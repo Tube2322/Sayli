@@ -20,6 +20,8 @@ import type { DifficultyPreference, UserProfile } from "@/lib/profile/types";
 import { getOrCreateSkillProfiles, setSelfSelectedSkillLevel, updateSkillProfileFromScore } from "@/lib/skill/actions";
 import { aggregateOverallLevel, representativeScoreForLevel } from "@/lib/skill/levelService";
 import type { Skill, SkillLevel, SkillProfile } from "@/lib/skill/types";
+import { getLearningState, recordPracticeResult } from "@/lib/practice/actions";
+import type { LearningState, PracticeResult } from "@/lib/practice/types";
 
 type SessionStatus = "loading" | "authenticated" | "unauthenticated";
 
@@ -29,11 +31,13 @@ type SessionContextValue = {
   profile: UserProfile | null;
   profileError: string | null;
   skillProfiles: Record<Skill, SkillProfile> | null;
+  learningState: LearningState | null;
   reloadProfile: () => void;
   setDifficultyPreference: (value: DifficultyPreference) => Promise<void>;
   completeAssessment: () => Promise<void>;
   saveSelfSelectedLevels: (levels: Record<Skill, SkillLevel>) => Promise<boolean>;
   saveAssessmentResults: (levels: Record<Skill, SkillLevel>) => Promise<boolean>;
+  submitPracticeResult: (input: Omit<PracticeResult, "id" | "createdAt">) => Promise<boolean>;
   logout: () => Promise<void>;
 };
 
@@ -45,6 +49,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [profileError, setProfileError] = useState<string | null>(null);
   const [skillProfiles, setSkillProfiles] = useState<Record<Skill, SkillProfile> | null>(null);
+  const [learningState, setLearningState] = useState<LearningState | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
 
   useEffect(() => {
@@ -54,6 +59,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       if (!firebaseUser) {
         setProfile(null);
         setSkillProfiles(null);
+        setLearningState(null);
       }
     });
     return unsubscribe;
@@ -76,6 +82,13 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       })
       .catch((err) => {
         if (!cancelled) setProfileError(err instanceof Error ? err.message : "โหลดโปรไฟล์ทักษะไม่สำเร็จ");
+      });
+    getLearningState(user.uid)
+      .then((ls) => {
+        if (!cancelled) setLearningState(ls);
+      })
+      .catch(() => {
+        // No practice yet is a normal, expected state — not an error to surface.
       });
     return () => {
       cancelled = true;
@@ -147,6 +160,22 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     [user, reloadProfile]
   );
 
+  const submitPracticeResult = useCallback(
+    async (input: Omit<PracticeResult, "id" | "createdAt">) => {
+      if (!user || !skillProfiles || !profile) return false;
+      try {
+        await recordPracticeResult(user.uid, input, skillProfiles, profile.difficultyPreference);
+        const ls = await getLearningState(user.uid);
+        setLearningState(ls);
+        return true;
+      } catch (err) {
+        setProfileError(err instanceof Error ? err.message : "บันทึกผลการฝึกไม่สำเร็จ ลองใหม่อีกครั้ง");
+        return false;
+      }
+    },
+    [user, skillProfiles, profile]
+  );
+
   const logout = useCallback(async () => {
     await signOut(auth);
   }, []);
@@ -159,11 +188,13 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         profile,
         profileError,
         skillProfiles,
+        learningState,
         reloadProfile,
         setDifficultyPreference,
         completeAssessment,
         saveSelfSelectedLevels,
         saveAssessmentResults,
+        submitPracticeResult,
         logout,
       }}
     >

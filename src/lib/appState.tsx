@@ -50,6 +50,8 @@ type AppState = {
   chooseEachLevels: Record<string, string>;
   assessmentDone: boolean;
   skillLevels: Record<string, string> | null;
+  lastPracticeCorrect: boolean | null;
+  lastPracticeScore: number | null;
 };
 
 type AppStateContextValue = AppState & {
@@ -60,7 +62,7 @@ type AppStateContextValue = AppState & {
   togglePronunciation: () => void;
   toggleSound: () => void;
   openHint: () => void;
-  checkAnswer: () => void;
+  checkAnswer: (correct: boolean, score: number) => void;
   closeSheets: () => void;
   continueAfterFeedback: () => void;
   setHistoryFilter: (f: "7d" | "30d" | "all") => void;
@@ -103,6 +105,8 @@ const initialState: AppState = {
   chooseEachLevels: Object.fromEntries(SKILL_ORDER.map((sk) => [sk, "L3"])),
   assessmentDone: false,
   skillLevels: null,
+  lastPracticeCorrect: null,
+  lastPracticeScore: null,
 };
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
@@ -135,7 +139,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       togglePronunciation: () => patch({ showPronunciation: !state.showPronunciation }),
       toggleSound: () => patch({ soundOn: !state.soundOn }),
       openHint: () => patch({ sheet: "hint" }),
-      checkAnswer: () => patch({ sheet: "feedback" }),
+      checkAnswer: (correct, score) => patch({ sheet: "feedback", lastPracticeCorrect: correct, lastPracticeScore: score }),
       closeSheets: () => patch({ sheet: null }),
       continueAfterFeedback: () => patch({ sheet: null, answer: "" }),
       setHistoryFilter: (f) => patch({ historyFilter: f }),

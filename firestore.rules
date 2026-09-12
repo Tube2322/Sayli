@@ -18,6 +18,23 @@ service cloud.firestore {
                     && request.resource.data.startingDifficulty in ['easy','medium','hard'];
         allow delete: if false;
       }
+
+      match /practiceResults/{resultId} {
+        allow read: if request.auth != null && request.auth.uid == uid;
+        // Practice results are an append-only history — never edited or removed.
+        allow create: if request.auth != null && request.auth.uid == uid
+                    && request.resource.data.keys().hasAll(['sessionId','questionId','skill','difficulty','answer','referenceAnswer','evaluation','score','correct','responseTimeMs','createdAt'])
+                    && request.resource.data.skill in ['reading','listening','writing','speaking','understanding']
+                    && request.resource.data.difficulty in ['easy','medium','hard']
+                    && request.resource.data.evaluation in ['correct','incorrect'];
+        allow update, delete: if false;
+      }
+
+      match /learningState/{docId} {
+        allow read: if request.auth != null && request.auth.uid == uid;
+        allow create, update: if request.auth != null && request.auth.uid == uid && docId == 'current';
+        allow delete: if false;
+      }
     }
   }
 }
