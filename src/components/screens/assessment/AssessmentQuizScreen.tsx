@@ -1,9 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppState } from "@/lib/appState";
+import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
 import { ASSESSMENT_QUESTIONS } from "@/lib/sampleData";
+import type { Skill, SkillLevel } from "@/lib/skill/types";
 
 export function AssessmentQuizScreen() {
   const { theme } = useTheme();
@@ -13,6 +16,8 @@ export function AssessmentQuizScreen() {
     setQuizAnswer, toggleOrderWord, submitQuizAnswer, nextQuizQuestion,
     computeSkillLevels, markAssessmentApplied,
   } = useAppState();
+  const { saveAssessmentResults, profileError } = useSession();
+  const [saving, setSaving] = useState(false);
 
   const q = ASSESSMENT_QUESTIONS[quizIndex];
   const isLast = quizIndex === ASSESSMENT_QUESTIONS.length - 1;
@@ -25,11 +30,16 @@ export function AssessmentQuizScreen() {
       ? orderPicked.length === (q.words?.length ?? 0)
       : !!(typeof quizAnswer === "string" && quizAnswer.trim());
 
-  const onNext = () => {
+  const onNext = async () => {
     if (isLast) {
-      const levels = computeSkillLevels();
-      markAssessmentApplied(levels);
-      router.push("/assessment/results");
+      const levels = computeSkillLevels() as Record<Skill, SkillLevel>;
+      setSaving(true);
+      const ok = await saveAssessmentResults(levels);
+      setSaving(false);
+      if (ok) {
+        markAssessmentApplied(levels);
+        router.push("/assessment/results");
+      }
     } else {
       nextQuizQuestion();
     }
@@ -123,12 +133,18 @@ export function AssessmentQuizScreen() {
           ) : (
             <div style={{ borderRadius: 16, padding: "14px 16px", background: theme.errorSoft, color: theme.error, fontSize: 14.5, fontWeight: 600 }}>✕ ลองใหม่ครั้งหน้า</div>
           )}
+          {profileError && (
+            <div style={{ fontSize: 13, color: theme.error, background: theme.errorSoft, borderRadius: 12, padding: "10px 12px" }}>
+              {profileError}
+            </div>
+          )}
           <button
             className="el-tap"
+            disabled={saving}
             onClick={onNext}
-            style={{ width: "100%", height: 54, border: "none", borderRadius: 16, background: theme.btnBg, color: theme.btnText, fontSize: 16, fontWeight: 600 }}
+            style={{ width: "100%", height: 54, border: "none", borderRadius: 16, background: theme.btnBg, color: theme.btnText, fontSize: 16, fontWeight: 600, opacity: saving ? 0.7 : 1 }}
           >
-            ต่อไป →
+            {saving ? "กำลังบันทึก..." : "ต่อไป →"}
           </button>
         </>
       )}

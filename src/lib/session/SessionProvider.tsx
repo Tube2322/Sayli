@@ -10,10 +10,16 @@ import {
 } from "react";
 import { onAuthStateChanged, signOut, type User } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
-import { getOrCreateProfile, updateDifficultyPreference, markAssessmentCompleted } from "@/lib/profile/actions";
+import {
+  getOrCreateProfile,
+  updateDifficultyPreference,
+  markAssessmentCompleted,
+  updateOverallLevel,
+} from "@/lib/profile/actions";
 import type { DifficultyPreference, UserProfile } from "@/lib/profile/types";
-import { getOrCreateSkillProfiles } from "@/lib/skill/actions";
-import type { Skill, SkillProfile } from "@/lib/skill/types";
+import { getOrCreateSkillProfiles, setSelfSelectedSkillLevel, updateSkillProfileFromScore } from "@/lib/skill/actions";
+import { aggregateOverallLevel, representativeScoreForLevel } from "@/lib/skill/levelService";
+import type { Skill, SkillLevel, SkillProfile } from "@/lib/skill/types";
 
 type SessionStatus = "loading" | "authenticated" | "unauthenticated";
 
@@ -26,6 +32,8 @@ type SessionContextValue = {
   reloadProfile: () => void;
   setDifficultyPreference: (value: DifficultyPreference) => Promise<void>;
   completeAssessment: () => Promise<void>;
+  saveSelfSelectedLevels: (levels: Record<Skill, SkillLevel>) => Promise<boolean>;
+  saveAssessmentResults: (levels: Record<Skill, SkillLevel>) => Promise<boolean>;
   logout: () => Promise<void>;
 };
 
@@ -101,13 +109,63 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     }
   }, [user, profile]);
 
+  const saveSelfSelectedLevels = useCallback(
+    async (levels: Record<Skill, SkillLevel>) => {
+      if (!user) return false;
+      try {
+        const skills = Object.keys(levels) as Skill[];
+        await Promise.all(skills.map((sk) => setSelfSelectedSkillLevel(user.uid, sk, levels[sk])));
+        await updateOverallLevel(user.uid, aggregateOverallLevel(Object.values(levels)));
+        reloadProfile();
+        return true;
+      } catch (err) {
+        setProfileError(err instanceof Error ? err.message : "บันทึกระดับที่เลือกไม่สำเร็จ ลองใหม่อีกครั้ง");
+        return false;
+      }
+    },
+    [user, reloadProfile]
+  );
+
+  const saveAssessmentResults = useCallback(
+    async (levels: Record<Skill, SkillLevel>) => {
+      if (!user) return false;
+      try {
+        const skills = Object.keys(levels) as Skill[];
+        await Promise.all(
+          skills.map((sk) =>
+            updateSkillProfileFromScore(user.uid, sk, representativeScoreForLevel(levels[sk]), "low", "assessment")
+          )
+        );
+        await updateOverallLevel(user.uid, aggregateOverallLevel(Object.values(levels)));
+        reloadProfile();
+        return true;
+      } catch (err) {
+        setProfileError(err instanceof Error ? err.message : "บันทึกผลประเมินไม่สำเร็จ ลองใหม่อีกครั้ง");
+        return false;
+      }
+    },
+    [user, reloadProfile]
+  );
+
   const logout = useCallback(async () => {
     await signOut(auth);
   }, []);
 
   return (
     <SessionContext.Provider
-      value={{ status, user, profile, profileError, skillProfiles, reloadProfile, setDifficultyPreference, completeAssessment, logout }}
+      value={{
+        status,
+        user,
+        profile,
+        profileError,
+        skillProfiles,
+        reloadProfile,
+        setDifficultyPreference,
+        completeAssessment,
+        saveSelfSelectedLevels,
+        saveAssessmentResults,
+        logout,
+      }}
     >
       {children}
     </SessionContext.Provider>

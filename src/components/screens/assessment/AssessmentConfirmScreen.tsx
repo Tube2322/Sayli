@@ -9,8 +9,8 @@ export function AssessmentConfirmScreen() {
   const { theme } = useTheme();
   const router = useRouter();
   const { chooseAllLevel, finishAssessment } = useAppState();
-  const { completeAssessment } = useSession();
-  const chosenLevelLabel = LEVEL_META[chooseAllLevel]?.name ?? "";
+  const { completeAssessment, profile } = useSession();
+  const chosenLevelLabel = LEVEL_META[profile?.overallLevel ?? chooseAllLevel]?.name ?? "";
 
   const onFinish = async () => {
     finishAssessment();

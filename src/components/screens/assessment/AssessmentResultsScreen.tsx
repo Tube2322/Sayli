@@ -6,18 +6,19 @@ import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
 
 const LEVEL_RANK: Record<string, number> = { L1: 1, L2: 2, L3: 3, L4: 4, L5: 5 };
+const CONFIDENCE_LABEL: Record<string, string> = { low: "Low", medium: "Medium", high: "High" };
 
 export function AssessmentResultsScreen() {
   const { theme } = useTheme();
   const router = useRouter();
-  const { skillLevels, skillScoresLog, finishAssessment } = useAppState();
-  const { completeAssessment } = useSession();
+  const { finishAssessment } = useAppState();
+  const { completeAssessment, skillProfiles } = useSession();
 
   const skillRows = SKILL_ORDER.map((sk) => {
-    const lv = (skillLevels && skillLevels[sk]) || "L2";
+    const sp = skillProfiles?.[sk];
+    const lv = sp?.level ?? "L2";
     const meta = LEVEL_META[lv];
-    const scoreEntry = skillScoresLog.find((e) => e.skill === sk);
-    const confidence = scoreEntry ? (scoreEntry.tier === "hard" ? "High" : "Medium") : "Medium";
+    const confidence = CONFIDENCE_LABEL[sp?.confidence ?? "low"];
     return { skill: sk, name: SKILL_LABELS[sk], level: lv, emoji: meta.emoji, confidence };
   });
   const sortedByRank = [...skillRows].sort((a, b) => LEVEL_RANK[a.level] - LEVEL_RANK[b.level]);

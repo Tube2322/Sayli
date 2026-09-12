@@ -1,4 +1,4 @@
-import type { DifficultyTier, SkillLevel } from "@/lib/skill/types";
+import { SKILL_LEVELS, type DifficultyTier, type SkillLevel } from "@/lib/skill/types";
 
 // Single source of truth for score -> level. Every part of the system must
 // call calculateSkillLevel() rather than re-implementing this mapping.
@@ -32,4 +32,15 @@ export function startingDifficultyForLevel(level: SkillLevel): DifficultyTier {
   if (level === "L1" || level === "L2") return "easy";
   if (level === "L3" || level === "L4") return "medium";
   return "hard";
+}
+
+// A single "overall level" for display (e.g. onboarding confirmation, profile
+// summary) derived from the five independent skill levels — never stored as
+// the primary record, since per-skill levels are what the system actually
+// tracks (spec §3: users must not be forced onto one level for every skill).
+export function aggregateOverallLevel(levels: SkillLevel[]): SkillLevel {
+  if (levels.length === 0) return "L2";
+  const avgRank = levels.reduce((sum, lv) => sum + SKILL_LEVELS.indexOf(lv), 0) / levels.length;
+  const idx = Math.round(avgRank);
+  return SKILL_LEVELS[Math.max(0, Math.min(SKILL_LEVELS.length - 1, idx))];
 }

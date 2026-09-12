@@ -1,8 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppState, LEVEL_META, LEVEL_ORDER, SKILL_LABELS, SKILL_ORDER } from "@/lib/appState";
+import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
+import type { Skill, SkillLevel } from "@/lib/skill/types";
 
 export function AssessmentChooseScreen() {
   const { theme } = useTheme();
@@ -11,14 +14,21 @@ export function AssessmentChooseScreen() {
     chooseMode, chooseAllLevel, chooseEachLevels,
     setChooseMode, setChooseAllLevel, setChooseEachLevel, markAssessmentApplied,
   } = useAppState();
+  const { saveSelfSelectedLevels, profileError } = useSession();
+  const [saving, setSaving] = useState(false);
 
-  const onConfirm = () => {
-    const levels: Record<string, string> = {};
+  const onConfirm = async () => {
+    const levels = {} as Record<Skill, SkillLevel>;
     SKILL_ORDER.forEach((sk) => {
-      levels[sk] = chooseMode === "all" ? chooseAllLevel : chooseEachLevels[sk];
+      levels[sk] = (chooseMode === "all" ? chooseAllLevel : chooseEachLevels[sk]) as SkillLevel;
     });
-    markAssessmentApplied(levels);
-    router.push("/assessment/confirm");
+    setSaving(true);
+    const ok = await saveSelfSelectedLevels(levels);
+    setSaving(false);
+    if (ok) {
+      markAssessmentApplied(levels);
+      router.push("/assessment/confirm");
+    }
   };
 
   return (
@@ -83,9 +93,20 @@ export function AssessmentChooseScreen() {
         </div>
       )}
 
+      {profileError && (
+        <div style={{ fontSize: 13, color: theme.error, background: theme.errorSoft, borderRadius: 12, padding: "10px 12px" }}>
+          {profileError}
+        </div>
+      )}
+
       <div style={{ flex: 1 }} />
-      <button className="el-tap" onClick={onConfirm} style={{ width: "100%", height: 54, border: "none", borderRadius: 16, background: theme.btnBg, color: theme.btnText, fontSize: 16, fontWeight: 600 }}>
-        ยืนยันระดับนี้
+      <button
+        className="el-tap"
+        disabled={saving}
+        onClick={onConfirm}
+        style={{ width: "100%", height: 54, border: "none", borderRadius: 16, background: theme.btnBg, color: theme.btnText, fontSize: 16, fontWeight: 600, opacity: saving ? 0.7 : 1 }}
+      >
+        {saving ? "กำลังบันทึก..." : "ยืนยันระดับนี้"}
       </button>
     </div>
   );

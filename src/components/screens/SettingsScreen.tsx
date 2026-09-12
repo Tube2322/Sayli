@@ -22,9 +22,9 @@ export function SettingsScreen() {
   const {
     themeMode, setThemeMode, dailyGoalMinutes, setDailyGoalMinutes,
     showPronunciation, togglePronunciation, soundOn, toggleSound,
-    skillLevels, skillScoresLog, openRetakeConfirm,
+    openRetakeConfirm,
   } = useAppState();
-  const { profile, profileError, setDifficultyPreference, logout } = useSession();
+  const { profile, profileError, skillProfiles, setDifficultyPreference, logout } = useSession();
   const [savingDifficulty, setSavingDifficulty] = useState(false);
 
   const onDifficultyChange = async (value: DifficultyPreference) => {
@@ -34,10 +34,10 @@ export function SettingsScreen() {
   };
 
   const skillRows = SKILL_ORDER.map((sk) => {
-    const lv = (skillLevels && skillLevels[sk]) || "L2";
+    const sp = skillProfiles?.[sk];
+    const lv = sp?.level ?? "L2";
     const meta = LEVEL_META[lv];
-    const scoreEntry = skillScoresLog.find((e) => e.skill === sk);
-    const confidence = scoreEntry ? (scoreEntry.tier === "hard" ? "High" : "Medium") : "Low";
+    const confidence = sp?.confidence === "high" ? "High" : sp?.confidence === "medium" ? "Medium" : "Low";
     return { skill: sk, name: SKILL_LABELS[sk], level: lv, emoji: meta.emoji, confidence };
   });
 

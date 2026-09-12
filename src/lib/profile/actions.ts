@@ -74,6 +74,11 @@ export async function updateDisplayName(uid: string, value: string): Promise<voi
   await updateDoc(ref, { displayName: value, updatedAt: serverTimestamp() });
 }
 
+export async function updateOverallLevel(uid: string, overallLevel: string): Promise<void> {
+  const ref = doc(db, "users", uid);
+  await updateDoc(ref, { overallLevel, updatedAt: serverTimestamp() });
+}
+
 export async function markAssessmentCompleted(uid: string): Promise<void> {
   const ref = doc(db, "users", uid);
   await updateDoc(ref, {
