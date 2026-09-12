@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link rel="stylesheet" href="_ds/industry-6fc171ad-e3f8-4b18-9648-318c53283d55/styles.css">
+  <style>
+    body { margin: 0; }
+    .el-scroll::-webkit-scrollbar { display: none; }
+    .el-tap { cursor: pointer; transition: transform .12s, opacity .12s, background .15s, color .15s; }
+    .el-tap:active { transform: scale(0.96); }
+    .el-sheet { transition: transform .28s cubic-bezier(.32,.72,0,1); }
+    input.el-input::placeholder { color: {{ mutedColor }}; }
+  </style>
+</helmet>
+<x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="390px,844px" style="margin:32px auto;display:block" dark="{{ dark }}">
+  <div style="position:relative; height:100%; background:{{ bgColor }}; font-family:'Barlow', system-ui, sans-serif; color:{{ textColor }}; overflow:hidden;">
+
+    <!-- dark mode toggle -->
+    <div class="el-tap" onclick="{{ toggleDark }}" style="position:absolute; top:66px; right:16px; z-index:70; width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:{{ surfaceColor }}; box-shadow:{{ shadowSm }};">
+      <sc-if value="{{ dark }}" hint-placeholder-val="{{ false }}">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{ accentColor }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v1.5M12 19.5V21M4.2 4.2l1.1 1.1M18.7 18.7l1.1 1.1M3 12h1.5M19.5 12H21M4.2 19.8l1.1-1.1M18.7 5.3l1.1-1.1"/><circle cx="12" cy="12" r="4.5"/></svg>
+      </sc-if>
+      <sc-if value="{{ notDark }}" hint-placeholder-val="{{ true }}">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="{{ accentColor }}" stroke="none"><path d="M20 14.5A8.5 8.5 0 019.5 4 8.5 8.5 0 1020 14.5z"/></svg>
+      </sc-if>
+    </div>
+
+    <!-- settings entry -->
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+      <div class="el-tap" onclick="{{ goSettings }}" aria-label="Settings" style="position:absolute; top:66px; right:62px; z-index:70; width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:{{ surfaceColor }}; box-shadow:{{ shadowSm }};">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{ textColor }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      </div>
+    </sc-if>
+
+    <div class="el-scroll" style="height:100%; overflow-y:auto; overflow-x:hidden; padding: 66px 20px 8px; box-sizing:border-box; display:flex; flex-direction:column;">
+
+      <!-- HOME -->
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex; flex-direction:column; gap:14px; flex:1; padding-bottom:100px;">
+          <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:26px; margin:0 46px 0 0;">{{ greeting }}</h1>
+
+          <div style="display:flex; gap:8px;">
+            <div style="flex:1; display:flex; align-items:center; gap:6px; padding:9px 10px; border-radius:14px; background:{{ surfaceColor }}; box-shadow:{{ shadowSm }};">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="{{ accentDeep }}" stroke="none"><path d="M12 2c1 3 5 5 5 10a5 5 0 01-10 0c0-1.5.5-2.5 1.3-3.6.4.9 1.2 1.4 1.2 1.4-.3-2 .5-4 2.5-7.8z"/></svg>
+              <span style="font-size:13px; font-weight:600;">{{ streakDays }}</span>
+            </div>
+            <div style="flex:1; display:flex; align-items:center; gap:6px; padding:9px 10px; border-radius:14px; background:{{ surfaceColor }}; box-shadow:{{ shadowSm }};">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="{{ navyColor }}" stroke="none"><path d="M12 2l3 6.5 7 .9-5 5 1.2 7-6.2-3.4L5.8 21.4 7 14.4l-5-5 7-.9L12 2Z"/></svg>
+              <span style="font-size:13px; font-weight:600;">Lv. {{ level }}</span>
+            </div>
+            <div style="flex:1; display:flex; align-items:center; gap:6px; padding:9px 10px; border-radius:14px; background:{{ surfaceColor }}; box-shadow:{{ shadowSm }};">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="{{ navyColor }}" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/></svg>
+              <span style="font-size:13px; font-weight:600;">{{ goalDone }}/{{ goalTarget }} นาที</span>
+            </div>
+          </div>
+
+          <div class="el-tap" onclick="{{ startSession }}" style="border-radius:26px; padding:20px; background:{{ accentSoft }}; box-shadow:{{ shadowCard }};">
+            <div style="font-size:12px; letter-spacing:.04em; color:{{ accentDeep }}; margin-bottom:6px; font-weight:600;">กำลังเรียนต่อ</div>
+            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:22px; margin-bottom:4px;">{{ continueLesson.title }}</div>
+            <div style="font-size:13px; color:{{ mutedColor }}; margin-bottom:16px;">{{ continueLesson.minutes }} นาที</div>
+            <button class="el-tap" onclick="{{ startSession }}" style="width:100%; height:52px; border:none; border-radius:16px; background:{{ btnBg }}; color:{{ btnText }}; font-size:16px; font-weight:600; display:flex; align-items:center; justify-content:center; gap:8px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              ทำต่อ
+            </button>
+          </div>
+
+          <div style="border-radius:24px; padding:18px 20px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+              <div style="font-size:13px; font-weight:600;">ภารกิจวันนี้</div>
+              <div style="font-size:12px; font-weight:600; color:{{ accentDeep }}; background:{{ accentSoft }}; padding:3px 10px; border-radius:999px;">{{ missionDone }}/{{ missionTotal }}</div>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+              <sc-for list="{{ missionItems }}" as="m" hint-placeholder-count="4">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:22%;">
+                  <sc-if value="{{ m.done }}" hint-placeholder-val="{{ false }}">
+                    <div style="width:30px; height:30px; border-radius:50%; background:{{ accentColor }}; display:flex; align-items:center; justify-content:center;">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="{{ btnText }}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ m.notDone }}" hint-placeholder-val="{{ true }}">
+                    <div style="width:30px; height:30px; border-radius:50%; border:1.5px solid {{ borderColor }};"></div>
+                  </sc-if>
+                  <span style="font-size:10px; color:{{ mutedColor }}; text-align:center;">{{ m.label }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="border-radius:24px; padding:16px 18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }}; display:flex; align-items:flex-start; gap:12px;">
+            <div style="width:34px; height:34px; border-radius:12px; background:{{ accentSoft }}; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ accentDeep }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.4.9 1 .9 1.7v.4h5.2v-.4c0-.7.3-1.3.9-1.7A6 6 0 0012 3z"/></svg>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:11px; font-weight:600; color:{{ accentDeep }}; margin-bottom:2px;">น่าทบทวน</div>
+              <div style="font-size:15px; font-weight:600; margin-bottom:2px;">"didn't" + กริยา</div>
+              <div style="font-size:12.5px; color:{{ mutedColor }};">คุณพลาดจุดนี้เมื่อเร็ว ๆ นี้</div>
+            </div>
+            <button class="el-tap" onclick="{{ goReview }}" style="height:34px; padding:0 14px; border-radius:10px; border:1.3px solid {{ accentColor }}; background:transparent; color:{{ accentDeep }}; font-size:12.5px; font-weight:600; flex-shrink:0; align-self:center;">ทบทวน</button>
+          </div>
+
+          <div style="border-radius:24px; padding:16px 18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }}; display:flex; align-items:center; gap:12px;">
+            <div style="width:34px; height:34px; border-radius:12px; background:{{ navyColor }}22; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:16px;">{{ weakest.emoji }}</div>
+            <div style="flex:1;">
+              <div style="font-size:11px; font-weight:600; color:{{ navyColor }}; margin-bottom:2px;">แนะนำสำหรับคุณ</div>
+              <div style="font-size:14.5px; font-weight:600;">{{ weakest.name }} — จากผลประเมิน</div>
+            </div>
+            <button class="el-tap" onclick="{{ goPractice }}" style="height:34px; padding:0 14px; border-radius:10px; border:1.3px solid {{ navyColor }}; background:transparent; color:{{ navyColor }}; font-size:12.5px; font-weight:600; flex-shrink:0;">ฝึก</button>
+          </div>
+
+          <div class="el-tap" onclick="{{ startSession }}" style="border-radius:20px; padding:14px 18px; border:1.3px solid {{ accentColor }}; display:flex; align-items:center; gap:10px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="{{ accentDeep }}" stroke="none"><path d="M13 2L3 14h7v8l10-12h-7z"/></svg>
+            <div style="flex:1;">
+              <div style="font-size:14px; font-weight:600; color:{{ accentDeep }};">ฝึกด่วน</div>
+              <div style="font-size:11.5px; color:{{ mutedColor }};">ให้ระบบเลือกให้</div>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ accentDeep }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- PRACTICE HUB -->
+      <sc-if value="{{ isPractice }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:18px; flex:1; padding-bottom:100px;">
+          <div>
+            <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:26px; margin:0 0 4px;">ฝึกฝน</h1>
+            <div style="font-size:13.5px; color:{{ mutedColor }};">เลือกวิธีที่คุณอยากฝึก</div>
+          </div>
+
+          <div style="border-radius:20px; padding:14px 16px; background:{{ navyColor }}11; display:flex; align-items:center; gap:10px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ navyColor }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2a2.5 2.5 0 00-2.3 3.5A3 3 0 006 8v1a3 3 0 00-1 5.8V16a3 3 0 003 3h.5a2.5 2.5 0 004.9 0H14v-3.2"/><path d="M14.5 2a2.5 2.5 0 012.3 3.5A3 3 0 0118 8v1a3 3 0 011 5.8V16a3 3 0 01-3 3"/></svg>
+            <div style="font-size:12.5px; color:{{ navyColor }};">แนะนำจากผลประเมิน: <strong>{{ focusSkills }}</strong></div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="font-size:11px; font-weight:700; letter-spacing:.06em; color:{{ navyColor }}; text-transform:uppercase;">ฝึกหลัก</div>
+            <div class="el-tap" onclick="{{ startSession }}" style="border-radius:22px; padding:16px 18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }}; display:flex; align-items:center; gap:14px;">
+              <div style="width:44px; height:44px; border-radius:14px; background:{{ accentSoft }}; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{ accentDeep }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2Z"/><path d="M12 6.5v14"/></svg>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:16px; font-weight:600;">Understand</div>
+                <div style="font-size:12.5px; color:{{ mutedColor }}; margin-top:1px;">อ่าน คิด แล้วอธิบาย</div>
+              </div>
+              <div style="font-size:11.5px; font-weight:600; color:{{ mutedColor }}; flex-shrink:0;">~3 นาที</div>
+            </div>
+            <div class="el-tap" onclick="{{ startSession }}" style="border-radius:22px; padding:16px 18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }}; display:flex; align-items:center; gap:14px;">
+              <div style="width:44px; height:44px; border-radius:14px; background:{{ accentSoft }}; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{ accentDeep }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4Z"/></svg>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:16px; font-weight:600;">Write</div>
+                <div style="font-size:12.5px; color:{{ mutedColor }}; margin-top:1px;">แปลความหมายไทย เขียนเป็นอังกฤษ</div>
+              </div>
+              <div style="font-size:11.5px; font-weight:600; color:{{ mutedColor }}; flex-shrink:0;">~4 นาที</div>
+            </div>
+            <div class="el-tap" onclick="{{ startSession }}" style="border-radius:22px; padding:16px 18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }}; display:flex; align-items:center; gap:14px;">
+              <div style="width:44px; height:44px; border-radius:14px; background:{{ accentSoft }}; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{ accentDeep }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14v-2a9 9 0 0118 0v2"/><rect x="1" y="14" width="6" height="7" rx="2"/><rect x="17" y="14" width="6" height="7" rx="2"/></svg>
+              </div>
+              <div style="flex:1;">
+                <div style="font-size:16px; font-weight:600;">Listen</div>
+                <div style="font-size:12.5px; color:{{ mutedColor }}; margin-top:1px;">ฟัง แล้วทำความเข้าใจ</div>
+              </div>
+              <div style="font-size:11.5px; font-weight:600; color:{{ mutedColor }}; flex-shrink:0;">~3 นาที</div>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div style="font-size:11px; font-weight:700; letter-spacing:.06em; color:{{ navyColor }}; text-transform:uppercase;">สถานการณ์จริง</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <div class="el-tap" onclick="{{ startSession }}" style="border-radius:20px; padding:16px 14px; background:{{ accentSoft }}; display:flex; flex-direction:column; gap:8px;">
+                <div style="width:36px; height:36px; border-radius:11px; background:{{ surfaceColor }}; display:flex; align-items:center; justify-content:center;">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{ accentDeep }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20l-5-2V4l5 2 6-2 5 2v14l-5-2-6 2Z"/><path d="M9 6v14M15 4v14"/></svg>
+                </div>
+                <div style="font-size:14.5px; font-weight:600;">Situation</div>
+                <div style="font-size:11.5px; color:{{ mutedColor }}; line-height:1.35;">ฝึกจากสถานการณ์จริง</div>
+              </div>
+              <div class="el-tap" onclick="{{ startSession }}" style="border-radius:20px; padding:16px 14px; background:{{ accentSoft }}; display:flex; flex-direction:column; gap:8px;">
+                <div style="width:36px; height:36px; border-radius:11px; background:{{ surfaceColor }}; display:flex; align-items:center; justify-content:center;">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="{{ accentDeep }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                </div>
+                <div style="font-size:14.5px; font-weight:600;">Conversation</div>
+                <div style="font-size:11.5px; color:{{ mutedColor }}; line-height:1.35;">คุยโต้ตอบเป็นบทสนทนา</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="el-tap" onclick="{{ startSession }}" style="border-radius:20px; padding:16px 18px; background:{{ btnBg }}; display:flex; align-items:center; gap:10px; margin-top:4px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="{{ btnText }}" stroke="none"><path d="M13 2L3 14h7v8l10-12h-7z"/></svg>
+            <div style="flex:1;">
+              <div style="font-size:15px; font-weight:600; color:{{ btnText }};">ฝึกด่วน</div>
+              <div style="font-size:11.5px; color:{{ btnText }}; opacity:.85;">ให้ระบบเลือกสิ่งที่เหมาะกับคุณ</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- SESSION (exercise flow) -->
+      <sc-if value="{{ isSession }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:22px; flex:1; padding-bottom:40px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="el-tap" onclick="{{ backFromSession }}" style="width:36px; height:36px; border-radius:50%; background:{{ surfaceColor }}; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ textColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:12px; color:{{ mutedColor }};">บทที่ 12</div>
+              <div style="height:6px; background:{{ trackColor }}; border-radius:999px; overflow:hidden; margin-top:4px;">
+                <div style="height:100%; width:65%; background:{{ accentColor }}; border-radius:999px;"></div>
+              </div>
+            </div>
+            <div style="font-size:13px; font-weight:600; color:{{ accentDeep }};">72 XP</div>
+          </div>
+
+          <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px; text-align:center;">
+            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:28px; line-height:1.25;">"I didn't mean<br>to hurt you."</div>
+            <div style="font-size:14px; color:{{ mutedColor }};">คุณจะแปลประโยคนี้เป็นภาษาไทยว่าอย่างไร?</div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            <input class="el-input" type="text" placeholder="พิมพ์คำตอบ..." value="{{ answer }}" oninput="{{ onAnswerChange }}" style="width:100%; height:56px; border-radius:18px; border:1.5px solid {{ borderColor }}; background:{{ surfaceColor }}; color:{{ textColor }}; padding:0 18px; font-size:16px; box-sizing:border-box; font-family:inherit;"/>
+            <div style="display:flex; gap:10px;">
+              <button class="el-tap" onclick="{{ openHint }}" style="height:52px; padding:0 18px; border-radius:16px; border:1.5px solid {{ borderColor }}; background:{{ surfaceColor }}; color:{{ accentDeep }}; font-size:15px; font-weight:500; display:flex; align-items:center; gap:6px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ accentDeep }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.4.9 1 .9 1.7v.4h5.2v-.4c0-.7.3-1.3.9-1.7A6 6 0 0012 3z"/></svg>
+                คำใบ้
+              </button>
+              <button class="el-tap" onclick="{{ checkAnswer }}" style="flex:1; height:52px; border:none; border-radius:16px; background:{{ btnBg }}; color:{{ btnText }}; font-size:16px; font-weight:600;">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- ASSESSMENT -->
+      <sc-if value="{{ isAssessmentIntro }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; text-align:center; padding:20px 6px;">
+          <div style="font-size:40px;">🧭</div>
+          <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:23px; margin:0;">มาหาระดับภาษาอังกฤษของคุณกัน</h1>
+          <div style="font-size:14px; color:{{ mutedColor }}; line-height:1.5; max-width:300px;">เราจะทดสอบภาษาอังกฤษของคุณสั้น ๆ แล้วสร้างแนวทางการเรียนที่เหมาะกับคุณ</div>
+          <button class="el-tap" onclick="{{ startAssessmentQuiz }}" style="width:100%; height:54px; border:none; border-radius:16px; background:{{ btnBg }}; color:{{ btnText }}; font-size:16px; font-weight:600; margin-top:8px;">ทำแบบประเมินสั้น ๆ</button>
+          <button class="el-tap" onclick="{{ goChooseLevel }}" style="width:100%; height:52px; border:1.5px solid {{ navyColor }}; border-radius:16px; background:transparent; color:{{ navyColor }}; font-size:15px; font-weight:600;">เลือกระดับของฉัน</button>
+          <div style="font-size:12px; color:{{ mutedColor }}; line-height:1.5; max-width:280px;">ไม่แน่ใจ? ทำแบบประเมิน — รู้ระดับตัวเองแล้ว? เลือกได้เลย</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAssessmentQuiz }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:20px; flex:1; padding-bottom:40px;">
+          <div>
+            <div style="font-size:12px; color:{{ mutedColor }}; margin-bottom:6px;">ข้อที่ {{ quizIndex1 }} จาก {{ quizTotal }}</div>
+            <div style="height:6px; background:{{ trackColor }}; border-radius:999px; overflow:hidden;">
+              <div style="height:100%; width:{{ quizProgressPct }}%; background:{{ accentColor }}; border-radius:999px; transition:width .2s;"></div>
+            </div>
+          </div>
+
+          <sc-if value="{{ hasQuizNote }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:12px; color:{{ mutedColor }}; background:{{ trackColor }}; border-radius:12px; padding:10px 12px;">{{ quizNote }}</div>
+          </sc-if>
+
+          <div style="font-size:18px; font-weight:600; line-height:1.4;">{{ currentQuestion.prompt }}</div>
+
+          <sc-if value="{{ quizTypeMc }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <sc-for list="{{ mcOptions }}" as="opt" hint-placeholder-count="4">
+                <div class="el-tap" onclick="{{ opt.select }}" style="padding:14px 16px; border-radius:14px; border:1.5px solid {{ opt.border }}; background:{{ opt.bg }}; color:{{ opt.color }}; font-size:15px; font-weight:500;">{{ opt.label }}</div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ quizTypeOrder }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <div style="min-height:46px; border-radius:14px; border:1.5px solid {{ borderColor }}; background:{{ surfaceColor }}; padding:12px 14px; font-size:15px; font-weight:500;">{{ orderPickedText }}</div>
+              <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                <sc-for list="{{ orderWordChips }}" as="chip" hint-placeholder-count="4">
+                  <div class="el-tap" onclick="{{ chip.toggle }}" style="padding:9px 14px; border-radius:10px; border:1.3px solid {{ accentColor }}; background:{{ accentSoft }}; color:{{ accentDeep }}; font-size:14px; font-weight:600; opacity:1;">{{ chip.label }}</div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ quizTypeText }}" hint-placeholder-val="{{ true }}">
+            <input class="el-input" type="text" placeholder="พิมพ์คำตอบ..." value="{{ quizTextAnswer }}" oninput="{{ onQuizTextChange }}" style="width:100%; height:56px; border-radius:18px; border:1.5px solid {{ borderColor }}; background:{{ surfaceColor }}; color:{{ textColor }}; padding:0 18px; font-size:16px; box-sizing:border-box; font-family:inherit;"/>
+          </sc-if>
+
+          <div style="flex:1;"></div>
+
+          <sc-if value="{{ quizPhaseAnswering }}" hint-placeholder-val="{{ true }}">
+            <button class="el-tap" onclick="{{ submitQuizAnswer }}" style="width:100%; height:54px; border:none; border-radius:16px; background:{{ btnBg }}; color:{{ btnText }}; font-size:16px; font-weight:600; opacity:{{ canSubmitQuiz }};">ตรวจคำตอบ</button>
+          </sc-if>
+          <sc-if value="{{ quizPhaseFeedback }}" hint-placeholder-val="{{ false }}">
+            <sc-if value="{{ lastCorrect }}" hint-placeholder-val="{{ false }}">
+              <div style="border-radius:16px; padding:14px 16px; background:{{ successSoft }}; color:{{ successColor }}; font-size:14.5px; font-weight:600;">✓ ถูกต้อง</div>
+            </sc-if>
+            <sc-if value="{{ lastIncorrect }}" hint-placeholder-val="{{ false }}">
+              <div style="border-radius:16px; padding:14px 16px; background:{{ errorSoft }}; color:{{ errorColor }}; font-size:14.5px; font-weight:600;">✕ ลองใหม่ครั้งหน้า</div>
+            </sc-if>
+            <button class="el-tap" onclick="{{ nextQuizQuestion }}" style="width:100%; height:54px; border:none; border-radius:16px; background:{{ btnBg }}; color:{{ btnText }}; font-size:16px; font-weight:600;">ต่อไป →</button>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAssessmentChoose }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:18px; flex:1; padding-bottom:40px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="el-tap" onclick="{{ goAssessmentIntro }}" style="width:36px; height:36px; border-radius:50%; background:{{ surfaceColor }}; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ textColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:22px; margin:0;">เลือกระดับของฉัน</h1>
+          </div>
+
+          <div style="display:flex; gap:6px; background:{{ trackColor }}; border-radius:12px; padding:4px;">
+            <div class="el-tap" onclick="{{ setChooseModeAll }}" style="flex:1; text-align:center; padding:9px 0; border-radius:9px; font-size:13px; font-weight:600; background:{{ chooseModeAllBg }}; color:{{ chooseModeAllColor }};">ใช้ระดับเดียวกันทุกด้าน</div>
+            <div class="el-tap" onclick="{{ setChooseModeEach }}" style="flex:1; text-align:center; padding:9px 0; border-radius:9px; font-size:13px; font-weight:600; background:{{ chooseModeEachBg }}; color:{{ chooseModeEachColor }};">เลือกแต่ละด้านเอง</div>
+          </div>
+
+          <sc-if value="{{ chooseModeAll }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <sc-for list="{{ levelPickerOptions }}" as="lv" hint-placeholder-count="5">
+                <div class="el-tap" onclick="{{ lv.select }}" style="border-radius:16px; padding:14px 16px; border:1.5px solid {{ lv.border }}; background:{{ lv.bg }}; display:flex; align-items:center; gap:12px;">
+                  <div style="font-size:22px;">{{ lv.emoji }}</div>
+                  <div style="flex:1;">
+                    <div style="font-size:14.5px; font-weight:600;">{{ lv.level }} · {{ lv.name }}</div>
+                    <div style="font-size:12px; color:{{ mutedColor }}; margin-top:2px;">{{ lv.desc }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ chooseModeEach }}" hint-placeholder-val="{{ false }}">
+            <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }}; display:flex; flex-direction:column; gap:16px;">
+              <sc-for list="{{ eachSkillRows }}" as="row" hint-placeholder-count="5">
+                <div>
+                  <div style="font-size:13.5px; font-weight:600; margin-bottom:8px;">{{ row.name }}</div>
+                  <div style="display:flex; gap:6px;">
+                    <sc-for list="{{ row.pills }}" as="p" hint-placeholder-count="5">
+                      <div class="el-tap" onclick="{{ p.select }}" style="flex:1; text-align:center; padding:8px 0; border-radius:9px; font-size:12px; font-weight:700; background:{{ p.bg }}; color:{{ p.color }};">{{ p.level }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <div style="flex:1;"></div>
+          <button class="el-tap" onclick="{{ confirmChooseLevel }}" style="width:100%; height:54px; border:none; border-radius:16px; background:{{ btnBg }}; color:{{ btnText }}; font-size:16px; font-weight:600;">ยืนยันระดับนี้</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAssessmentChosenConfirm }}" hint-placeholder-val="{{ false }}">
+        <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; text-align:center; padding:20px 10px;">
+          <div style="font-size:36px;">👍</div>
+          <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:21px; margin:0;">เยี่ยม! เราจะเริ่มที่ประมาณ {{ chosenLevelLabel }}</h1>
+          <div style="font-size:13.5px; color:{{ mutedColor }}; max-width:280px; line-height:1.5;">คุณเปลี่ยนระดับเริ่มต้นได้ทุกเมื่อในหน้าตั้งค่า</div>
+          <button class="el-tap" onclick="{{ finishAssessment }}" style="width:100%; height:52px; border:none; border-radius:16px; background:{{ btnBg }}; color:{{ btnText }}; font-size:15.5px; font-weight:600; margin-top:8px;">เริ่มเรียน</button>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAssessmentResults }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding-bottom:40px;">
+          <div style="text-align:center; padding:10px 0;">
+            <div style="font-size:34px;">🎉</div>
+            <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:21px; margin:6px 0 0;">โปรไฟล์ภาษาอังกฤษของคุณพร้อมแล้ว</h1>
+          </div>
+          <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }}; display:flex; flex-direction:column; gap:12px;">
+            <sc-for list="{{ skillRows }}" as="r" hint-placeholder-count="5">
+              <div style="display:flex; align-items:center; justify-content:space-between;">
+                <span style="font-size:14.5px; font-weight:500;">{{ r.name }}</span>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <span style="font-size:10.5px; color:{{ mutedColor }};">{{ r.confidence }}</span>
+                  <span style="font-size:13px; font-weight:600; color:{{ accentDeep }}; background:{{ accentSoft }}; padding:4px 10px; border-radius:999px;">{{ r.emoji }} {{ r.level }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="border-radius:22px; padding:16px 18px; background:{{ accentSoft }};">
+            <div style="font-size:12px; font-weight:600; color:{{ accentDeep }}; margin-bottom:2px;">ทักษะที่แข็งที่สุดของคุณ</div>
+            <div style="font-size:15px; font-weight:600;">{{ strongest.name }}</div>
+          </div>
+          <div style="border-radius:22px; padding:16px 18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+            <div style="font-size:12px; font-weight:600; color:{{ navyColor }}; margin-bottom:2px;">โฟกัสถัดไป</div>
+            <div style="font-size:15px; font-weight:600;">{{ focusSkills }}</div>
+          </div>
+          <button class="el-tap" onclick="{{ finishAssessment }}" style="width:100%; height:54px; border:none; border-radius:16px; background:{{ btnBg }}; color:{{ btnText }}; font-size:16px; font-weight:600; margin-top:4px;">เริ่มเส้นทางการเรียนของฉัน</button>
+        </div>
+      </sc-if>
+
+      <!-- REVIEW -->
+      <sc-if value="{{ isReview }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding-bottom:100px;">
+          <div>
+            <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:26px; margin:0 0 4px;">ทบทวน</h1>
+            <div style="font-size:13.5px; color:{{ mutedColor }};">ทบทวนสิ่งที่คุณควรจำตอนนี้</div>
+          </div>
+
+          <sc-if value="{{ hasReviewItems }}" hint-placeholder-val="{{ true }}">
+            <div class="el-tap" onclick="{{ startSession }}" style="border-radius:26px; padding:20px; background:{{ accentSoft }}; box-shadow:{{ shadowCard }};">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="{{ accentDeep }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2a2.5 2.5 0 00-2.3 3.5A3 3 0 006 8v1a3 3 0 00-1 5.8V16a3 3 0 003 3h.5a2.5 2.5 0 004.9 0H14v-3.2"/><path d="M14.5 2a2.5 2.5 0 012.3 3.5A3 3 0 0118 8v1a3 3 0 011 5.8V16a3 3 0 01-3 3"/></svg>
+                <div style="font-size:12px; font-weight:600; color:{{ accentDeep }}; letter-spacing:.02em;">Smart Review</div>
+              </div>
+              <div style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:20px; margin-bottom:4px;">เราเลือกสิ่งที่คุณควรทบทวนให้แล้ว</div>
+              <div style="font-size:13px; color:{{ mutedColor }}; margin-bottom:16px;">{{ reviewItems.length }} รายการ · ~5 นาที</div>
+              <button class="el-tap" onclick="{{ startSession }}" style="width:100%; height:52px; border:none; border-radius:16px; background:{{ btnBg }}; color:{{ btnText }}; font-size:16px; font-weight:600;">เริ่มทบทวน</button>
+            </div>
+
+            <div style="border-radius:22px; padding:16px 18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }}; display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="{{ accentDeep }}" stroke="none"><path d="M12 2c1 3 5 5 5 10a5 5 0 01-10 0c0-1.5.5-2.5 1.3-3.6.4.9 1.2 1.4 1.2 1.4-.3-2 .5-4 2.5-7.8z"/></svg>
+                <div><div style="font-size:14px; font-weight:600;">{{ needsReviewCount }}</div><div style="font-size:10.5px; color:{{ mutedColor }};">ควรทบทวนตอนนี้</div></div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="{{ errorColor }}" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                <div><div style="font-size:14px; font-weight:600;">{{ mistakeCount }}</div><div style="font-size:10.5px; color:{{ mutedColor }};">เคยตอบผิด</div></div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="{{ mutedColor }}" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <div><div style="font-size:14px; font-weight:600;">{{ forgottenCount }}</div><div style="font-size:10.5px; color:{{ mutedColor }};">ไม่ได้เจอนาน</div></div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="{{ accentDeep }}" stroke="none"><path d="M12 2l3 6.5 7 .9-5 5 1.2 7-6.2-3.4L5.8 21.4 7 14.4l-5-5 7-.9L12 2Z"/></svg>
+                <div><div style="font-size:14px; font-weight:600;">{{ almostCount }}</div><div style="font-size:10.5px; color:{{ mutedColor }};">ใกล้จำได้แม่น</div></div>
+              </div>
+            </div>
+
+            <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+              <div style="font-size:12.5px; font-weight:600; color:{{ errorColor }}; margin-bottom:2px;">Mistake Book</div>
+              <div style="font-size:12px; color:{{ mutedColor }}; margin-bottom:12px;">กลับมาแก้สิ่งที่เคยผิด</div>
+              <div style="font-size:15px; font-weight:600; margin-bottom:8px;">{{ latestMistake.en }}</div>
+              <div style="font-size:12px; color:{{ mutedColor }}; margin-bottom:2px;">คำตอบของคุณ</div>
+              <div style="font-size:13.5px; margin-bottom:8px;">{{ latestMistake.yourAnswer }}</div>
+              <div style="font-size:12px; color:{{ mutedColor }}; margin-bottom:2px;">Key Pattern</div>
+              <div style="font-size:13.5px; margin-bottom:14px;">{{ latestMistake.pattern }}</div>
+              <button class="el-tap" onclick="{{ startSession }}" style="width:100%; height:46px; border:none; border-radius:14px; background:{{ btnSecondaryBg }}; color:{{ btnSecondaryText }}; font-size:14.5px; font-weight:600;">ทบทวนข้อผิดพลาด</button>
+            </div>
+
+            <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+              <div style="font-size:12.5px; font-weight:600; margin-bottom:12px;">Pattern Review</div>
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <sc-for list="{{ patterns }}" as="p" hint-placeholder-count="3">
+                  <div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span style="font-size:13.5px; font-weight:500;">{{ p.name }}</span><span style="font-size:12.5px; color:{{ mutedColor }};">{{ p.pct }}%</span></div>
+                    <div style="height:6px; background:{{ trackColor }}; border-radius:999px; overflow:hidden;"><div style="height:100%; width:{{ p.pct }}%; background:{{ accentColor }}; border-radius:999px;"></div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ noReviewItems }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; text-align:center; padding:40px 10px;">
+              <div style="font-size:40px;">🎉</div>
+              <div style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:20px;">ทบทวนครบแล้ว!</div>
+              <div style="font-size:13.5px; color:{{ mutedColor }};">ตอนนี้ไม่มีอะไรที่ต้องรีบทบทวน</div>
+              <button class="el-tap" onclick="{{ goPractice }}" style="height:48px; padding:0 22px; border:none; border-radius:14px; background:{{ btnBg }}; color:{{ btnText }}; font-size:14.5px; font-weight:600;">ฝึกเนื้อหาใหม่</button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- PROGRESS -->
+      <sc-if value="{{ isProgress }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding-bottom:100px;">
+          <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:26px; margin:0;">ความก้าวหน้า</h1>
+
+          <div style="border-radius:26px; padding:20px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+            <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:6px;">
+              <div style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:21px;">Level {{ level }}</div>
+              <div style="font-size:12.5px; color:{{ mutedColor }};">Everyday English</div>
+            </div>
+            <div style="height:10px; background:{{ trackColor }}; border-radius:999px; overflow:hidden; margin-bottom:14px;">
+              <div style="height:100%; width:78%; background:{{ accentColor }}; border-radius:999px;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="{{ accentDeep }}" stroke="none"><path d="M12 2c1 3 5 5 5 10a5 5 0 01-10 0c0-1.5.5-2.5 1.3-3.6.4.9 1.2 1.4 1.2 1.4-.3-2 .5-4 2.5-7.8z"/></svg>
+                <span style="font-size:12.5px; font-weight:600;">{{ streakDays }} วัน</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="{{ accentDeep }}" stroke-width="1.7"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                <span style="font-size:12.5px; font-weight:600;">{{ lessonsDone }} บท</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="{{ accentDeep }}" stroke="none"><path d="M12 2l3 6.5 7 .9-5 5 1.2 7-6.2-3.4L5.8 21.4 7 14.4l-5-5 7-.9L12 2Z"/></svg>
+                <span style="font-size:12.5px; font-weight:600;">{{ masteryPct }}%</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+            <div style="font-size:12.5px; font-weight:600; margin-bottom:12px;">ทักษะ</div>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <sc-for list="{{ skills }}" as="sk" hint-placeholder-count="5">
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span style="font-size:13.5px; font-weight:500;">{{ sk.name }}</span><span style="font-size:12.5px; color:{{ mutedColor }};">{{ sk.pct }}%</span></div>
+                  <div style="height:6px; background:{{ trackColor }}; border-radius:999px; overflow:hidden;"><div style="height:100%; width:{{ sk.pct }}%; background:{{ accentColor }}; border-radius:999px;"></div></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+            <div style="font-size:12.5px; font-weight:600; margin-bottom:12px;">ความเชี่ยวชาญตามหัวข้อ</div>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <sc-for list="{{ masteryTopics }}" as="t" hint-placeholder-count="4">
+                <div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span style="font-size:13.5px; font-weight:500;">{{ t.name }}</span><span style="font-size:12.5px; color:{{ mutedColor }};">{{ t.pct }}%</span></div>
+                  <div style="height:6px; background:{{ trackColor }}; border-radius:999px; overflow:hidden;"><div style="height:100%; width:{{ t.pct }}%; background:{{ accentColor }}; border-radius:999px;"></div></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+            <div style="font-size:12.5px; font-weight:600; margin-bottom:14px;">เส้นทางการเรียนรู้</div>
+            <div style="display:flex; flex-direction:column;">
+              <sc-for list="{{ journeyStages }}" as="j" hint-placeholder-count="7">
+                <div style="display:flex; align-items:flex-start; gap:10px;">
+                  <div style="display:flex; flex-direction:column; align-items:center;">
+                    <sc-if value="{{ j.done }}" hint-placeholder-val="{{ false }}">
+                      <div style="width:20px; height:20px; border-radius:50%; background:{{ accentColor }}; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="{{ btnText }}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ j.current }}" hint-placeholder-val="{{ false }}">
+                      <div style="width:20px; height:20px; border-radius:50%; border:2.5px solid {{ accentColor }}; flex-shrink:0;"></div>
+                    </sc-if>
+                    <sc-if value="{{ j.upcoming }}" hint-placeholder-val="{{ true }}">
+                      <div style="width:20px; height:20px; border-radius:50%; border:1.5px solid {{ borderColor }}; flex-shrink:0;"></div>
+                    </sc-if>
+                    <sc-if value="{{ j.notLast }}" hint-placeholder-val="{{ true }}">
+                      <div style="width:1.5px; flex:1; min-height:16px; background:{{ borderColor }};"></div>
+                    </sc-if>
+                  </div>
+                  <div style="font-size:13.5px; font-weight:{{ j.weight }}; color:{{ j.color }}; padding-bottom:16px;">{{ j.name }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="border-radius:22px; padding:16px 18px; background:{{ accentSoft }}; display:flex; align-items:center; gap:12px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{ accentDeep }}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg>
+            <div><div style="font-size:13px; font-weight:600; color:{{ accentDeep }};">Listening ดีขึ้น +12%</div><div style="font-size:11.5px; color:{{ mutedColor }};">เทียบกับสัปดาห์ก่อน</div></div>
+          </div>
+
+          <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+            <div style="font-size:12.5px; font-weight:600; margin-bottom:12px;">Achievements</div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <sc-for list="{{ achievements }}" as="a" hint-placeholder-count="3">
+                <div style="display:flex; align-items:center; gap:10px;">
+                  <div style="width:32px; height:32px; border-radius:10px; background:{{ accentSoft }}; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="{{ accentDeep }}" stroke="none"><path d="M12 2l3 6.5 7 .9-5 5 1.2 7-6.2-3.4L5.8 21.4 7 14.4l-5-5 7-.9L12 2Z"/></svg>
+                  </div>
+                  <div style="font-size:13.5px; font-weight:500;">{{ a.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+              <div style="font-size:12.5px; font-weight:600;">ประวัติการเรียน</div>
+              <div style="display:flex; gap:4px; background:{{ trackColor }}; border-radius:10px; padding:3px;">
+                <div class="el-tap" onclick="{{ setHistory7 }}" style="padding:5px 9px; border-radius:8px; font-size:11px; font-weight:600; background:{{ hist7Bg }}; color:{{ hist7Color }};">7 วัน</div>
+                <div class="el-tap" onclick="{{ setHistory30 }}" style="padding:5px 9px; border-radius:8px; font-size:11px; font-weight:600; background:{{ hist30Bg }}; color:{{ hist30Color }};">30 วัน</div>
+                <div class="el-tap" onclick="{{ setHistoryAll }}" style="padding:5px 9px; border-radius:8px; font-size:11px; font-weight:600; background:{{ histAllBg }}; color:{{ histAllColor }};">ทั้งหมด</div>
+              </div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <sc-for list="{{ historyEntries }}" as="h" hint-placeholder-count="3">
+                <div style="display:flex; justify-content:space-between;">
+                  <span style="font-size:13.5px; font-weight:500;">{{ h.day }}</span>
+                  <span style="font-size:12.5px; color:{{ mutedColor }};">{{ h.minutes }} นาที · ตอบถูก {{ h.correct }} ข้อ</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- SETTINGS -->
+      <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:18px; flex:1; padding-bottom:60px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="el-tap" onclick="{{ goHome }}" style="width:36px; height:36px; border-radius:50%; background:{{ surfaceColor }}; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{ textColor }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <h1 style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:24px; margin:0;">ตั้งค่า</h1>
+          </div>
+
+          <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+            <div style="font-size:12px; font-weight:700; color:{{ navyColor }}; text-transform:uppercase; letter-spacing:.05em; margin-bottom:12px;">การแสดงผล</div>
+            <div style="display:flex; gap:6px; background:{{ trackColor }}; border-radius:12px; padding:4px;">
+              <div class="el-tap" onclick="{{ setThemeLight }}" style="flex:1; text-align:center; padding:9px 0; border-radius:9px; font-size:13px; font-weight:600; background:{{ themeLightBg }}; color:{{ themeLightColor }};">สว่าง</div>
+              <div class="el-tap" onclick="{{ setThemeDark }}" style="flex:1; text-align:center; padding:9px 0; border-radius:9px; font-size:13px; font-weight:600; background:{{ themeDarkBg }}; color:{{ themeDarkColor }};">มืด</div>
+              <div class="el-tap" onclick="{{ setThemeSystem }}" style="flex:1; text-align:center; padding:9px 0; border-radius:9px; font-size:13px; font-weight:600; background:{{ themeSystemBg }}; color:{{ themeSystemColor }};">ระบบ</div>
+            </div>
+          </div>
+
+          <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }}; display:flex; flex-direction:column; gap:16px;">
+            <div style="font-size:12px; font-weight:700; color:{{ navyColor }}; text-transform:uppercase; letter-spacing:.05em;">การเรียนรู้</div>
+
+            <div>
+              <div style="font-size:14px; font-weight:500; margin-bottom:8px;">เป้าหมายต่อวัน</div>
+              <div style="display:flex; gap:6px;">
+                <sc-for list="{{ goalOptions }}" as="g" hint-placeholder-count="4">
+                  <div class="el-tap" onclick="{{ g.select }}" style="flex:1; text-align:center; padding:9px 0; border-radius:10px; font-size:12.5px; font-weight:600; border:1.3px solid {{ g.border }}; background:{{ g.bg }}; color:{{ g.color }};">{{ g.label }}</div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <div>
+                <div style="font-size:14px; font-weight:500;">แสดงคำอ่านออกเสียง</div>
+                <div style="font-size:11.5px; color:{{ mutedColor }};">Pronunciation ใต้ประโยค</div>
+              </div>
+              <div class="el-tap" onclick="{{ togglePronunciation }}" style="width:46px; height:27px; border-radius:999px; background:{{ pronToggleBg }}; position:relative; flex-shrink:0;">
+                <div style="width:21px; height:21px; border-radius:50%; background:#fff; position:absolute; top:3px; left:{{ pronToggleLeft }}px; box-shadow:0 1px 3px rgba(0,0,0,0.25); transition:left .15s;"></div>
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <div>
+                <div style="font-size:14px; font-weight:500;">เสียง</div>
+                <div style="font-size:11.5px; color:{{ mutedColor }};">เสียงตอบสนองในบทเรียน</div>
+              </div>
+              <div class="el-tap" onclick="{{ toggleSound }}" style="width:46px; height:27px; border-radius:999px; background:{{ soundToggleBg }}; position:relative; flex-shrink:0;">
+                <div style="width:21px; height:21px; border-radius:50%; background:#fff; position:absolute; top:3px; left:{{ soundToggleLeft }}px; box-shadow:0 1px 3px rgba(0,0,0,0.25); transition:left .15s;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:14px; font-weight:500; margin-bottom:8px;">ระดับความยาก</div>
+              <div style="display:flex; gap:6px;">
+                <sc-for list="{{ difficultyOptions }}" as="d" hint-placeholder-count="3">
+                  <div class="el-tap" onclick="{{ d.select }}" style="flex:1; text-align:center; padding:9px 0; border-radius:10px; font-size:12.5px; font-weight:600; border:1.3px solid {{ d.border }}; background:{{ d.bg }}; color:{{ d.color }};">{{ d.label }}</div>
+                </sc-for>
+              </div>
+              <div style="font-size:11px; color:{{ mutedColor }}; margin-top:8px; line-height:1.4;">ระบบจะยังปรับความยากอัตโนมัติตามผลการฝึกจริงของคุณด้วย</div>
+            </div>
+          </div>
+
+          <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+            <div style="font-size:12px; font-weight:700; color:{{ navyColor }}; text-transform:uppercase; letter-spacing:.05em; margin-bottom:12px;">การประเมิน</div>
+            <div style="font-size:11.5px; color:{{ mutedColor }}; margin-bottom:12px;">โปรไฟล์ทักษะปัจจุบัน</div>
+            <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:14px;">
+              <sc-for list="{{ skillRows }}" as="r" hint-placeholder-count="5">
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                  <span style="font-size:13.5px; font-weight:500;">{{ r.name }}</span>
+                  <div style="display:flex; align-items:center; gap:6px;">
+                    <span style="font-size:10px; color:{{ mutedColor }};">{{ r.confidence }}</span>
+                    <span style="font-size:12px; font-weight:600; color:{{ accentDeep }}; background:{{ accentSoft }}; padding:3px 9px; border-radius:999px;">{{ r.emoji }} {{ r.level }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="el-tap" onclick="{{ openRetakeConfirm }}" style="flex:1; height:46px; border:none; border-radius:14px; background:{{ btnSecondaryBg }}; color:{{ btnSecondaryText }}; font-size:13.5px; font-weight:600;">ทำแบบประเมินใหม่</button>
+              <button class="el-tap" onclick="{{ goChooseLevel }}" style="flex:1; height:46px; border:1.3px solid {{ navyColor }}; border-radius:14px; background:transparent; color:{{ navyColor }}; font-size:13.5px; font-weight:600;">เลือกระดับเอง</button>
+            </div>
+          </div>
+
+          <div style="border-radius:22px; padding:18px; background:{{ surfaceColor }}; box-shadow:{{ shadowCard }};">
+            <div style="font-size:12px; font-weight:700; color:{{ navyColor }}; text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px;">เกี่ยวกับ</div>
+            <div style="font-size:14px; font-weight:600; margin-bottom:2px;">English Life</div>
+            <div style="font-size:12px; color:{{ mutedColor }}; margin-bottom:10px;">เวอร์ชัน 1.0.0 (Prototype)</div>
+            <div style="font-size:12px; color:{{ mutedColor }};">Privacy · Terms · Help</div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- HINT SHEET -->
+    <sc-if value="{{ showBackdrop }}" hint-placeholder-val="{{ false }}">
+      <div class="el-tap" onclick="{{ closeSheets }}" style="position:absolute; inset:0; background:rgba(0,0,0,0.4); z-index:80;"></div>
+    </sc-if>
+    <div class="el-sheet" style="position:absolute; left:0; right:0; bottom:0; z-index:90; background:{{ surfaceColor }}; border-radius:28px 28px 0 0; padding:24px 22px calc(env(safe-area-inset-bottom,0px) + 24px); box-shadow:0 -10px 40px rgba(0,0,0,0.2); transform:{{ hintTransform }};">
+      <div style="width:36px; height:4px; border-radius:4px; background:{{ trackColor }}; margin:0 auto 18px;"></div>
+      <div style="font-size:13px; font-weight:600; color:{{ accentDeep }}; margin-bottom:8px;">คำใบ้</div>
+      <div style="font-size:15px; margin-bottom:4px;">ลองดูคำว่า <strong>"mean"</strong></div>
+      <div style="font-size:14px; color:{{ mutedColor }}; margin-bottom:20px;">หมายถึง "หมายความว่า"</div>
+      <button class="el-tap" onclick="{{ closeSheets }}" style="width:100%; height:52px; border:none; border-radius:16px; background:{{ btnBg }}; color:{{ btnText }}; font-size:16px; font-weight:600;">เข้าใจแล้ว</button>
+    </div>
+
+    <!-- RETAKE CONFIRM -->
+    <sc-if value="{{ retakeConfirm }}" hint-placeholder-val="{{ false }}">
+      <div class="el-tap" onclick="{{ closeRetakeConfirm }}" style="position:absolute; inset:0; background:rgba(0,0,0,0.4); z-index:80;"></div>
+      <div style="position:absolute; left:20px; right:20px; top:50%; transform:translateY(-50%); z-index:90; background:{{ surfaceColor }}; border-radius:22px; padding:22px; box-shadow:0 10px 40px rgba(0,0,0,0.25); text-align:center;">
+        <div style="font-size:15px; font-weight:600; margin-bottom:8px;">ทำแบบประเมินใหม่?</div>
+        <div style="font-size:13px; color:{{ mutedColor }}; line-height:1.5; margin-bottom:18px;">การทำแบบประเมินใหม่อาจปรับแนวทางการเรียนที่แนะนำ ประวัติการเรียนของคุณจะไม่ถูกลบ</div>
+        <div style="display:flex; gap:10px;">
+          <button class="el-tap" onclick="{{ closeRetakeConfirm }}" style="flex:1; height:46px; border:1.3px solid {{ borderColor }}; border-radius:14px; background:transparent; color:{{ textColor }}; font-size:14px; font-weight:600;">ยกเลิก</button>
+          <button class="el-tap" onclick="{{ confirmRetake }}" style="flex:1; height:46px; border:none; border-radius:14px; background:{{ btnBg }}; color:{{ btnText }}; font-size:14px; font-weight:600;">ยืนยัน</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- RETAKE CONFIRM -->
+    <sc-if value="{{ retakeConfirm }}" hint-placeholder-val="{{ false }}">
+      <div class="el-tap" onclick="{{ closeRetakeConfirm }}" style="position:absolute; inset:0; background:rgba(0,0,0,0.4); z-index:80;"></div>
+      <div style="position:absolute; left:20px; right:20px; top:50%; transform:translateY(-50%); z-index:90; background:{{ surfaceColor }}; border-radius:22px; padding:22px; box-shadow:0 10px 40px rgba(0,0,0,0.25); text-align:center;">
+        <div style="font-size:15px; font-weight:600; margin-bottom:8px;">ทำแบบประเมินใหม่?</div>
+        <div style="font-size:13px; color:{{ mutedColor }}; line-height:1.5; margin-bottom:18px;">การทำแบบประเมินใหม่อาจปรับแนวทางการเรียนที่แนะนำ ประวัติการเรียนของคุณจะไม่ถูกลบ</div>
+        <div style="display:flex; gap:10px;">
+          <button class="el-tap" onclick="{{ closeRetakeConfirm }}" style="flex:1; height:46px; border:1.3px solid {{ borderColor }}; border-radius:14px; background:transparent; color:{{ textColor }}; font-size:14px; font-weight:600;">ยกเลิก</button>
+          <button class="el-tap" onclick="{{ confirmRetake }}" style="flex:1; height:46px; border:none; border-radius:14px; background:{{ btnBg }}; color:{{ btnText }}; font-size:14px; font-weight:600;">ยืนยัน</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- FEEDBACK SHEET -->
+    <div class="el-sheet" style="position:absolute; left:0; right:0; bottom:0; z-index:90; background:{{ surfaceColor }}; border-radius:28px 28px 0 0; padding:28px 22px calc(env(safe-area-inset-bottom,0px) + 24px); box-shadow:0 -10px 40px rgba(0,0,0,0.2); transform:{{ feedbackTransform }}; text-align:center;">
+      <div style="width:36px; height:4px; border-radius:4px; background:{{ trackColor }}; margin:0 auto 16px;"></div>
+      <div style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:30px; color:{{ successColor }};">92%</div>
+      <div style="font-family:'Barlow Condensed',sans-serif; font-weight:600; font-size:19px; margin:4px 0 14px;">เกือบสมบูรณ์แบบ!</div>
+      <div style="text-align:left; background:{{ successSoft }}; border-radius:16px; padding:14px 16px; margin-bottom:20px;">
+        <div style="font-size:12px; color:{{ successColor }}; margin-bottom:2px;">คำสำคัญ</div>
+        <div style="font-size:14px; margin-bottom:10px;">"mean" = หมายถึง</div>
+        <div style="font-size:12px; color:{{ successColor }}; margin-bottom:2px;">ประโยคต้นฉบับ</div>
+        <div style="font-size:14px;">I didn't mean to hurt you.</div>
+      </div>
+      <button class="el-tap" onclick="{{ continueAfterFeedback }}" style="width:100%; height:52px; border:none; border-radius:16px; background:{{ btnBg }}; color:{{ btnText }}; font-size:16px; font-weight:600;">ต่อไป →</button>
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}">
+    <div style="position:absolute; left:0; right:0; bottom:0; z-index:40; display:flex; justify-content:space-around; align-items:center; padding:10px 6px calc(env(safe-area-inset-bottom,0px) + 14px); background:{{ navBg }}; backdrop-filter:blur(14px); border-top:1.5px solid {{ navyColor }}22;">
+      <div class="el-tap" style="display:flex; flex-direction:column; align-items:center; gap:3px; min-width:52px; color:{{ homeColor }};" onclick="{{ goHome }}">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V9.5"/></svg>
+        <span style="font-size:11px; font-weight:500;">หน้าหลัก</span>
+      </div>
+      <div class="el-tap" style="display:flex; flex-direction:column; align-items:center; gap:3px; min-width:52px; color:{{ practiceColor }};" onclick="{{ goPractice }}">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8 12h8M12 8v8"/></svg>
+        <span style="font-size:11px; font-weight:500;">ฝึกฝน</span>
+      </div>
+      <div class="el-tap" style="display:flex; flex-direction:column; align-items:center; gap:3px; min-width:52px; color:{{ reviewColor }};" onclick="{{ goReview }}">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/></svg>
+        <span style="font-size:11px; font-weight:500;">ทวน</span>
+      </div>
+      <div class="el-tap" style="display:flex; flex-direction:column; align-items:center; gap:3px; min-width:52px; color:{{ progressColor }};" onclick="{{ goProgress }}">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
+        <span style="font-size:11px; font-weight:500;">ความก้าวหน้า</span>
+      </div>
+    </div>
+    </sc-if>
+  </div>
+</x-import>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const SKILL_LABELS = { reading: 'Reading', listening: 'Listening', writing: 'Writing', understanding: 'Understanding', speaking: 'Speaking' };
+const SKILL_ORDER = ['reading', 'listening', 'writing', 'understanding', 'speaking'];
+const LEVEL_META = {
+  L1: { emoji: '🌱', name: 'First Words', desc: 'ทักทาย คำศัพท์พื้นฐาน ประโยคสั้น ๆ' },
+  L2: { emoji: '🌿', name: 'Everyday Basics', desc: 'สั่งอาหาร ถามทาง คุยกิจวัตรประจำวัน' },
+  L3: { emoji: '🌳', name: 'Natural Conversation', desc: 'สนทนาทั่วไปได้คล่องขึ้น ใช้ contractions' },
+  L4: { emoji: '🚀', name: 'Advanced', desc: 'เข้าใจ idioms, phrasal verbs, tone' },
+  L5: { emoji: '👑', name: 'Native-like Understanding', desc: 'เข้าใจ slang, sarcasm, บทสนทนาธรรมชาติ' },
+};
+const LEVEL_ORDER = ['L1', 'L2', 'L3', 'L4', 'L5'];
+const ASSESSMENT_QUESTIONS = [
+  { skill: 'reading', type: 'mc', prompt: '"I\'m not really into it." ประโยคนี้หมายความว่าอย่างไร?',
+    options: ['ฉันชอบมันมาก', 'ฉันไม่ค่อยชอบ / สนใจมัน', 'ฉันไม่เข้าใจมัน', 'ฉันอยากได้มัน'], correct: 1 },
+  { skill: 'listening', type: 'blank', note: '🔊 ต้นแบบนี้ยังไม่มีระบบเสียง — อ่านประโยคแทนการฟัง',
+    prompt: 'I\'m ____ call you later. (เติมคำที่ได้ยินบ่อยในภาษาพูด แปลว่า "going to")', accept: ['gonna'] },
+  { skill: 'writing', type: 'order', prompt: 'เรียงคำต่อไปนี้ให้เป็นประโยคที่ถูกต้อง',
+    words: ['you', 'Could', 'help', 'me'], correct: 'Could you help me' },
+  { skill: 'understanding', type: 'translate', prompt: 'แปลเป็นภาษาอังกฤษ: "ฉันไม่ได้ตั้งใจจะทำให้คุณโกรธ"',
+    accept: ['didn\'t mean to make you angry', 'didnt mean to make you angry', 'did not mean to make you angry'] },
+  { skill: 'speaking', type: 'situation', note: '🎤 ต้นแบบนี้ยังไม่รองรับไมโครโฟน — พิมพ์คำตอบแทนการพูด',
+    prompt: 'คุณอยู่ในร้านอาหาร พนักงานเสิร์ฟอาหารผิดโต๊ะ คุณจะพูดว่าอะไร?',
+    accept: ['this is not what i ordered', 'wrong order', 'excuse me this is', 'i think there is a mistake'] },
+];
+function normalizeText(s) {
+  return (s || '').toLowerCase().replace(/[.,!?'"]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+class Component extends DCLogic {
+  state = {
+    screen: 'home', assessmentView: 'intro', themeMode: 'light', answer: '', sheet: null,
+    dailyGoalMinutes: 8, showPronunciation: true, soundOn: true, difficulty: 'normal', historyFilter: '7d',
+    assessmentDone: false, skillLevels: null, skillSource: null,
+    quizIndex: 0, quizAnswer: null, quizPhase: 'answering', orderPicked: [], skillScoresLog: [], difficultyTier: 'medium', lastCorrect: null,
+    retakeConfirm: false,
+    chooseMode: 'all', chooseAllLevel: 'L3', chooseEachLevels: { reading: 'L3', listening: 'L3', writing: 'L3', understanding: 'L3', speaking: 'L3' },
+  };
+
+  componentDidMount() {
+    try {
+      const saved = JSON.parse(localStorage.getItem('el_assessment_v1') || 'null');
+      if (saved && saved.skillLevels) this.setState({ assessmentDone: true, skillLevels: saved.skillLevels, skillSource: saved.skillSource || null, screen: 'home' });
+      else this.setState({ assessmentDone: false, skillLevels: null, screen: 'assessment', assessmentView: 'intro' });
+    } catch (e) {}
+  }
+
+  setQuizAnswer(v) { this.setState({ quizAnswer: v }); }
+
+  toggleOrderWord(w) {
+    const picked = this.state.orderPicked;
+    this.setState({ orderPicked: picked.includes(w) ? picked.filter(x => x !== w) : [...picked, w] });
+  }
+
+  submitQuizAnswer() {
+    const q = ASSESSMENT_QUESTIONS[this.state.quizIndex];
+    let correct = false;
+    if (q.type === 'mc') correct = this.state.quizAnswer === q.correct;
+    else if (q.type === 'order') correct = normalizeText(this.state.orderPicked.join(' ')) === normalizeText(q.correct);
+    else correct = q.accept.some(a => normalizeText(this.state.quizAnswer).includes(normalizeText(a)));
+
+    const tier = this.state.difficultyTier;
+    const nextTier = correct ? (tier === 'easy' ? 'medium' : 'hard') : (tier === 'hard' ? 'medium' : 'easy');
+    this.setState({
+      quizPhase: 'feedback', lastCorrect: correct, difficultyTier: nextTier,
+      skillScoresLog: [...this.state.skillScoresLog, { skill: q.skill, correct, tier }],
+    });
+  }
+
+  computeSkillLevels() {
+    const levels = {};
+    SKILL_ORDER.forEach(sk => {
+      const entry = this.state.skillScoresLog.find(e => e.skill === sk);
+      if (!entry) { levels[sk] = 'L2'; return; }
+      if (entry.correct) levels[sk] = entry.tier === 'hard' ? 'L5' : entry.tier === 'medium' ? 'L4' : 'L3';
+      else levels[sk] = entry.tier === 'hard' ? 'L3' : entry.tier === 'medium' ? 'L2' : 'L1';
+    });
+    return levels;
+  }
+
+  nextQuizQuestion() {
+    if (this.state.quizIndex < ASSESSMENT_QUESTIONS.length - 1) {
+      this.setState({ quizIndex: this.state.quizIndex + 1, quizAnswer: null, orderPicked: [], quizPhase: 'answering' });
+    } else {
+      const skillLevels = this.computeSkillLevels();
+      const skillSource = {}; SKILL_ORDER.forEach(sk => skillSource[sk] = 'assessment');
+      try { localStorage.setItem('el_assessment_v1', JSON.stringify({ skillLevels, skillSource })); } catch (e) {}
+      this.setState({ skillLevels, skillSource, assessmentView: 'results' });
+    }
+  }
+
+  goAssessmentIntro() {
+    this.setState({
+      screen: 'assessment', assessmentView: 'intro', quizIndex: 0, quizAnswer: null,
+      orderPicked: [], quizPhase: 'answering', skillScoresLog: [], difficultyTier: 'medium', retakeConfirm: false,
+    });
+  }
+
+  finishAssessment() { this.setState({ assessmentDone: true, screen: 'home' }); }
+  startAssessmentQuiz() { this.setState({ assessmentView: 'quiz' }); }
+  goChooseLevel() { this.setState({ screen: 'assessment', assessmentView: 'choose' }); }
+  setChooseMode(m) { this.setState({ chooseMode: m }); }
+  setChooseAllLevel(lv) { this.setState({ chooseAllLevel: lv }); }
+  setChooseEachLevel(sk, lv) { this.setState({ chooseEachLevels: { ...this.state.chooseEachLevels, [sk]: lv } }); }
+  confirmChooseLevel() {
+    const levels = {}, source = {};
+    SKILL_ORDER.forEach(sk => {
+      levels[sk] = this.state.chooseMode === 'all' ? this.state.chooseAllLevel : this.state.chooseEachLevels[sk];
+      source[sk] = 'self';
+    });
+    try { localStorage.setItem('el_assessment_v1', JSON.stringify({ skillLevels: levels, skillSource: source })); } catch (e) {}
+    this.setState({ skillLevels: levels, skillSource: source, assessmentView: 'chosenConfirm' });
+  }
+
+  renderVals() {
+    const dark = this.state.themeMode === 'dark' ||
+      (this.state.themeMode === 'system' && typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const hour = new Date().getHours();
+    const greeting = hour < 11 ? 'สวัสดีตอนเช้า' : hour < 17 ? 'สวัสดีตอนบ่าย' : 'สวัสดีตอนเย็น';
+    const s = this.state.screen;
+
+    const theme = dark ? {
+      bg: '#10131F', surface: '#1B1F2D', text: '#F7F7FA', muted: '#A7A9B5', mutedFaint: '#747887',
+      accent: '#F58BAB', accentSoft: 'rgba(245,139,171,0.16)', accentDeep: '#F58BAB',
+      navy: '#343850', navySoft: '#3E4360', navyLight: '#F7F7FA',
+      border: '#2A2F42', track: '#343850', navBg: 'rgba(16,19,31,0.88)',
+      shadowCard: '0 10px 26px rgba(0,0,0,0.45)', shadowSm: '0 4px 12px rgba(0,0,0,0.4)',
+      btnBg: '#F58BAB', btnText: '#10131F',
+      btnSecondaryBg: '#343850', btnSecondaryText: '#F7F7FA',
+      success: '#4CAF7D', successSoft: 'rgba(76,175,125,0.18)',
+      warning: '#E7A83B', warningSoft: 'rgba(231,168,59,0.18)',
+      error: '#E28893', errorSoft: 'rgba(226,136,147,0.16)',
+      info: '#6B8FD6', infoSoft: 'rgba(107,143,214,0.18)',
+    } : {
+      bg: '#FFF9FB', surface: '#FFFFFF', text: '#20243A', muted: '#7A7E90', mutedFaint: '#9A9DAC',
+      accent: '#F47FA6', accentSoft: '#FCE7EF', accentDeep: '#D85F88',
+      navy: '#20243A', navySoft: '#343850', navyLight: '#E9EBF4',
+      border: '#E9EBF4', track: '#FCE7EF', navBg: 'rgba(255,255,255,0.88)',
+      shadowCard: '0 10px 26px rgba(32,36,58,0.08)', shadowSm: '0 4px 12px rgba(32,36,58,0.08)',
+      btnBg: '#F47FA6', btnText: '#FFFFFF',
+      btnSecondaryBg: '#20243A', btnSecondaryText: '#FFFFFF',
+      success: '#4CAF7D', successSoft: '#E8F6EF',
+      warning: '#E7A83B', warningSoft: '#FFF4DC',
+      error: '#D96C78', errorSoft: '#FCEBED',
+      info: '#6B8FD6', infoSoft: '#EDF2FF',
+    };
+
+    const weekDays = [
+      { label: 'จ', h: 36, color: theme.accent },
+      { label: 'อ', h: 52, color: theme.accent },
+      { label: 'พ', h: 22, color: theme.accent },
+      { label: 'พฤ', h: 60, color: theme.accent },
+      { label: 'ศ', h: 44, color: theme.accent },
+      { label: 'ส', h: 18, color: theme.track },
+      { label: 'อา', h: 12, color: theme.track },
+    ];
+
+    const missionItems = [
+      { label: 'ใหม่', done: true, notDone: false },
+      { label: 'ทบทวน', done: true, notDone: false },
+      { label: 'จุดผิด', done: false, notDone: true },
+      { label: 'ท้าทาย', done: false, notDone: true },
+    ];
+
+    const reviewItems = [
+      { en: 'I didn\'t mean to hurt you.', th: 'ฉันไม่ได้ตั้งใจทำให้คุณเจ็บ', due: 'วันนี้', category: 'mistake', yourAnswer: 'ฉันไม่ได้หมายถึงทำร้ายคุณ', pattern: 'didn\'t mean to + verb' },
+      { en: 'Could you slow down a bit?', th: 'ช่วยพูดช้าลงหน่อยได้ไหม', due: 'วันนี้', category: 'needs' },
+      { en: 'It\'s not a big deal.', th: 'มันไม่ใช่เรื่องใหญ่', due: 'วันนี้', category: 'needs' },
+      { en: 'I\'ll take care of it.', th: 'ฉันจะจัดการเอง', due: 'พรุ่งนี้', category: 'forgotten' },
+      { en: 'That makes sense.', th: 'เข้าใจแล้ว / มันสมเหตุสมผล', due: 'พรุ่งนี้', category: 'almost' },
+      { en: 'Would you mind helping me?', th: 'ช่วยฉันหน่อยได้ไหม', due: 'พรุ่งนี้', category: 'almost' },
+      { en: 'I used to live there.', th: 'ฉันเคยอาศัยอยู่ที่นั่น', due: 'พรุ่งนี้', category: 'forgotten' },
+    ];
+    const needsReviewCount = reviewItems.filter(i => i.category === 'needs').length;
+    const mistakeCount = reviewItems.filter(i => i.category === 'mistake').length;
+    const forgottenCount = reviewItems.filter(i => i.category === 'forgotten').length;
+    const almostCount = reviewItems.filter(i => i.category === 'almost').length;
+    const latestMistake = reviewItems.find(i => i.category === 'mistake') || reviewItems[0];
+
+    const patterns = [
+      { name: 'didn\'t + verb', pct: 78 },
+      { name: 'Could you...?', pct: 62 },
+      { name: 'be going to...', pct: 45 },
+    ];
+
+    const skills = [
+      { name: 'Reading', pct: 72 }, { name: 'Listening', pct: 54 }, { name: 'Writing', pct: 61 },
+      { name: 'Conversation', pct: 40 }, { name: 'Understanding', pct: 68 },
+    ];
+    const masteryTopics = [
+      { name: 'Daily Life', pct: 80 }, { name: 'Questions', pct: 67 },
+      { name: 'Past Tense', pct: 48 }, { name: 'Natural Conversation', pct: 31 },
+    ];
+    const journeyNames = ['Survival English', 'Everyday English', 'Natural Conversation', 'Social English', 'Work English', 'Advanced English', 'Native-Level'];
+    const journeyStages = journeyNames.map((name, i) => {
+      const done = i < 2, current = i === 2, upcoming = i > 2;
+      return {
+        name, done, current, upcoming, notLast: i < journeyNames.length - 1,
+        weight: current ? 600 : 400,
+        color: done ? theme.text : current ? theme.accentDeep : theme.muted,
+      };
+    });
+    const achievements = [
+      { label: '🏆 100 ประโยคแรก' }, { label: '🔥 ต่อเนื่อง 7 วัน' }, { label: '⭐ เชี่ยวชาญ 10 Pattern' },
+    ];
+    const inactiveNavColor = dark ? theme.muted : theme.navySoft;
+    const historyByFilter = {
+      '7d': [{ day: 'วันนี้', minutes: 8, correct: 12 }, { day: 'เมื่อวาน', minutes: 6, correct: 9 }],
+      '30d': [{ day: 'วันนี้', minutes: 8, correct: 12 }, { day: 'เมื่อวาน', minutes: 6, correct: 9 }, { day: '3 วันก่อน', minutes: 10, correct: 15 }, { day: '5 วันก่อน', minutes: 4, correct: 6 }],
+      all: [{ day: 'วันนี้', minutes: 8, correct: 12 }, { day: 'เมื่อวาน', minutes: 6, correct: 9 }, { day: '3 วันก่อน', minutes: 10, correct: 15 }, { day: '5 วันก่อน', minutes: 4, correct: 6 }, { day: '2 สัปดาห์ก่อน', minutes: 7, correct: 11 }, { day: '1 เดือนก่อน', minutes: 5, correct: 7 }],
+    };
+
+    const levelRank = { L1: 1, L2: 2, L3: 3, L4: 4, L5: 5 };
+    const skillLevels = this.state.skillLevels || {};
+    const skillSource = this.state.skillSource || {};
+    const skillRows = SKILL_ORDER.map(sk => {
+      const lv = skillLevels[sk] || 'L2';
+      const meta = LEVEL_META[lv];
+      const src = skillSource[sk];
+      const scoreEntry = this.state.skillScoresLog.find(e => e.skill === sk);
+      let confidence = 'Medium';
+      if (src === 'self') confidence = 'Low';
+      else if (scoreEntry) confidence = scoreEntry.tier === 'hard' ? 'High' : 'Medium';
+      return { skill: sk, name: SKILL_LABELS[sk], level: lv, emoji: meta.emoji, levelName: meta.name, confidence };
+    });
+    const sortedByRank = [...skillRows].sort((a, b) => levelRank[a.level] - levelRank[b.level]);
+    const weakest = sortedByRank[0];
+    const strongest = sortedByRank[sortedByRank.length - 1];
+    const focusSkills = sortedByRank.slice(0, 2).map(r => r.name).join(' + ');
+
+    const q = ASSESSMENT_QUESTIONS[this.state.quizIndex];
+    const mcOptions = q && q.type === 'mc' ? q.options.map((opt, idx) => ({
+      label: opt, select: () => this.setQuizAnswer(idx),
+      selected: this.state.quizAnswer === idx,
+      bg: this.state.quizAnswer === idx ? theme.accentSoft : theme.surface,
+      border: this.state.quizAnswer === idx ? theme.accent : theme.border,
+      color: this.state.quizAnswer === idx ? theme.accentDeep : theme.text,
+    })) : [];
+    const orderWordChips = q && q.type === 'order' ? q.words.map((w, idx) => ({
+      label: w, key: w + idx, toggle: () => this.toggleOrderWord(w),
+      picked: this.state.orderPicked.includes(w),
+    })) : [];
+
+    return {
+      dark, notDark: !dark,
+      isAssessment: s === 'assessment',
+      isAssessmentIntro: s === 'assessment' && this.state.assessmentView === 'intro',
+      isAssessmentQuiz: s === 'assessment' && this.state.assessmentView === 'quiz',
+      isAssessmentResults: s === 'assessment' && this.state.assessmentView === 'results',
+      isAssessmentChoose: s === 'assessment' && this.state.assessmentView === 'choose',
+      isAssessmentChosenConfirm: s === 'assessment' && this.state.assessmentView === 'chosenConfirm',
+      startAssessmentQuiz: () => this.startAssessmentQuiz(),
+      finishAssessment: () => this.finishAssessment(),
+      goAssessmentIntro: () => this.goAssessmentIntro(),
+      goChooseLevel: () => this.goChooseLevel(),
+      chooseModeAll: this.state.chooseMode === 'all', chooseModeEach: this.state.chooseMode === 'each',
+      setChooseModeAll: () => this.setChooseMode('all'), setChooseModeEach: () => this.setChooseMode('each'),
+      chooseModeAllBg: this.state.chooseMode === 'all' ? theme.surface : 'transparent', chooseModeAllColor: this.state.chooseMode === 'all' ? theme.accentDeep : theme.muted,
+      chooseModeEachBg: this.state.chooseMode === 'each' ? theme.surface : 'transparent', chooseModeEachColor: this.state.chooseMode === 'each' ? theme.accentDeep : theme.muted,
+      levelPickerOptions: LEVEL_ORDER.map(lv => ({
+        level: lv, emoji: LEVEL_META[lv].emoji, name: LEVEL_META[lv].name, desc: LEVEL_META[lv].desc,
+        select: () => this.setChooseAllLevel(lv), selected: this.state.chooseAllLevel === lv,
+        border: this.state.chooseAllLevel === lv ? theme.accent : theme.border,
+        bg: this.state.chooseAllLevel === lv ? theme.accentSoft : theme.surface,
+      })),
+      eachSkillRows: SKILL_ORDER.map(sk => ({
+        skill: sk, name: SKILL_LABELS[sk],
+        pills: LEVEL_ORDER.map(lv => ({
+          level: lv, select: () => this.setChooseEachLevel(sk, lv),
+          selected: this.state.chooseEachLevels[sk] === lv,
+          bg: this.state.chooseEachLevels[sk] === lv ? theme.accent : theme.track,
+          color: this.state.chooseEachLevels[sk] === lv ? theme.btnText : theme.text,
+        })),
+      })),
+      confirmChooseLevel: () => this.confirmChooseLevel(),
+      chosenLevelLabel: LEVEL_META[this.state.chooseAllLevel] ? LEVEL_META[this.state.chooseAllLevel].name : '',
+      quizIndex1: this.state.quizIndex + 1, quizTotal: ASSESSMENT_QUESTIONS.length,
+      quizProgressPct: Math.round(((this.state.quizIndex) / ASSESSMENT_QUESTIONS.length) * 100),
+      currentQuestion: q, quizNote: q && q.note, hasQuizNote: !!(q && q.note),
+      quizTypeMc: q && q.type === 'mc', quizTypeOrder: q && q.type === 'order',
+      quizTypeText: q && (q.type === 'blank' || q.type === 'translate' || q.type === 'situation'),
+      mcOptions, orderWordChips, orderPickedText: this.state.orderPicked.join(' '),
+      quizTextAnswer: typeof this.state.quizAnswer === 'string' ? this.state.quizAnswer : '',
+      onQuizTextChange: (e) => this.setQuizAnswer(e.target.value),
+      canSubmitQuiz: q && (q.type === 'mc' ? this.state.quizAnswer !== null :
+        q.type === 'order' ? this.state.orderPicked.length === q.words.length :
+        !!(this.state.quizAnswer && this.state.quizAnswer.trim())),
+      quizPhaseAnswering: this.state.quizPhase === 'answering', quizPhaseFeedback: this.state.quizPhase === 'feedback',
+      submitQuizAnswer: () => this.submitQuizAnswer(), nextQuizQuestion: () => this.nextQuizQuestion(),
+      lastCorrect: this.state.lastCorrect, lastIncorrect: this.state.quizPhase === 'feedback' && !this.state.lastCorrect,
+      skillRows, weakest, strongest, focusSkills,
+      retakeConfirm: this.state.retakeConfirm,
+      openRetakeConfirm: () => this.setState({ retakeConfirm: true }),
+      closeRetakeConfirm: () => this.setState({ retakeConfirm: false }),
+      confirmRetake: () => { this.setState({ retakeConfirm: false }); this.goAssessmentIntro(); },
+      bgColor: theme.bg, surfaceColor: theme.surface, textColor: theme.text, mutedColor: theme.muted,
+      accentColor: theme.accent, accentSoft: theme.accentSoft, accentDeep: theme.accentDeep,
+      navyColor: theme.navy, navySoftColor: theme.navySoft,
+      borderColor: theme.border, trackColor: theme.track, navBg: theme.navBg,
+      shadowCard: theme.shadowCard, shadowSm: theme.shadowSm, btnBg: theme.btnBg, btnText: theme.btnText,
+      btnSecondaryBg: theme.btnSecondaryBg, btnSecondaryText: theme.btnSecondaryText,
+      successColor: theme.success, successSoft: theme.successSoft,
+      warningColor: theme.warning, warningSoft: theme.warningSoft,
+      errorColor: theme.error, errorSoft: theme.errorSoft,
+      infoColor: theme.info, infoSoft: theme.infoSoft,
+      toggleDark: () => this.setState({ themeMode: dark ? 'light' : 'dark' }),
+
+      isHome: s === 'home', isPractice: s === 'practice', isSession: s === 'session', isReview: s === 'review', isProgress: s === 'progress', isSettings: s === 'settings',
+      showNav: s !== 'session' && s !== 'settings' && s !== 'assessment',
+      greeting, weekDays, reviewItems, missionItems,
+      missionDone: missionItems.filter(m => m.done).length, missionTotal: missionItems.length,
+      streakDays: 5, level: 4, goalDone: 5, goalTarget: this.state.dailyGoalMinutes,
+      continueLesson: { title: 'บทสนทนาในชีวิตประจำวัน', minutes: 3 },
+      lessonsDone: 24, masteryPct: 67,
+      hasReviewItems: reviewItems.length > 0, noReviewItems: reviewItems.length === 0,
+      needsReviewCount, mistakeCount, forgottenCount, almostCount, latestMistake, patterns,
+      skills, masteryTopics, journeyStages, achievements,
+      historyEntries: historyByFilter[this.state.historyFilter],
+      setHistory7: () => this.setState({ historyFilter: '7d' }),
+      setHistory30: () => this.setState({ historyFilter: '30d' }),
+      setHistoryAll: () => this.setState({ historyFilter: 'all' }),
+      hist7Bg: this.state.historyFilter === '7d' ? theme.surface : 'transparent', hist7Color: this.state.historyFilter === '7d' ? theme.accentDeep : theme.muted,
+      hist30Bg: this.state.historyFilter === '30d' ? theme.surface : 'transparent', hist30Color: this.state.historyFilter === '30d' ? theme.accentDeep : theme.muted,
+      histAllBg: this.state.historyFilter === 'all' ? theme.surface : 'transparent', histAllColor: this.state.historyFilter === 'all' ? theme.accentDeep : theme.muted,
+
+      setThemeLight: () => this.setState({ themeMode: 'light' }),
+      setThemeDark: () => this.setState({ themeMode: 'dark' }),
+      setThemeSystem: () => this.setState({ themeMode: 'system' }),
+      themeLightBg: this.state.themeMode === 'light' ? theme.surface : 'transparent', themeLightColor: this.state.themeMode === 'light' ? theme.accentDeep : theme.muted,
+      themeDarkBg: this.state.themeMode === 'dark' ? theme.surface : 'transparent', themeDarkColor: this.state.themeMode === 'dark' ? theme.accentDeep : theme.muted,
+      themeSystemBg: this.state.themeMode === 'system' ? theme.surface : 'transparent', themeSystemColor: this.state.themeMode === 'system' ? theme.accentDeep : theme.muted,
+
+      goalOptions: [5, 10, 15, 20].map(v => ({
+        label: v + ' นาที', select: () => this.setState({ dailyGoalMinutes: v }),
+        border: this.state.dailyGoalMinutes === v ? theme.accent : theme.border,
+        bg: this.state.dailyGoalMinutes === v ? theme.accentSoft : 'transparent',
+        color: this.state.dailyGoalMinutes === v ? theme.accentDeep : theme.text,
+      })),
+      difficultyOptions: [['beginner', 'ง่าย'], ['normal', 'ปกติ'], ['challenge', 'ท้าทาย']].map(([v, label]) => ({
+        label, select: () => this.setState({ difficulty: v }),
+        border: this.state.difficulty === v ? theme.accent : theme.border,
+        bg: this.state.difficulty === v ? theme.accentSoft : 'transparent',
+        color: this.state.difficulty === v ? theme.accentDeep : theme.text,
+      })),
+      togglePronunciation: () => this.setState({ showPronunciation: !this.state.showPronunciation }),
+      toggleSound: () => this.setState({ soundOn: !this.state.soundOn }),
+      pronToggleBg: this.state.showPronunciation ? theme.accent : theme.track,
+      pronToggleLeft: this.state.showPronunciation ? 22 : 3,
+      soundToggleBg: this.state.soundOn ? theme.accent : theme.track,
+      soundToggleLeft: this.state.soundOn ? 22 : 3,
+
+      answer: this.state.answer,
+      onAnswerChange: (e) => this.setState({ answer: e.target.value }),
+
+      goHome: () => this.setState({ screen: 'home', sheet: null }),
+      goPractice: () => this.setState({ screen: 'practice', sheet: null }),
+      goReview: () => this.setState({ screen: 'review', sheet: null }),
+      goProgress: () => this.setState({ screen: 'progress', sheet: null }),
+      goSettings: () => this.setState({ screen: 'settings', sheet: null }),
+      startSession: () => this.setState({ screen: 'session', sheet: null }),
+      backFromSession: () => this.setState({ screen: 'practice', sheet: null }),
+
+      homeColor: s === 'home' ? theme.accentDeep : inactiveNavColor,
+      practiceColor: (s === 'practice' || s === 'session') ? theme.accentDeep : inactiveNavColor,
+      reviewColor: s === 'review' ? theme.accentDeep : inactiveNavColor,
+      progressColor: s === 'progress' ? theme.accentDeep : inactiveNavColor,
+
+      openHint: () => this.setState({ sheet: 'hint' }),
+      checkAnswer: () => this.setState({ sheet: 'feedback' }),
+      closeSheets: () => this.setState({ sheet: null }),
+      continueAfterFeedback: () => this.setState({ sheet: null, answer: '' }),
+      showBackdrop: this.state.sheet !== null,
+      hintTransform: this.state.sheet === 'hint' ? 'translateY(0)' : 'translateY(100%)',
+      feedbackTransform: this.state.sheet === 'feedback' ? 'translateY(0)' : 'translateY(100%)',
+    };
+  }
+}
+</script>
+</body>
+</html>

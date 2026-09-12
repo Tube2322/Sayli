@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@400;600&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: "Barlow", system-ui, sans-serif;
+}
+
+.el-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.el-tap {
+  cursor: pointer;
+  transition: transform 0.12s, opacity 0.12s, background 0.15s, color 0.15s;
+}
+.el-tap:active {
+  transform: scale(0.96);
+}
+
+.el-sheet {
+  transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.el-input {
+  font-family: inherit;
+}
