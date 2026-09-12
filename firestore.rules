@@ -46,6 +46,18 @@ service cloud.firestore {
                     && request.resource.data.masteryPct >= 0 && request.resource.data.masteryPct <= 100;
         allow delete: if false;
       }
+
+      match /reviewSchedule/{questionId} {
+        allow read: if request.auth != null && request.auth.uid == uid;
+        allow create, update: if request.auth != null && request.auth.uid == uid
+                    && request.resource.data.keys().hasAll(['questionId','skill','masteryScore','reviewCount','consecutiveCorrect','intervalDays','lastReviewedAt','nextReviewAt'])
+                    && request.resource.data.skill in ['reading','listening','writing','speaking','understanding']
+                    && request.resource.data.masteryScore is int && request.resource.data.masteryScore >= 0 && request.resource.data.masteryScore <= 100
+                    && request.resource.data.reviewCount is int && request.resource.data.reviewCount >= 0
+                    && request.resource.data.consecutiveCorrect is int && request.resource.data.consecutiveCorrect >= 0
+                    && request.resource.data.intervalDays is int && request.resource.data.intervalDays >= 0;
+        allow delete: if false;
+      }
     }
   }
 }

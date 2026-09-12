@@ -17,6 +17,7 @@ import type { Skill, SkillProfile } from "@/lib/skill/types";
 import { computeLearningState } from "@/lib/practice/learningStateService";
 import type { LearningState, PracticeResult } from "@/lib/practice/types";
 import { getPatternMastery, recordPatternAttempt } from "@/lib/pattern/actions";
+import { computeReviewScheduleUpdate, type ReviewScheduleItem } from "@/lib/practice/reviewScheduleService";
 
 function practiceResultsCol(uid: string) {
   return collection(db, "users", uid, "practiceResults");
@@ -24,6 +25,43 @@ function practiceResultsCol(uid: string) {
 
 function learningStateRef(uid: string) {
   return doc(db, "users", uid, "learningState", "current");
+}
+
+function reviewScheduleCol(uid: string) {
+  return collection(db, "users", uid, "reviewSchedule");
+}
+
+function reviewScheduleFromDoc(id: string, data: Record<string, unknown>): ReviewScheduleItem {
+  return {
+    questionId: id,
+    skill: data.skill as Skill,
+    masteryScore: data.masteryScore as number,
+    reviewCount: data.reviewCount as number,
+    consecutiveCorrect: data.consecutiveCorrect as number,
+    intervalDays: data.intervalDays as number,
+    lastReviewedAt: (data.lastReviewedAt as number) ?? Date.now(),
+    nextReviewAt: (data.nextReviewAt as number) ?? Date.now(),
+  };
+}
+
+export async function getReviewSchedule(uid: string): Promise<ReviewScheduleItem[]> {
+  const snap = await getDocs(reviewScheduleCol(uid));
+  return snap.docs.map((d) => reviewScheduleFromDoc(d.id, d.data()));
+}
+
+/** Upserts one question's spaced-repetition schedule from a fresh attempt. */
+async function recordReviewScheduleAttempt(
+  uid: string,
+  questionId: string,
+  skill: Skill,
+  correct: boolean,
+  score: number
+): Promise<void> {
+  const ref = doc(reviewScheduleCol(uid), questionId);
+  const snap = await getDoc(ref);
+  const prev = snap.exists() ? reviewScheduleFromDoc(questionId, snap.data()) : null;
+  const next = computeReviewScheduleUpdate(prev, { questionId, skill, correct, score }, Date.now());
+  await setDoc(ref, next);
 }
 
 function resultFromDoc(id: string, data: Record<string, unknown>): PracticeResult {
@@ -72,8 +110,10 @@ export async function recordPracticeResult(
 ): Promise<void> {
   await addDoc(practiceResultsCol(uid), { ...input, createdAt: serverTimestamp() });
   await recordPatternAttempt(uid, input.pattern, input.correct);
+  await recordReviewScheduleAttempt(uid, input.questionId, input.skill, input.correct, input.score);
   const recentResults = await getRecentPracticeResults(uid, 20);
   const patternMastery = await getPatternMastery(uid);
-  const state = computeLearningState(skillProfiles, recentResults, difficultyPreference, patternMastery);
+  const reviewSchedule = await getReviewSchedule(uid);
+  const state = computeLearningState(skillProfiles, recentResults, difficultyPreference, patternMastery, reviewSchedule);
   await setDoc(learningStateRef(uid), { ...state, updatedAt: serverTimestamp() });
 }

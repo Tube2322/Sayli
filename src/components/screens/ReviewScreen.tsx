@@ -13,15 +13,17 @@ export function ReviewScreen() {
 
   const recentMistakes = learningState?.recentMistakes ?? [];
   const reviewPriority = learningState?.reviewPriority ?? [];
-  // "forgotten" (not-seen-in-a-while) and "almost mastered" require spaced
-  // repetition (Phase 6) — until that scheduling exists, these stay honestly 0.
-  const forgottenCount = learningState?.forgottenItems.length ?? 0;
-  const almostCount = learningState?.almostMastered.length ?? 0;
+  const forgottenItems = learningState?.forgottenItems ?? [];
+  const almostMasteredItems = learningState?.almostMastered ?? [];
+  const forgottenCount = forgottenItems.length;
+  const almostCount = almostMasteredItems.length;
   const needsReviewCount = reviewPriority.length;
   const mistakeCount = recentMistakes.length;
   const latestMistake = recentMistakes[0];
   const latestMistakeMeta = latestMistake ? QUESTION_BANK[latestMistake.questionId] : undefined;
-  const hasReviewItems = needsReviewCount > 0 || mistakeCount > 0;
+  const dueQuestionId = forgottenItems[0];
+  const dueMeta = dueQuestionId ? QUESTION_BANK[dueQuestionId] : undefined;
+  const hasReviewItems = needsReviewCount > 0 || mistakeCount > 0 || forgottenCount > 0;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16, flex: 1, paddingBottom: 100 }}>
@@ -48,6 +50,15 @@ export function ReviewScreen() {
             <Stat theme={theme} icon={<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={theme.muted} strokeWidth="1.8"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></svg>} value={forgottenCount} label="ไม่ได้เจอนาน" />
             <Stat theme={theme} icon={<svg width="15" height="15" viewBox="0 0 24 24" fill={theme.accentDeep} stroke="none"><path d="M12 2l3 6.5 7 .9-5 5 1.2 7-6.2-3.4L5.8 21.4 7 14.4l-5-5 7-.9L12 2Z" /></svg>} value={almostCount} label="ใกล้จำได้แม่น" />
           </div>
+
+          {dueQuestionId && (
+            <div style={{ borderRadius: 22, padding: 18, background: theme.surface, boxShadow: theme.shadowCard }}>
+              <div style={{ fontSize: 12.5, fontWeight: 600, color: theme.accentDeep, marginBottom: 2 }}>ถึงเวลาทบทวน</div>
+              <div style={{ fontSize: 12, color: theme.muted, marginBottom: 12 }}>ไม่ได้เจอประโยคนี้มาสักพักแล้ว</div>
+              <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 14 }}>{dueMeta?.en ?? dueQuestionId}</div>
+              <button className="el-tap" onClick={go} style={{ width: "100%", height: 46, border: "none", borderRadius: 14, background: theme.btnSecondaryBg, color: theme.btnSecondaryText, fontSize: 14.5, fontWeight: 600 }}>ทบทวนตอนนี้</button>
+            </div>
+          )}
 
           {latestMistake && (
             <div style={{ borderRadius: 22, padding: 18, background: theme.surface, boxShadow: theme.shadowCard }}>

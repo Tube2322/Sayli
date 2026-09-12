@@ -3,6 +3,7 @@ import { SKILL_LEVELS, type DifficultyTier, type Skill, type SkillProfile } from
 import { getDifficultyDistribution } from "@/lib/skill/difficultyService";
 import type { LearningState, PracticeResult } from "@/lib/practice/types";
 import type { PatternMastery } from "@/lib/pattern/types";
+import { isAlmostMastered, isForgotten, isRecentlyLearned, type ReviewScheduleItem } from "@/lib/practice/reviewScheduleService";
 
 const WEAK_PATTERN_THRESHOLD = 60;
 
@@ -13,7 +14,8 @@ export function computeLearningState(
   skillProfiles: Record<Skill, SkillProfile>,
   recentResults: PracticeResult[],
   difficultyPreference: DifficultyPreference,
-  patternMastery: PatternMastery[]
+  patternMastery: PatternMastery[],
+  reviewSchedule: ReviewScheduleItem[]
 ): Omit<LearningState, "updatedAt"> {
   const skills = Object.values(skillProfiles);
   const ranked = [...skills].sort((a, b) => SKILL_LEVELS.indexOf(a.level) - SKILL_LEVELS.indexOf(b.level));
@@ -46,6 +48,14 @@ export function computeLearningState(
     .sort((a, b) => a.masteryPct - b.masteryPct)
     .map((p) => p.pattern);
 
+  const now = Date.now();
+  const forgottenItems = reviewSchedule
+    .filter((r) => isForgotten(r, now))
+    .sort((a, b) => a.nextReviewAt - b.nextReviewAt)
+    .map((r) => r.questionId);
+  const almostMastered = reviewSchedule.filter((r) => isAlmostMastered(r, now)).map((r) => r.questionId);
+  const recentlyLearned = reviewSchedule.filter((r) => isRecentlyLearned(r, now)).map((r) => r.questionId);
+
   return {
     weakSkills,
     strongSkills,
@@ -53,8 +63,8 @@ export function computeLearningState(
     recentMistakes,
     reviewPriority,
     recommendedDifficulty,
-    recentlyLearned: [], // populated once lesson-completion tracking exists
-    almostMastered: [], // populated once mastery scoring (Phase 5/6) exists
-    forgottenItems: [], // populated once spaced repetition (Phase 6) exists
+    recentlyLearned,
+    almostMastered,
+    forgottenItems,
   };
 }
