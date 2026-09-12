@@ -8,6 +8,7 @@ export type PracticeResult = {
   difficulty: DifficultyTier;
   answer: string;
   referenceAnswer: string;
+  pattern: string; // grammar pattern this question exercises, e.g. "didn't mean to + verb"
   evaluation: "correct" | "incorrect";
   score: number; // 0-100
   correct: boolean;

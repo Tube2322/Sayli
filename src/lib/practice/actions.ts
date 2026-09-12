@@ -16,6 +16,7 @@ import type { DifficultyPreference } from "@/lib/profile/types";
 import type { Skill, SkillProfile } from "@/lib/skill/types";
 import { computeLearningState } from "@/lib/practice/learningStateService";
 import type { LearningState, PracticeResult } from "@/lib/practice/types";
+import { getPatternMastery, recordPatternAttempt } from "@/lib/pattern/actions";
 
 function practiceResultsCol(uid: string) {
   return collection(db, "users", uid, "practiceResults");
@@ -35,6 +36,7 @@ function resultFromDoc(id: string, data: Record<string, unknown>): PracticeResul
     difficulty: data.difficulty as PracticeResult["difficulty"],
     answer: data.answer as string,
     referenceAnswer: data.referenceAnswer as string,
+    pattern: (data.pattern as string) ?? "",
     evaluation: data.evaluation as PracticeResult["evaluation"],
     score: data.score as number,
     correct: Boolean(data.correct),
@@ -69,7 +71,9 @@ export async function recordPracticeResult(
   difficultyPreference: DifficultyPreference
 ): Promise<void> {
   await addDoc(practiceResultsCol(uid), { ...input, createdAt: serverTimestamp() });
+  await recordPatternAttempt(uid, input.pattern, input.correct);
   const recentResults = await getRecentPracticeResults(uid, 20);
-  const state = computeLearningState(skillProfiles, recentResults, difficultyPreference);
+  const patternMastery = await getPatternMastery(uid);
+  const state = computeLearningState(skillProfiles, recentResults, difficultyPreference, patternMastery);
   await setDoc(learningStateRef(uid), { ...state, updatedAt: serverTimestamp() });
 }

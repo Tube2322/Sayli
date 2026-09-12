@@ -23,7 +23,7 @@ service cloud.firestore {
         allow read: if request.auth != null && request.auth.uid == uid;
         // Practice results are an append-only history — never edited or removed.
         allow create: if request.auth != null && request.auth.uid == uid
-                    && request.resource.data.keys().hasAll(['sessionId','questionId','skill','difficulty','answer','referenceAnswer','evaluation','score','correct','responseTimeMs','createdAt'])
+                    && request.resource.data.keys().hasAll(['sessionId','questionId','skill','difficulty','answer','referenceAnswer','pattern','evaluation','score','correct','responseTimeMs','createdAt'])
                     && request.resource.data.skill in ['reading','listening','writing','speaking','understanding']
                     && request.resource.data.difficulty in ['easy','medium','hard']
                     && request.resource.data.evaluation in ['correct','incorrect'];
@@ -33,6 +33,17 @@ service cloud.firestore {
       match /learningState/{docId} {
         allow read: if request.auth != null && request.auth.uid == uid;
         allow create, update: if request.auth != null && request.auth.uid == uid && docId == 'current';
+        allow delete: if false;
+      }
+
+      match /patternMastery/{patternId} {
+        allow read: if request.auth != null && request.auth.uid == uid;
+        allow create, update: if request.auth != null && request.auth.uid == uid
+                    && request.resource.data.keys().hasAll(['pattern','attempts','correct','masteryPct'])
+                    && request.resource.data.attempts is int && request.resource.data.attempts >= 0
+                    && request.resource.data.correct is int && request.resource.data.correct >= 0
+                    && request.resource.data.masteryPct is int
+                    && request.resource.data.masteryPct >= 0 && request.resource.data.masteryPct <= 100;
         allow delete: if false;
       }
     }

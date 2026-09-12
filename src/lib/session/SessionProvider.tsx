@@ -22,6 +22,8 @@ import { aggregateOverallLevel, representativeScoreForLevel } from "@/lib/skill/
 import type { Skill, SkillLevel, SkillProfile } from "@/lib/skill/types";
 import { getLearningState, recordPracticeResult } from "@/lib/practice/actions";
 import type { LearningState, PracticeResult } from "@/lib/practice/types";
+import { getPatternMastery } from "@/lib/pattern/actions";
+import type { PatternMastery } from "@/lib/pattern/types";
 
 type SessionStatus = "loading" | "authenticated" | "unauthenticated";
 
@@ -32,6 +34,7 @@ type SessionContextValue = {
   profileError: string | null;
   skillProfiles: Record<Skill, SkillProfile> | null;
   learningState: LearningState | null;
+  patternMastery: PatternMastery[];
   reloadProfile: () => void;
   setDifficultyPreference: (value: DifficultyPreference) => Promise<void>;
   completeAssessment: () => Promise<void>;
@@ -50,6 +53,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [profileError, setProfileError] = useState<string | null>(null);
   const [skillProfiles, setSkillProfiles] = useState<Record<Skill, SkillProfile> | null>(null);
   const [learningState, setLearningState] = useState<LearningState | null>(null);
+  const [patternMastery, setPatternMastery] = useState<PatternMastery[]>([]);
   const [reloadToken, setReloadToken] = useState(0);
 
   useEffect(() => {
@@ -60,6 +64,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         setProfile(null);
         setSkillProfiles(null);
         setLearningState(null);
+        setPatternMastery([]);
       }
     });
     return unsubscribe;
@@ -89,6 +94,13 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       })
       .catch(() => {
         // No practice yet is a normal, expected state — not an error to surface.
+      });
+    getPatternMastery(user.uid)
+      .then((pm) => {
+        if (!cancelled) setPatternMastery(pm);
+      })
+      .catch(() => {
+        // No pattern attempts yet is a normal, expected state — not an error to surface.
       });
     return () => {
       cancelled = true;
@@ -165,8 +177,9 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       if (!user || !skillProfiles || !profile) return false;
       try {
         await recordPracticeResult(user.uid, input, skillProfiles, profile.difficultyPreference);
-        const ls = await getLearningState(user.uid);
+        const [ls, pm] = await Promise.all([getLearningState(user.uid), getPatternMastery(user.uid)]);
         setLearningState(ls);
+        setPatternMastery(pm);
         return true;
       } catch (err) {
         setProfileError(err instanceof Error ? err.message : "บันทึกผลการฝึกไม่สำเร็จ ลองใหม่อีกครั้ง");
@@ -189,6 +202,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         profileError,
         skillProfiles,
         learningState,
+        patternMastery,
         reloadProfile,
         setDifficultyPreference,
         completeAssessment,

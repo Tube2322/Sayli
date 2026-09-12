@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { useAppState } from "@/lib/appState";
 import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
-import { normalizeText } from "@/lib/sampleData";
+import { evaluateAnswer } from "@/lib/practice/evaluationService";
+import { QUESTION_BANK } from "@/lib/practice/questionBank";
 
 // This prototype still has exactly one practice exercise (no content bank
 // yet — see PracticeScreen). It's tagged honestly as an "understanding"
@@ -13,6 +14,7 @@ import { normalizeText } from "@/lib/sampleData";
 // Results/Learning State have a real skill to attach to.
 const QUESTION_ID = "session-demo-didnt-mean-to-hurt-you";
 const REFERENCE_ANSWER = "ฉันไม่ได้ตั้งใจทำให้คุณเจ็บ";
+const PATTERN = QUESTION_BANK[QUESTION_ID].pattern;
 const ACCEPTABLE_ANSWERS = [
   "ฉันไม่ได้ตั้งใจทำให้คุณเจ็บ",
   "ฉันไม่ได้ตั้งใจจะทำร้ายคุณ",
@@ -30,8 +32,7 @@ export function SessionScreen() {
   const startedAtRef = useRef<number>(Date.now());
 
   const onCheckAnswer = async () => {
-    const correct = ACCEPTABLE_ANSWERS.some((a) => normalizeText(answer).includes(normalizeText(a)));
-    const score = correct ? 90 : 40;
+    const { correct, score } = evaluateAnswer(answer, ACCEPTABLE_ANSWERS);
     setChecking(true);
     await submitPracticeResult({
       sessionId: sessionIdRef.current,
@@ -40,6 +41,7 @@ export function SessionScreen() {
       difficulty: "medium",
       answer,
       referenceAnswer: REFERENCE_ANSWER,
+      pattern: PATTERN,
       evaluation: correct ? "correct" : "incorrect",
       score,
       correct,

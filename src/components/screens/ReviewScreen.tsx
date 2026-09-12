@@ -1,20 +1,27 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
-import { patterns, reviewItems } from "@/lib/sampleData";
+import { QUESTION_BANK } from "@/lib/practice/questionBank";
 
 export function ReviewScreen() {
   const { theme } = useTheme();
   const router = useRouter();
+  const { learningState, patternMastery } = useSession();
   const go = () => router.push("/session");
 
-  const needsReviewCount = reviewItems.filter((i) => i.category === "needs").length;
-  const mistakeCount = reviewItems.filter((i) => i.category === "mistake").length;
-  const forgottenCount = reviewItems.filter((i) => i.category === "forgotten").length;
-  const almostCount = reviewItems.filter((i) => i.category === "almost").length;
-  const latestMistake = reviewItems.find((i) => i.category === "mistake") || reviewItems[0];
-  const hasReviewItems = reviewItems.length > 0;
+  const recentMistakes = learningState?.recentMistakes ?? [];
+  const reviewPriority = learningState?.reviewPriority ?? [];
+  // "forgotten" (not-seen-in-a-while) and "almost mastered" require spaced
+  // repetition (Phase 6) — until that scheduling exists, these stay honestly 0.
+  const forgottenCount = learningState?.forgottenItems.length ?? 0;
+  const almostCount = learningState?.almostMastered.length ?? 0;
+  const needsReviewCount = reviewPriority.length;
+  const mistakeCount = recentMistakes.length;
+  const latestMistake = recentMistakes[0];
+  const latestMistakeMeta = latestMistake ? QUESTION_BANK[latestMistake.questionId] : undefined;
+  const hasReviewItems = needsReviewCount > 0 || mistakeCount > 0;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16, flex: 1, paddingBottom: 100 }}>
@@ -31,7 +38,7 @@ export function ReviewScreen() {
               <div style={{ fontSize: 12, fontWeight: 600, color: theme.accentDeep, letterSpacing: ".02em" }}>Smart Review</div>
             </div>
             <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 20, marginBottom: 4 }}>เราเลือกสิ่งที่คุณควรทบทวนให้แล้ว</div>
-            <div style={{ fontSize: 13, color: theme.muted, marginBottom: 16 }}>{reviewItems.length} รายการ · ~5 นาที</div>
+            <div style={{ fontSize: 13, color: theme.muted, marginBottom: 16 }}>{needsReviewCount + mistakeCount} รายการ</div>
             <button className="el-tap" onClick={go} style={{ width: "100%", height: 52, border: "none", borderRadius: 16, background: theme.btnBg, color: theme.btnText, fontSize: 16, fontWeight: 600 }}>เริ่มทบทวน</button>
           </div>
 
@@ -42,33 +49,37 @@ export function ReviewScreen() {
             <Stat theme={theme} icon={<svg width="15" height="15" viewBox="0 0 24 24" fill={theme.accentDeep} stroke="none"><path d="M12 2l3 6.5 7 .9-5 5 1.2 7-6.2-3.4L5.8 21.4 7 14.4l-5-5 7-.9L12 2Z" /></svg>} value={almostCount} label="ใกล้จำได้แม่น" />
           </div>
 
-          <div style={{ borderRadius: 22, padding: 18, background: theme.surface, boxShadow: theme.shadowCard }}>
-            <div style={{ fontSize: 12.5, fontWeight: 600, color: theme.error, marginBottom: 2 }}>Mistake Book</div>
-            <div style={{ fontSize: 12, color: theme.muted, marginBottom: 12 }}>กลับมาแก้สิ่งที่เคยผิด</div>
-            <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 8 }}>{latestMistake.en}</div>
-            <div style={{ fontSize: 12, color: theme.muted, marginBottom: 2 }}>คำตอบของคุณ</div>
-            <div style={{ fontSize: 13.5, marginBottom: 8 }}>{latestMistake.yourAnswer ?? "-"}</div>
-            <div style={{ fontSize: 12, color: theme.muted, marginBottom: 2 }}>Key Pattern</div>
-            <div style={{ fontSize: 13.5, marginBottom: 14 }}>{latestMistake.pattern ?? "-"}</div>
-            <button className="el-tap" onClick={go} style={{ width: "100%", height: 46, border: "none", borderRadius: 14, background: theme.btnSecondaryBg, color: theme.btnSecondaryText, fontSize: 14.5, fontWeight: 600 }}>ทบทวนข้อผิดพลาด</button>
-          </div>
+          {latestMistake && (
+            <div style={{ borderRadius: 22, padding: 18, background: theme.surface, boxShadow: theme.shadowCard }}>
+              <div style={{ fontSize: 12.5, fontWeight: 600, color: theme.error, marginBottom: 2 }}>Mistake Book</div>
+              <div style={{ fontSize: 12, color: theme.muted, marginBottom: 12 }}>กลับมาแก้สิ่งที่เคยผิด</div>
+              <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 8 }}>{latestMistakeMeta?.en ?? latestMistake.referenceAnswer}</div>
+              <div style={{ fontSize: 12, color: theme.muted, marginBottom: 2 }}>คำตอบของคุณ</div>
+              <div style={{ fontSize: 13.5, marginBottom: 8 }}>{latestMistake.answer || "-"}</div>
+              <div style={{ fontSize: 12, color: theme.muted, marginBottom: 2 }}>Key Pattern</div>
+              <div style={{ fontSize: 13.5, marginBottom: 14 }}>{latestMistakeMeta?.pattern ?? "-"}</div>
+              <button className="el-tap" onClick={go} style={{ width: "100%", height: 46, border: "none", borderRadius: 14, background: theme.btnSecondaryBg, color: theme.btnSecondaryText, fontSize: 14.5, fontWeight: 600 }}>ทบทวนข้อผิดพลาด</button>
+            </div>
+          )}
 
+          {patternMastery.length > 0 && (
           <div style={{ borderRadius: 22, padding: 18, background: theme.surface, boxShadow: theme.shadowCard }}>
             <div style={{ fontSize: 12.5, fontWeight: 600, marginBottom: 12 }}>Pattern Review</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              {patterns.map((p) => (
-                <div key={p.name}>
+              {patternMastery.map((p) => (
+                <div key={p.patternId}>
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
-                    <span style={{ fontSize: 13.5, fontWeight: 500 }}>{p.name}</span>
-                    <span style={{ fontSize: 12.5, color: theme.muted }}>{p.pct}%</span>
+                    <span style={{ fontSize: 13.5, fontWeight: 500 }}>{p.pattern}</span>
+                    <span style={{ fontSize: 12.5, color: theme.muted }}>{p.masteryPct}%</span>
                   </div>
                   <div style={{ height: 6, background: theme.track, borderRadius: 999, overflow: "hidden" }}>
-                    <div style={{ height: "100%", width: `${p.pct}%`, background: theme.accent, borderRadius: 999 }} />
+                    <div style={{ height: "100%", width: `${p.masteryPct}%`, background: theme.accent, borderRadius: 999 }} />
                   </div>
                 </div>
               ))}
             </div>
           </div>
+          )}
         </>
       ) : (
         <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 14, textAlign: "center", padding: "40px 10px" }}>
