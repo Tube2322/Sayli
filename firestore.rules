@@ -7,6 +7,17 @@ service cloud.firestore {
                     && request.resource.data.keys().hasAll(['displayName','createdAt','updatedAt','assessmentCompleted','difficultyPreference'])
                     && request.resource.data.difficultyPreference in ['beginner','normal','challenge'];
       allow delete: if false;
+
+      match /skillProfiles/{skill} {
+        allow read: if request.auth != null && request.auth.uid == uid;
+        allow create, update: if request.auth != null && request.auth.uid == uid
+                    && skill in ['reading','listening','writing','speaking','understanding']
+                    && request.resource.data.level in ['L1','L2','L3','L4','L5']
+                    && request.resource.data.confidence in ['low','medium','high']
+                    && request.resource.data.source in ['assessment','self_selected','adaptive_update','default']
+                    && request.resource.data.startingDifficulty in ['easy','medium','hard'];
+        allow delete: if false;
+      }
     }
   }
 }
