@@ -52,7 +52,10 @@ type AppState = {
   skillLevels: Record<string, string> | null;
   lastPracticeCorrect: boolean | null;
   lastPracticeScore: number | null;
+  activeQuestion: ActiveQuestion | null;
 };
+
+export type ActiveQuestion = { en: string; pattern: string; hintWord: string; hintMeaning: string };
 
 type AppStateContextValue = AppState & {
   toggleDark: () => void;
@@ -61,8 +64,8 @@ type AppStateContextValue = AppState & {
   setDailyGoalMinutes: (v: number) => void;
   togglePronunciation: () => void;
   toggleSound: () => void;
-  openHint: () => void;
-  checkAnswer: (correct: boolean, score: number) => void;
+  openHint: (question?: ActiveQuestion) => void;
+  checkAnswer: (correct: boolean, score: number, question?: ActiveQuestion) => void;
   closeSheets: () => void;
   continueAfterFeedback: () => void;
   setHistoryFilter: (f: "7d" | "30d" | "all") => void;
@@ -107,6 +110,7 @@ const initialState: AppState = {
   skillLevels: null,
   lastPracticeCorrect: null,
   lastPracticeScore: null,
+  activeQuestion: null,
 };
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
@@ -138,8 +142,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       setDailyGoalMinutes: (v) => patch({ dailyGoalMinutes: v }),
       togglePronunciation: () => patch({ showPronunciation: !state.showPronunciation }),
       toggleSound: () => patch({ soundOn: !state.soundOn }),
-      openHint: () => patch({ sheet: "hint" }),
-      checkAnswer: (correct, score) => patch({ sheet: "feedback", lastPracticeCorrect: correct, lastPracticeScore: score }),
+      openHint: (question) => patch({ sheet: "hint", activeQuestion: question ?? state.activeQuestion }),
+      checkAnswer: (correct, score, question) =>
+        patch({ sheet: "feedback", lastPracticeCorrect: correct, lastPracticeScore: score, activeQuestion: question ?? state.activeQuestion }),
       closeSheets: () => patch({ sheet: null }),
       continueAfterFeedback: () => patch({ sheet: null, answer: "" }),
       setHistoryFilter: (f) => patch({ historyFilter: f }),

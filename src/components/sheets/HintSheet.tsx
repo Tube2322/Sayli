@@ -5,7 +5,7 @@ import { useTheme } from "@/lib/useTheme";
 
 export function HintSheet() {
   const { theme } = useTheme();
-  const { sheet, closeSheets } = useAppState();
+  const { sheet, closeSheets, activeQuestion } = useAppState();
   const open = sheet === "hint";
 
   return (
@@ -30,9 +30,9 @@ export function HintSheet() {
         <div style={{ width: 36, height: 4, borderRadius: 4, background: theme.track, margin: "0 auto 18px" }} />
         <div style={{ fontSize: 13, fontWeight: 600, color: theme.accentDeep, marginBottom: 8 }}>คำใบ้</div>
         <div style={{ fontSize: 15, marginBottom: 4 }}>
-          ลองดูคำว่า <strong>&quot;mean&quot;</strong>
+          ลองดูคำว่า <strong>&quot;{activeQuestion?.hintWord ?? "-"}&quot;</strong>
         </div>
-        <div style={{ fontSize: 14, color: theme.muted, marginBottom: 20 }}>หมายถึง &quot;หมายความว่า&quot;</div>
+        <div style={{ fontSize: 14, color: theme.muted, marginBottom: 20 }}>{activeQuestion?.hintMeaning ?? ""}</div>
         <button
           className="el-tap"
           onClick={closeSheets}

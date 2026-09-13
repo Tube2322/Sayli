@@ -11,6 +11,8 @@ export type QuestionMeta = {
   pattern: string;
   referenceAnswer: string;
   acceptableAnswers: string[];
+  hintWord: string;
+  hintMeaning: string;
 };
 
 export const QUESTION_BANK: Record<string, QuestionMeta> = {
@@ -26,5 +28,7 @@ export const QUESTION_BANK: Record<string, QuestionMeta> = {
       "ฉันไม่ได้ตั้งใจทำร้ายคุณ",
       "ฉันไม่ได้หมายความจะทำร้ายคุณ",
     ],
+    hintWord: "mean",
+    hintMeaning: "หมายถึง \"หมายความว่า\"",
   },
 };

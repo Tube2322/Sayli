@@ -1,12 +1,18 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
+import { SKILL_LABELS } from "@/lib/sampleData";
 
 export function PracticeScreen() {
   const { theme } = useTheme();
   const router = useRouter();
+  const { learningState } = useSession();
   const go = () => router.push("/session");
+
+  const weakSkills = learningState?.weakSkills ?? [];
+  const recommendedLabel = weakSkills.map((sk) => SKILL_LABELS[sk]).join(" + ");
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 18, flex: 1, paddingBottom: 100 }}>
@@ -15,12 +21,14 @@ export function PracticeScreen() {
         <div style={{ fontSize: 13.5, color: theme.muted }}>เลือกวิธีที่คุณอยากฝึก</div>
       </div>
 
-      <div style={{ borderRadius: 20, padding: "14px 16px", background: `${theme.navy}11`, display: "flex", alignItems: "center", gap: 10 }}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={theme.navy} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M9.5 2a2.5 2.5 0 00-2.3 3.5A3 3 0 006 8v1a3 3 0 00-1 5.8V16a3 3 0 003 3h.5a2.5 2.5 0 004.9 0H14v-3.2" /><path d="M14.5 2a2.5 2.5 0 012.3 3.5A3 3 0 0118 8v1a3 3 0 011 5.8V16a3 3 0 01-3 3" /></svg>
-        <div style={{ fontSize: 12.5, color: theme.navy }}>
-          แนะนำจากผลประเมิน: <strong>Reading + Speaking</strong>
+      {weakSkills.length > 0 && (
+        <div style={{ borderRadius: 20, padding: "14px 16px", background: `${theme.navy}11`, display: "flex", alignItems: "center", gap: 10 }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={theme.navy} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M9.5 2a2.5 2.5 0 00-2.3 3.5A3 3 0 006 8v1a3 3 0 00-1 5.8V16a3 3 0 003 3h.5a2.5 2.5 0 004.9 0H14v-3.2" /><path d="M14.5 2a2.5 2.5 0 012.3 3.5A3 3 0 0118 8v1a3 3 0 011 5.8V16a3 3 0 01-3 3" /></svg>
+          <div style={{ fontSize: 12.5, color: theme.navy }}>
+            แนะนำจากผลประเมิน: <strong>{recommendedLabel}</strong>
+          </div>
         </div>
-      </div>
+      )}
 
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".06em", color: theme.navy, textTransform: "uppercase" }}>ฝึกหลัก</div>

@@ -7,6 +7,7 @@ import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
 import { evaluateAnswer } from "@/lib/practice/evaluationService";
 import { QUESTION_BANK } from "@/lib/practice/questionBank";
+import { SKILL_LABELS } from "@/lib/sampleData";
 import { contextFromLearningState, selectNextQuestion } from "@/lib/practice/adaptiveEngine";
 
 export function SessionScreen() {
@@ -45,7 +46,17 @@ export function SessionScreen() {
       responseTimeMs: Date.now() - startedAtRef.current,
     });
     setChecking(false);
-    checkAnswer(correct, score);
+    checkAnswer(correct, score, {
+      en: question.en,
+      pattern: question.pattern,
+      hintWord: question.hintWord,
+      hintMeaning: question.hintMeaning,
+    });
+  };
+
+  const onOpenHint = () => {
+    if (!question) return;
+    openHint({ en: question.en, pattern: question.pattern, hintWord: question.hintWord, hintMeaning: question.hintMeaning });
   };
 
   return (
@@ -59,12 +70,8 @@ export function SessionScreen() {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={theme.text} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
         </div>
         <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 12, color: theme.muted }}>บทที่ 12</div>
-          <div style={{ height: 6, background: theme.track, borderRadius: 999, overflow: "hidden", marginTop: 4 }}>
-            <div style={{ height: "100%", width: "65%", background: theme.accent, borderRadius: 999 }} />
-          </div>
+          <div style={{ fontSize: 12, color: theme.muted }}>{question ? SKILL_LABELS[question.skill] : ""}</div>
         </div>
-        <div style={{ fontSize: 13, fontWeight: 600, color: theme.accentDeep }}>72 XP</div>
       </div>
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 22, textAlign: "center" }}>
@@ -91,7 +98,7 @@ export function SessionScreen() {
         <div style={{ display: "flex", gap: 10 }}>
           <button
             className="el-tap"
-            onClick={openHint}
+            onClick={onOpenHint}
             style={{ height: 52, padding: "0 18px", borderRadius: 16, border: `1.5px solid ${theme.border}`, background: theme.surface, color: theme.accentDeep, fontSize: 15, fontWeight: 500, display: "flex", alignItems: "center", gap: 6 }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={theme.accentDeep} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.4.9 1 .9 1.7v.4h5.2v-.4c0-.7.3-1.3.9-1.7A6 6 0 0012 3z" /></svg>

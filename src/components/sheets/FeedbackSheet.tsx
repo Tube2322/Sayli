@@ -5,7 +5,7 @@ import { useTheme } from "@/lib/useTheme";
 
 export function FeedbackSheet() {
   const { theme } = useTheme();
-  const { sheet, continueAfterFeedback, lastPracticeCorrect, lastPracticeScore } = useAppState();
+  const { sheet, continueAfterFeedback, lastPracticeCorrect, lastPracticeScore, activeQuestion } = useAppState();
   const open = sheet === "feedback";
   const correct = lastPracticeCorrect ?? false;
   const score = lastPracticeScore ?? 0;
@@ -31,9 +31,9 @@ export function FeedbackSheet() {
       </div>
       <div style={{ textAlign: "left", background: resultSoft, borderRadius: 16, padding: "14px 16px", marginBottom: 20 }}>
         <div style={{ fontSize: 12, color: resultColor, marginBottom: 2 }}>คำสำคัญ</div>
-        <div style={{ fontSize: 14, marginBottom: 10 }}>&quot;mean&quot; = หมายถึง</div>
+        <div style={{ fontSize: 14, marginBottom: 10 }}>&quot;{activeQuestion?.hintWord ?? "-"}&quot; = {activeQuestion?.hintMeaning ?? "-"}</div>
         <div style={{ fontSize: 12, color: resultColor, marginBottom: 2 }}>ประโยคต้นฉบับ</div>
-        <div style={{ fontSize: 14 }}>I didn&apos;t mean to hurt you.</div>
+        <div style={{ fontSize: 14 }}>{activeQuestion?.en ?? "-"}</div>
       </div>
       <button
         className="el-tap"
