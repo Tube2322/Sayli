@@ -124,6 +124,12 @@ export default function RegisterPage() {
           {loading ? "กำลังสมัคร..." : "สมัครสมาชิก"}
         </button>
       </form>
+      <div style={{ fontSize: 11.5, color: theme.mutedFaint, textAlign: "center", marginTop: 14, lineHeight: 1.6 }}>
+        การสมัครถือว่ายอมรับ{" "}
+        <Link href="/terms" style={{ color: theme.muted, textDecoration: "underline" }}>ข้อตกลงการใช้งาน</Link>{" "}
+        และ{" "}
+        <Link href="/privacy" style={{ color: theme.muted, textDecoration: "underline" }}>นโยบายความเป็นส่วนตัว</Link>
+      </div>
     </AuthPageShell>
   );
 }

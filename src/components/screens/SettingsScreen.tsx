@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
 import { useAppState, LEVEL_META, SKILL_LABELS, SKILL_ORDER } from "@/lib/appState";
 import { useSession } from "@/lib/session/SessionProvider";
@@ -174,7 +175,11 @@ export function SettingsScreen() {
         <SectionLabel theme={theme}>เกี่ยวกับ</SectionLabel>
         <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 2 }}>English Life</div>
         <div style={{ fontSize: 12, color: theme.muted, marginBottom: 10 }}>เวอร์ชัน 1.0.0</div>
-        <div style={{ fontSize: 12, color: theme.muted, marginBottom: 10 }}>Privacy · Terms · Help</div>
+        <div style={{ fontSize: 12, color: theme.accentDeep, marginBottom: 10, display: "flex", gap: 6 }}>
+          <Link href="/privacy" style={{ color: "inherit", textDecoration: "underline" }}>ความเป็นส่วนตัว</Link>
+          <span style={{ color: theme.muted }}>·</span>
+          <Link href="/terms" style={{ color: "inherit", textDecoration: "underline" }}>ข้อตกลงการใช้งาน</Link>
+        </div>
         <div style={{ fontSize: 11, color: theme.muted, lineHeight: 1.5 }}>
           ประโยคฝึกบางส่วนใช้ข้อมูลจาก{" "}
           <a href="https://tatoeba.org" target="_blank" rel="noreferrer" style={{ color: theme.accentDeep }}>

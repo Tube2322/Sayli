@@ -93,6 +93,10 @@ export default function LoginPage() {
           style={{ width: "100%", height: 56, borderRadius: 18, border: `1.5px solid ${theme.border}`, background: theme.bg, color: theme.text, padding: "0 18px", fontSize: 16, boxSizing: "border-box", fontFamily: "inherit" }}
         />
 
+        <Link href="/forgot-password" style={{ fontSize: 12.5, color: theme.muted, textAlign: "right", textDecoration: "none", marginTop: -4 }}>
+          ลืมรหัสผ่าน?
+        </Link>
+
         {error && (
           <div style={{ fontSize: 13, color: theme.error, background: theme.errorSoft, borderRadius: 12, padding: "10px 12px" }}>
             {error}
