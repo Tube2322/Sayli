@@ -1,28 +1,45 @@
 "use client";
 
 import { useAppState } from "@/lib/appState";
+import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
-import { achievements, historyByFilter, journeyNames, masteryTopics, skills } from "@/lib/sampleData";
-
-// Sample values ported verbatim from the prototype — Progress's real data
-// pipeline (skill/practice history aggregation) is out of scope for Phase 1.
-const level = 4;
-const streakDays = 5;
-const lessonsDone = 24;
-const masteryPct = 67;
+import { LEVEL_META, LEVEL_ORDER, SKILL_LABELS } from "@/lib/sampleData";
+import { SKILL_LEVELS } from "@/lib/skill/types";
+import {
+  computeAchievements,
+  computeHistoryByFilter,
+  computeMostImprovedSkill,
+  computeStreakDays,
+  masteryPctOverall,
+  overallLevelNumber,
+} from "@/lib/progress/progressService";
 
 export function ProgressScreen() {
   const { theme } = useTheme();
   const { historyFilter, setHistoryFilter } = useAppState();
-  const historyEntries = historyByFilter[historyFilter];
+  const { profile, skillProfiles, recentPracticeResults, patternMastery } = useSession();
 
-  const journeyStages = journeyNames.map((name, i) => ({
-    name,
-    done: i < 2,
-    current: i === 2,
-    notLast: i < journeyNames.length - 1,
-    weight: i === 2 ? 600 : 400,
-    color: i < 2 ? theme.text : i === 2 ? theme.accentDeep : theme.muted,
+  const level = overallLevelNumber(profile?.overallLevel ?? null);
+  const streakDays = computeStreakDays(recentPracticeResults);
+  const lessonsDone = recentPracticeResults.length;
+  const masteryPct = masteryPctOverall(skillProfiles);
+  const historyEntries = computeHistoryByFilter(recentPracticeResults, historyFilter);
+  const achievements = computeAchievements(recentPracticeResults, streakDays, patternMastery);
+  const improvedSkill = computeMostImprovedSkill(recentPracticeResults);
+
+  const skillRows = skillProfiles
+    ? Object.values(skillProfiles).map((p) => ({ name: SKILL_LABELS[p.skill], pct: p.score }))
+    : [];
+  const patternRows = patternMastery.map((p) => ({ name: p.pattern, pct: p.masteryPct }));
+
+  const currentLevelIdx = profile?.overallLevel ? SKILL_LEVELS.indexOf(profile.overallLevel as (typeof SKILL_LEVELS)[number]) : 0;
+  const journeyStages = LEVEL_ORDER.map((lv, i) => ({
+    name: LEVEL_META[lv].name,
+    done: i < currentLevelIdx,
+    current: i === currentLevelIdx,
+    notLast: i < LEVEL_ORDER.length - 1,
+    weight: i === currentLevelIdx ? 600 : 400,
+    color: i < currentLevelIdx ? theme.text : i === currentLevelIdx ? theme.accentDeep : theme.muted,
   }));
 
   return (
@@ -32,10 +49,10 @@ export function ProgressScreen() {
       <div style={{ borderRadius: 26, padding: 20, background: theme.surface, boxShadow: theme.shadowCard }}>
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
           <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 21 }}>Level {level}</div>
-          <div style={{ fontSize: 12.5, color: theme.muted }}>Everyday English</div>
+          <div style={{ fontSize: 12.5, color: theme.muted }}>{LEVEL_META[profile?.overallLevel ?? "L2"]?.name ?? ""}</div>
         </div>
         <div style={{ height: 10, background: theme.track, borderRadius: 999, overflow: "hidden", marginBottom: 14 }}>
-          <div style={{ height: "100%", width: "78%", background: theme.accent, borderRadius: 999 }} />
+          <div style={{ height: "100%", width: `${masteryPct}%`, background: theme.accent, borderRadius: 999 }} />
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -44,7 +61,7 @@ export function ProgressScreen() {
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={theme.accentDeep} strokeWidth="1.7"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" /></svg>
-            <span style={{ fontSize: 12.5, fontWeight: 600 }}>{lessonsDone} บท</span>
+            <span style={{ fontSize: 12.5, fontWeight: 600 }}>{lessonsDone} ครั้ง</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill={theme.accentDeep} stroke="none"><path d="M12 2l3 6.5 7 .9-5 5 1.2 7-6.2-3.4L5.8 21.4 7 14.4l-5-5 7-.9L12 2Z" /></svg>
@@ -53,8 +70,8 @@ export function ProgressScreen() {
         </div>
       </div>
 
-      <ProgressCard theme={theme} title="ทักษะ" rows={skills} />
-      <ProgressCard theme={theme} title="ความเชี่ยวชาญตามหัวข้อ" rows={masteryTopics} />
+      {skillRows.length > 0 && <ProgressCard theme={theme} title="ทักษะ" rows={skillRows} />}
+      {patternRows.length > 0 && <ProgressCard theme={theme} title="Pattern Mastery" rows={patternRows} />}
 
       <div style={{ borderRadius: 22, padding: 18, background: theme.surface, boxShadow: theme.shadowCard }}>
         <div style={{ fontSize: 12.5, fontWeight: 600, marginBottom: 14 }}>เส้นทางการเรียนรู้</div>
@@ -79,27 +96,31 @@ export function ProgressScreen() {
         </div>
       </div>
 
-      <div style={{ borderRadius: 22, padding: "16px 18px", background: theme.accentSoft, display: "flex", alignItems: "center", gap: 12 }}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={theme.accentDeep} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 17l6-6 4 4 8-8" /><path d="M17 7h4v4" /></svg>
-        <div>
-          <div style={{ fontSize: 13, fontWeight: 600, color: theme.accentDeep }}>Listening ดีขึ้น +12%</div>
-          <div style={{ fontSize: 11.5, color: theme.muted }}>เทียบกับสัปดาห์ก่อน</div>
+      {improvedSkill && (
+        <div style={{ borderRadius: 22, padding: "16px 18px", background: theme.accentSoft, display: "flex", alignItems: "center", gap: 12 }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={theme.accentDeep} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 17l6-6 4 4 8-8" /><path d="M17 7h4v4" /></svg>
+          <div>
+            <div style={{ fontSize: 13, fontWeight: 600, color: theme.accentDeep }}>{SKILL_LABELS[improvedSkill.skill]} ดีขึ้น +{improvedSkill.deltaPct}%</div>
+            <div style={{ fontSize: 11.5, color: theme.muted }}>เทียบกับช่วงก่อนหน้า</div>
+          </div>
         </div>
-      </div>
+      )}
 
-      <div style={{ borderRadius: 22, padding: 18, background: theme.surface, boxShadow: theme.shadowCard }}>
-        <div style={{ fontSize: 12.5, fontWeight: 600, marginBottom: 12 }}>Achievements</div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {achievements.map((a) => (
-            <div key={a.label} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ width: 32, height: 32, borderRadius: 10, background: theme.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill={theme.accentDeep} stroke="none"><path d="M12 2l3 6.5 7 .9-5 5 1.2 7-6.2-3.4L5.8 21.4 7 14.4l-5-5 7-.9L12 2Z" /></svg>
+      {achievements.length > 0 && (
+        <div style={{ borderRadius: 22, padding: 18, background: theme.surface, boxShadow: theme.shadowCard }}>
+          <div style={{ fontSize: 12.5, fontWeight: 600, marginBottom: 12 }}>Achievements</div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {achievements.map((a) => (
+              <div key={a.label} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <div style={{ width: 32, height: 32, borderRadius: 10, background: theme.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill={theme.accentDeep} stroke="none"><path d="M12 2l3 6.5 7 .9-5 5 1.2 7-6.2-3.4L5.8 21.4 7 14.4l-5-5 7-.9L12 2Z" /></svg>
+                </div>
+                <div style={{ fontSize: 13.5, fontWeight: 500 }}>{a.label}</div>
               </div>
-              <div style={{ fontSize: 13.5, fontWeight: 500 }}>{a.label}</div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <div style={{ borderRadius: 22, padding: 18, background: theme.surface, boxShadow: theme.shadowCard }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
@@ -117,14 +138,18 @@ export function ProgressScreen() {
             ))}
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          {historyEntries.map((h) => (
-            <div key={h.day} style={{ display: "flex", justifyContent: "space-between" }}>
-              <span style={{ fontSize: 13.5, fontWeight: 500 }}>{h.day}</span>
-              <span style={{ fontSize: 12.5, color: theme.muted }}>{h.minutes} นาที · ตอบถูก {h.correct} ข้อ</span>
-            </div>
-          ))}
-        </div>
+        {historyEntries.length > 0 ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            {historyEntries.map((h) => (
+              <div key={h.day} style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 13.5, fontWeight: 500 }}>{h.day}</span>
+                <span style={{ fontSize: 12.5, color: theme.muted }}>{h.minutes} นาที · ตอบถูก {h.correct} ข้อ</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div style={{ fontSize: 13, color: theme.muted }}>ยังไม่มีประวัติการฝึกในช่วงนี้</div>
+        )}
       </div>
     </div>
   );

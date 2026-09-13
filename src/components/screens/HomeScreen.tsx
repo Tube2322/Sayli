@@ -1,26 +1,45 @@
 "use client";
 
+import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useAppState } from "@/lib/appState";
+import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
-import { missionItems } from "@/lib/sampleData";
-
-// Sample values ported verbatim from the prototype (Home/Progress real stats
-// pipeline is out of scope for Phase 1 — see plan §"What does NOT change").
-const streakDays = 5;
-const level = 4;
-const goalDone = 5;
-const continueLesson = { title: "บทสนทนาในชีวิตประจำวัน", minutes: 3 };
+import { SKILL_LABELS } from "@/lib/sampleData";
+import { QUESTION_BANK } from "@/lib/practice/questionBank";
+import { contextFromLearningState, selectNextQuestion } from "@/lib/practice/adaptiveEngine";
+import { computeStreakDays, computeTodayMinutes, computeTodayMissions, overallLevelNumber } from "@/lib/progress/progressService";
 
 export function HomeScreen() {
   const { theme } = useTheme();
   const { dailyGoalMinutes } = useAppState();
+  const { profile, learningState, recentPracticeResults, reviewSchedule } = useSession();
   const router = useRouter();
 
   const hour = new Date().getHours();
   const greeting = hour < 11 ? "สวัสดีตอนเช้า" : hour < 17 ? "สวัสดีตอนบ่าย" : "สวัสดีตอนเย็น";
+
+  const streakDays = computeStreakDays(recentPracticeResults);
+  const level = overallLevelNumber(profile?.overallLevel ?? null);
+  const goalDone = computeTodayMinutes(recentPracticeResults);
+  const missions = computeTodayMissions(recentPracticeResults, reviewSchedule);
+  const missionItems = [
+    { label: "ใหม่", done: missions.practicedNew },
+    { label: "ทบทวน", done: missions.reviewed },
+    { label: "จุดผิด", done: missions.fixedMistake },
+    { label: "ท้าทาย", done: missions.challenged },
+  ];
   const missionDone = missionItems.filter((m) => m.done).length;
-  const missionTotal = missionItems.length;
+
+  const nextQuestionId = useMemo(
+    () => selectNextQuestion(QUESTION_BANK, contextFromLearningState(learningState)),
+    [learningState]
+  );
+  const nextQuestion = nextQuestionId ? QUESTION_BANK[nextQuestionId] : null;
+
+  const latestMistake = learningState?.recentMistakes[0];
+  const latestMistakePattern = latestMistake ? QUESTION_BANK[latestMistake.questionId]?.pattern : undefined;
+  const weakSkill = learningState?.weakSkills[0];
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 14, flex: 1, paddingBottom: 100 }}>
@@ -49,8 +68,10 @@ export function HomeScreen() {
         style={{ borderRadius: 26, padding: 20, background: theme.accentSoft, boxShadow: theme.shadowCard }}
       >
         <div style={{ fontSize: 12, letterSpacing: ".04em", color: theme.accentDeep, marginBottom: 6, fontWeight: 600 }}>กำลังเรียนต่อ</div>
-        <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 22, marginBottom: 4 }}>{continueLesson.title}</div>
-        <div style={{ fontSize: 13, color: theme.muted, marginBottom: 16 }}>{continueLesson.minutes} นาที</div>
+        <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 22, marginBottom: 4 }}>
+          {nextQuestion ? SKILL_LABELS[nextQuestion.skill] : "ฝึกฝน"}
+        </div>
+        <div style={{ fontSize: 13, color: theme.muted, marginBottom: 16 }}>{nextQuestion?.pattern ?? "เริ่มฝึกข้อแรกของคุณ"}</div>
         <button
           className="el-tap"
           onClick={() => router.push("/session")}
@@ -64,7 +85,7 @@ export function HomeScreen() {
       <div style={{ borderRadius: 24, padding: "18px 20px", background: theme.surface, boxShadow: theme.shadowCard }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
           <div style={{ fontSize: 13, fontWeight: 600 }}>ภารกิจวันนี้</div>
-          <div style={{ fontSize: 12, fontWeight: 600, color: theme.accentDeep, background: theme.accentSoft, padding: "3px 10px", borderRadius: 999 }}>{missionDone}/{missionTotal}</div>
+          <div style={{ fontSize: 12, fontWeight: 600, color: theme.accentDeep, background: theme.accentSoft, padding: "3px 10px", borderRadius: 999 }}>{missionDone}/{missionItems.length}</div>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           {missionItems.map((m) => (
@@ -82,38 +103,42 @@ export function HomeScreen() {
         </div>
       </div>
 
-      <div style={{ borderRadius: 24, padding: "16px 18px", background: theme.surface, boxShadow: theme.shadowCard, display: "flex", alignItems: "flex-start", gap: 12 }}>
-        <div style={{ width: 34, height: 34, borderRadius: 12, background: theme.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={theme.accentDeep} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.4.9 1 .9 1.7v.4h5.2v-.4c0-.7.3-1.3.9-1.7A6 6 0 0012 3z" /></svg>
+      {latestMistake && (
+        <div style={{ borderRadius: 24, padding: "16px 18px", background: theme.surface, boxShadow: theme.shadowCard, display: "flex", alignItems: "flex-start", gap: 12 }}>
+          <div style={{ width: 34, height: 34, borderRadius: 12, background: theme.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={theme.accentDeep} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.4.9 1 .9 1.7v.4h5.2v-.4c0-.7.3-1.3.9-1.7A6 6 0 0012 3z" /></svg>
+          </div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: theme.accentDeep, marginBottom: 2 }}>น่าทบทวน</div>
+            <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 2 }}>{latestMistakePattern ?? "-"}</div>
+            <div style={{ fontSize: 12.5, color: theme.muted }}>คุณพลาดจุดนี้เมื่อเร็ว ๆ นี้</div>
+          </div>
+          <button
+            className="el-tap"
+            onClick={() => router.push("/review")}
+            style={{ height: 34, padding: "0 14px", borderRadius: 10, border: `1.3px solid ${theme.accent}`, background: "transparent", color: theme.accentDeep, fontSize: 12.5, fontWeight: 600, flexShrink: 0, alignSelf: "center" }}
+          >
+            ทบทวน
+          </button>
         </div>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 11, fontWeight: 600, color: theme.accentDeep, marginBottom: 2 }}>น่าทบทวน</div>
-          <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 2 }}>&quot;didn&apos;t&quot; + กริยา</div>
-          <div style={{ fontSize: 12.5, color: theme.muted }}>คุณพลาดจุดนี้เมื่อเร็ว ๆ นี้</div>
-        </div>
-        <button
-          className="el-tap"
-          onClick={() => router.push("/review")}
-          style={{ height: 34, padding: "0 14px", borderRadius: 10, border: `1.3px solid ${theme.accent}`, background: "transparent", color: theme.accentDeep, fontSize: 12.5, fontWeight: 600, flexShrink: 0, alignSelf: "center" }}
-        >
-          ทบทวน
-        </button>
-      </div>
+      )}
 
-      <div style={{ borderRadius: 24, padding: "16px 18px", background: theme.surface, boxShadow: theme.shadowCard, display: "flex", alignItems: "center", gap: 12 }}>
-        <div style={{ width: 34, height: 34, borderRadius: 12, background: `${theme.navy}22`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 16 }}>📖</div>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontSize: 11, fontWeight: 600, color: theme.navy, marginBottom: 2 }}>แนะนำสำหรับคุณ</div>
-          <div style={{ fontSize: 14.5, fontWeight: 600 }}>Reading — จากผลประเมิน</div>
+      {weakSkill && (
+        <div style={{ borderRadius: 24, padding: "16px 18px", background: theme.surface, boxShadow: theme.shadowCard, display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ width: 34, height: 34, borderRadius: 12, background: `${theme.navy}22`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 16 }}>📖</div>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 11, fontWeight: 600, color: theme.navy, marginBottom: 2 }}>แนะนำสำหรับคุณ</div>
+            <div style={{ fontSize: 14.5, fontWeight: 600 }}>{SKILL_LABELS[weakSkill]} — จากผลประเมิน</div>
+          </div>
+          <button
+            className="el-tap"
+            onClick={() => router.push("/practice")}
+            style={{ height: 34, padding: "0 14px", borderRadius: 10, border: `1.3px solid ${theme.navy}`, background: "transparent", color: theme.navy, fontSize: 12.5, fontWeight: 600, flexShrink: 0 }}
+          >
+            ฝึก
+          </button>
         </div>
-        <button
-          className="el-tap"
-          onClick={() => router.push("/practice")}
-          style={{ height: 34, padding: "0 14px", borderRadius: 10, border: `1.3px solid ${theme.navy}`, background: "transparent", color: theme.navy, fontSize: 12.5, fontWeight: 600, flexShrink: 0 }}
-        >
-          ฝึก
-        </button>
-      </div>
+      )}
 
       <div
         className="el-tap"

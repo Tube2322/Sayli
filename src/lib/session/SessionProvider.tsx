@@ -20,7 +20,7 @@ import type { DifficultyPreference, UserProfile } from "@/lib/profile/types";
 import { getOrCreateSkillProfiles, setSelfSelectedSkillLevel, updateSkillProfileFromScore } from "@/lib/skill/actions";
 import { aggregateOverallLevel, representativeScoreForLevel } from "@/lib/skill/levelService";
 import type { Skill, SkillLevel, SkillProfile } from "@/lib/skill/types";
-import { getLearningState, getReviewSchedule, recordPracticeResult } from "@/lib/practice/actions";
+import { getLearningState, getRecentPracticeResults, getReviewSchedule, recordPracticeResult } from "@/lib/practice/actions";
 import type { LearningState, PracticeResult } from "@/lib/practice/types";
 import { getPatternMastery } from "@/lib/pattern/actions";
 import type { PatternMastery } from "@/lib/pattern/types";
@@ -37,6 +37,7 @@ type SessionContextValue = {
   learningState: LearningState | null;
   patternMastery: PatternMastery[];
   reviewSchedule: ReviewScheduleItem[];
+  recentPracticeResults: PracticeResult[];
   reloadProfile: () => void;
   setDifficultyPreference: (value: DifficultyPreference) => Promise<void>;
   completeAssessment: () => Promise<void>;
@@ -57,6 +58,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [learningState, setLearningState] = useState<LearningState | null>(null);
   const [patternMastery, setPatternMastery] = useState<PatternMastery[]>([]);
   const [reviewSchedule, setReviewSchedule] = useState<ReviewScheduleItem[]>([]);
+  const [recentPracticeResults, setRecentPracticeResults] = useState<PracticeResult[]>([]);
   const [reloadToken, setReloadToken] = useState(0);
 
   useEffect(() => {
@@ -69,6 +71,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         setLearningState(null);
         setPatternMastery([]);
         setReviewSchedule([]);
+        setRecentPracticeResults([]);
       }
     });
     return unsubscribe;
@@ -112,6 +115,13 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       })
       .catch(() => {
         // No review schedule yet is a normal, expected state — not an error to surface.
+      });
+    getRecentPracticeResults(user.uid, 200)
+      .then((results) => {
+        if (!cancelled) setRecentPracticeResults(results);
+      })
+      .catch(() => {
+        // No practice history yet is a normal, expected state — not an error to surface.
       });
     return () => {
       cancelled = true;
@@ -188,14 +198,16 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       if (!user || !skillProfiles || !profile) return false;
       try {
         await recordPracticeResult(user.uid, input, skillProfiles, profile.difficultyPreference);
-        const [ls, pm, rs] = await Promise.all([
+        const [ls, pm, rs, recent] = await Promise.all([
           getLearningState(user.uid),
           getPatternMastery(user.uid),
           getReviewSchedule(user.uid),
+          getRecentPracticeResults(user.uid, 200),
         ]);
         setLearningState(ls);
         setPatternMastery(pm);
         setReviewSchedule(rs);
+        setRecentPracticeResults(recent);
         return true;
       } catch (err) {
         setProfileError(err instanceof Error ? err.message : "บันทึกผลการฝึกไม่สำเร็จ ลองใหม่อีกครั้ง");
@@ -220,6 +232,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
         learningState,
         patternMastery,
         reviewSchedule,
+        recentPracticeResults,
         reloadProfile,
         setDifficultyPreference,
         completeAssessment,
