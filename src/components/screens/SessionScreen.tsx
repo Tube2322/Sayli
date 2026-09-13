@@ -13,10 +13,11 @@ import { SkillIcon } from "@/components/ui/SkillIcon";
 import { contextFromLearningState, selectNextQuestion } from "@/lib/practice/adaptiveEngine";
 import { buildMultipleChoiceOptions, isMultipleChoiceQuestion } from "@/lib/practice/multipleChoice";
 import { computeSessionRecap, computeSessionStreak } from "@/lib/progress/progressService";
+import { playCorrect, playIncorrect, playTap } from "@/lib/soundEffects";
 
 export function SessionScreen() {
   const { theme } = useTheme();
-  const { answer, setAnswer, openHint, checkAnswer, openRecap, preferredSkill, setPreferredSkill } = useAppState();
+  const { answer, setAnswer, openHint, checkAnswer, openRecap, preferredSkill, setPreferredSkill, soundOn } = useAppState();
   const { submitPracticeResult, profileError, learningState, reviewSchedule, recentPracticeResults } = useSession();
   const router = useRouter();
   const [checking, setChecking] = useState(false);
@@ -94,8 +95,8 @@ export function SessionScreen() {
 
   const canCheck = mcMode ? !!selectedOption : !!answer.trim();
 
-  const onCheckAnswer = async () => {
-    if (!question || !questionId || !canCheck) return;
+  const onCheckAnswer = () => {
+    if (!question || !questionId || !canCheck || checking) return;
     let correct: boolean;
     let score: number;
     if (mcMode) {
@@ -113,21 +114,13 @@ export function SessionScreen() {
     }
     const answerValue = mcMode ? selectedOption ?? "" : answer;
 
-    setChecking(true);
-    await submitPracticeResult({
-      sessionId: sessionIdRef.current,
-      questionId,
-      skill: question.skill,
-      difficulty: question.difficulty,
-      answer: answerValue,
-      referenceAnswer: question.referenceAnswer,
-      pattern: question.pattern,
-      evaluation: correct ? "correct" : "incorrect",
-      score,
-      correct,
-      responseTimeMs: Date.now() - startedAtRef.current,
-    });
-    setChecking(false);
+    if (correct) playCorrect(soundOn); else playIncorrect(soundOn);
+
+    // Reveal the result immediately (evaluation is local/instant) instead of
+    // waiting on the save round-trip — that wait was the actual source of
+    // the "checking..." delay users felt after every answer. Saving to
+    // Firestore now happens in the background; profileError still surfaces
+    // reactively if it fails.
     checkAnswer(correct, score, {
       en: question.en,
       pattern: question.pattern,
@@ -139,10 +132,26 @@ export function SessionScreen() {
       grammarNote: question.grammarNote,
       usageContext: question.usageContext,
     });
+
+    setChecking(true);
+    submitPracticeResult({
+      sessionId: sessionIdRef.current,
+      questionId,
+      skill: question.skill,
+      difficulty: question.difficulty,
+      answer: answerValue,
+      referenceAnswer: question.referenceAnswer,
+      pattern: question.pattern,
+      evaluation: correct ? "correct" : "incorrect",
+      score,
+      correct,
+      responseTimeMs: Date.now() - startedAtRef.current,
+    }).finally(() => setChecking(false));
   };
 
   const onOpenHint = () => {
     if (!question) return;
+    playTap(soundOn);
     openHint({ en: question.en, pattern: question.pattern, hintWord: question.hintWord, hintMeaning: question.hintMeaning, referenceAnswer: question.referenceAnswer, direction, grammarNote: question.grammarNote, usageContext: question.usageContext });
   };
 
@@ -252,7 +261,7 @@ export function SessionScreen() {
                 <div
                   key={`${opt}-${idx}`}
                   className="el-tap"
-                  onClick={() => setSelectedOption(opt)}
+                  onClick={() => { playTap(soundOn); setSelectedOption(opt); }}
                   style={{
                     padding: "14px 16px", borderRadius: 14, fontSize: 15, fontWeight: 500,
                     border: `1.5px solid ${selected ? theme.accent : theme.border}`,

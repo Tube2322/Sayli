@@ -18,9 +18,9 @@ import {
 } from "@/lib/profile/actions";
 import type { DifficultyPreference, UserProfile } from "@/lib/profile/types";
 import { getOrCreateSkillProfiles, setSelfSelectedSkillLevel, updateSkillProfileFromScore } from "@/lib/skill/actions";
-import { aggregateOverallLevel, representativeScoreForLevel } from "@/lib/skill/levelService";
+import { aggregateOverallLevel, representativeScoreForLevel, difficultyPreferenceForLevel, startingDifficultyForLevel } from "@/lib/skill/levelService";
 import type { Skill, SkillLevel, SkillProfile } from "@/lib/skill/types";
-import { getLearningState, getRecentPracticeResults, getReviewSchedule, recordPracticeResult } from "@/lib/practice/actions";
+import { getLearningState, getRecentPracticeResults, getReviewSchedule, recordPracticeResult, seedLearningState } from "@/lib/practice/actions";
 import type { LearningState, PracticeResult } from "@/lib/practice/types";
 import { getPatternMastery } from "@/lib/pattern/actions";
 import type { PatternMastery } from "@/lib/pattern/types";
@@ -160,8 +160,31 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       if (!user) return false;
       try {
         const skills = Object.keys(levels) as Skill[];
-        await Promise.all(skills.map((sk) => setSelfSelectedSkillLevel(user.uid, sk, levels[sk])));
-        await updateOverallLevel(user.uid, aggregateOverallLevel(Object.values(levels)));
+        const overallLevel = aggregateOverallLevel(Object.values(levels));
+        const newDifficultyPreference = difficultyPreferenceForLevel(overallLevel);
+        const nextSkillProfiles = Object.fromEntries(
+          skills.map((sk) => [
+            sk,
+            {
+              skill: sk,
+              level: levels[sk],
+              score: representativeScoreForLevel(levels[sk]),
+              confidence: "low" as const,
+              source: "self_selected" as const,
+              startingDifficulty: startingDifficultyForLevel(levels[sk]),
+              updatedAt: Date.now(),
+            },
+          ])
+        ) as Record<Skill, SkillProfile>;
+
+        await Promise.all([
+          ...skills.map((sk) => setSelfSelectedSkillLevel(user.uid, sk, levels[sk])),
+          updateOverallLevel(user.uid, overallLevel),
+          updateDifficultyPreference(user.uid, newDifficultyPreference),
+        ]);
+        const seededState = await seedLearningState(user.uid, nextSkillProfiles, newDifficultyPreference);
+        setSkillProfiles(nextSkillProfiles);
+        setLearningState(seededState);
         reloadProfile();
         return true;
       } catch (err) {
@@ -177,12 +200,42 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       if (!user) return false;
       try {
         const skills = Object.keys(levels) as Skill[];
-        await Promise.all(
-          skills.map((sk) =>
+        const overallLevel = aggregateOverallLevel(Object.values(levels));
+        const newDifficultyPreference = difficultyPreferenceForLevel(overallLevel);
+        const nextSkillProfiles = Object.fromEntries(
+          skills.map((sk) => {
+            const score = representativeScoreForLevel(levels[sk]);
+            return [
+              sk,
+              {
+                skill: sk,
+                level: levels[sk],
+                score,
+                confidence: "low" as const,
+                source: "assessment" as const,
+                startingDifficulty: startingDifficultyForLevel(levels[sk]),
+                updatedAt: Date.now(),
+              },
+            ];
+          })
+        ) as Record<Skill, SkillProfile>;
+
+        await Promise.all([
+          ...skills.map((sk) =>
             updateSkillProfileFromScore(user.uid, sk, representativeScoreForLevel(levels[sk]), "low", "assessment")
-          )
-        );
-        await updateOverallLevel(user.uid, aggregateOverallLevel(Object.values(levels)));
+          ),
+          updateOverallLevel(user.uid, overallLevel),
+          // Practice difficulty starts where the assessment placed the learner
+          // (genuinely easy for a low result) instead of defaulting to "normal"
+          // — still adjustable afterward in Settings.
+          updateDifficultyPreference(user.uid, newDifficultyPreference),
+        ]);
+        // Seed Learning State immediately so the very first practice question
+        // reflects the real assessed difficulty instead of falling back to
+        // "medium" until the learner's first answer is recorded.
+        const seededState = await seedLearningState(user.uid, nextSkillProfiles, newDifficultyPreference);
+        setSkillProfiles(nextSkillProfiles);
+        setLearningState(seededState);
         reloadProfile();
         return true;
       } catch (err) {
@@ -197,19 +250,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     async (input: Omit<PracticeResult, "id" | "createdAt">) => {
       if (!user || !skillProfiles || !profile) return false;
       try {
-        await recordPracticeResult(user.uid, input, skillProfiles, profile.difficultyPreference);
-        const [sp, ls, pm, rs, recent] = await Promise.all([
-          getOrCreateSkillProfiles(user.uid),
-          getLearningState(user.uid),
-          getPatternMastery(user.uid),
-          getReviewSchedule(user.uid),
-          getRecentPracticeResults(user.uid, 200),
-        ]);
-        setSkillProfiles(sp);
-        setLearningState(ls);
-        setPatternMastery(pm);
-        setReviewSchedule(rs);
-        setRecentPracticeResults(recent);
+        const result = await recordPracticeResult(user.uid, input, skillProfiles, profile.difficultyPreference);
+        setSkillProfiles(result.skillProfiles);
+        setLearningState(result.learningState);
+        setPatternMastery(result.patternMastery);
+        setReviewSchedule(result.reviewSchedule);
+        setRecentPracticeResults(result.recentResults);
         return true;
       } catch (err) {
         setProfileError(err instanceof Error ? err.message : "บันทึกผลการฝึกไม่สำเร็จ ลองใหม่อีกครั้ง");

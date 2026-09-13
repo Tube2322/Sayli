@@ -19,6 +19,7 @@ import { calculateSkillLevel } from "@/lib/skill/levelService";
 import { computeLearningState } from "@/lib/practice/learningStateService";
 import type { LearningState, PracticeResult } from "@/lib/practice/types";
 import { getPatternMastery, recordPatternAttempt } from "@/lib/pattern/actions";
+import type { PatternMastery } from "@/lib/pattern/types";
 import { computeReviewScheduleUpdate, type ReviewScheduleItem } from "@/lib/practice/reviewScheduleService";
 
 function practiceResultsCol(uid: string) {
@@ -128,20 +129,74 @@ async function updateSkillProfileFromPractice(uid: string, skill: Skill, score: 
  * the only place either is written, so Home/Review/Recommendation never
  * diverge (spec §13-14, §28).
  */
+export type RecordPracticeResultOutcome = {
+  skillProfiles: Record<Skill, SkillProfile>;
+  learningState: LearningState;
+  patternMastery: PatternMastery[];
+  reviewSchedule: ReviewScheduleItem[];
+  recentResults: PracticeResult[];
+};
+
+/**
+ * Computes and stores Learning State from an empty practice history —
+ * called right after an assessment (or difficultyPreference change) so the
+ * very first practice question already reflects the learner's real result
+ * instead of falling back to a hardcoded "medium" until their first answer
+ * is recorded. With no history, correctRatio defaults to neutral (0.5) and
+ * recommendedDifficulty is simply the distribution's dominant tier for the
+ * given preference — "easy" for a beginner, exactly as intended.
+ */
+export async function seedLearningState(
+  uid: string,
+  skillProfiles: Record<Skill, SkillProfile>,
+  difficultyPreference: DifficultyPreference
+): Promise<LearningState> {
+  const state = computeLearningState(skillProfiles, [], difficultyPreference, [], []);
+  const updatedAt = Date.now();
+  await setDoc(learningStateRef(uid), { ...state, updatedAt: serverTimestamp() });
+  return { ...state, updatedAt };
+}
+
+/**
+ * Records one real practice attempt, updates the practiced skill's profile,
+ * recomputes and stores Learning State, and returns everything it just
+ * fetched/computed so the caller (SessionProvider) can update its own state
+ * directly instead of re-fetching the same documents again — that redundant
+ * second round of reads was the main source of the "checking..." delay
+ * users felt after every answer.
+ */
 export async function recordPracticeResult(
   uid: string,
   input: Omit<PracticeResult, "id" | "createdAt">,
   skillProfiles: Record<Skill, SkillProfile>,
   difficultyPreference: DifficultyPreference
-): Promise<void> {
-  await addDoc(practiceResultsCol(uid), { ...input, createdAt: serverTimestamp() });
-  await recordPatternAttempt(uid, input.pattern, input.correct);
-  await recordReviewScheduleAttempt(uid, input.questionId, input.skill, input.correct, input.score);
-  const updatedProfile = await updateSkillProfileFromPractice(uid, input.skill, input.score);
-  const recentResults = await getRecentPracticeResults(uid, 20);
-  const patternMastery = await getPatternMastery(uid);
-  const reviewSchedule = await getReviewSchedule(uid);
+): Promise<RecordPracticeResultOutcome> {
+  // These four writes touch independent documents (practiceResults,
+  // patternMastery, reviewSchedule, skillProfiles) — running them one at a
+  // time was 4 sequential network round-trips for no reason.
+  const [, , , updatedProfile] = await Promise.all([
+    addDoc(practiceResultsCol(uid), { ...input, createdAt: serverTimestamp() }),
+    recordPatternAttempt(uid, input.pattern, input.correct),
+    recordReviewScheduleAttempt(uid, input.questionId, input.skill, input.correct, input.score),
+    updateSkillProfileFromPractice(uid, input.skill, input.score),
+  ]);
+  // Fetch the full 200-result window once — enough for both this attempt's
+  // learningState calc (which only needs the most recent 20) and the
+  // caller's own state (which wants up to 200) — so nothing needs re-fetching after.
+  const [recentResults, patternMastery, reviewSchedule] = await Promise.all([
+    getRecentPracticeResults(uid, 200),
+    getPatternMastery(uid),
+    getReviewSchedule(uid),
+  ]);
   const nextSkillProfiles = { ...skillProfiles, [input.skill]: updatedProfile };
-  const state = computeLearningState(nextSkillProfiles, recentResults, difficultyPreference, patternMastery, reviewSchedule);
+  const state = computeLearningState(nextSkillProfiles, recentResults.slice(0, 20), difficultyPreference, patternMastery, reviewSchedule);
+  const updatedAt = Date.now();
   await setDoc(learningStateRef(uid), { ...state, updatedAt: serverTimestamp() });
+  return {
+    skillProfiles: nextSkillProfiles,
+    learningState: { ...state, updatedAt },
+    patternMastery,
+    reviewSchedule,
+    recentResults,
+  };
 }

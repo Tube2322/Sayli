@@ -1,4 +1,5 @@
 import { SKILL_LEVELS, type DifficultyTier, type SkillLevel } from "@/lib/skill/types";
+import type { DifficultyPreference } from "@/lib/profile/types";
 
 // Single source of truth for score -> level. Every part of the system must
 // call calculateSkillLevel() rather than re-implementing this mapping.
@@ -32,6 +33,18 @@ export function startingDifficultyForLevel(level: SkillLevel): DifficultyTier {
   if (level === "L1" || level === "L2") return "easy";
   if (level === "L3" || level === "L4") return "medium";
   return "hard";
+}
+
+// The practice difficulty distribution (spec §4's beginner/normal/challenge
+// preference) should start where the assessment actually placed the
+// learner, not default to "normal" regardless of a genuinely low result —
+// otherwise a true beginner gets 15% hard content from question one. Users
+// can still override this in Settings afterward; a re-taken assessment
+// recalibrates it again, same as everything else the assessment sets.
+export function difficultyPreferenceForLevel(level: SkillLevel): DifficultyPreference {
+  if (level === "L1" || level === "L2") return "beginner";
+  if (level === "L3") return "normal";
+  return "challenge";
 }
 
 // A single "overall level" for display (e.g. onboarding confirmation, profile
