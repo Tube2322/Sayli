@@ -35,6 +35,14 @@ const RECENCY_PENALTY_WINDOW_MS = 3 * 24 * 60 * 60 * 1000;
 const RECENCY_PENALTY_MAX = 8;
 const NOVELTY_BONUS = 5;
 
+// Ordinal so a beginner (recommendedDifficulty "easy") is genuinely capped
+// at easy content, not just nudged toward it — a hard question must never
+// surface before the learner's real performance (computeLearningState's
+// correctRatio ramp) has earned it. Content due for spaced review is exempt
+// from the cap below, since forgetting a previously-learned item is a memory
+// problem, not a difficulty one.
+const TIER_ORDER: DifficultyTier[] = ["easy", "medium", "hard"];
+
 // Small nudge toward a different register (social/casual/formal) than the
 // question the learner most recently answered, so practice rotates across
 // styles instead of settling into one — real signal from real history, not
@@ -60,18 +68,32 @@ function mostRecentRegister(
  * the learner's current state, so "ฝึกด่วน" (Quick Practice) and the normal
  * session entry point never pick ad hoc or random content.
  *
- * Scoring is additive and ordered by priority: a question due for spaced
- * review outranks anything else, then a question in a weak/mistake skill,
- * then a question at the recommended difficulty, then a question in an
- * overall-weak skill. Ties break on questionId for determinism.
+ * Candidates above the learner's recommended difficulty tier are excluded
+ * outright (unless due for spaced review) — a beginner is never handed a
+ * "hard" question just because nothing easier scored higher. Among the
+ * remaining candidates, scoring is additive and ordered by priority: a
+ * question due for spaced review outranks anything else, then a question in
+ * a weak/mistake skill, then a question at the recommended difficulty, then
+ * a question in an overall-weak skill. Ties break on questionId for
+ * determinism.
  */
 export function selectNextQuestion(
   questionBank: Record<string, QuestionMeta>,
   context: AdaptiveContext,
   now: number = Date.now()
 ): string | null {
-  const entries = Object.entries(questionBank);
-  if (entries.length === 0) return null;
+  const allEntries = Object.entries(questionBank);
+  if (allEntries.length === 0) return null;
+
+  const maxTierIdx = TIER_ORDER.indexOf(context.recommendedDifficulty);
+  const gated = allEntries.filter(
+    ([questionId, meta]) =>
+      context.forgottenItems.includes(questionId) || TIER_ORDER.indexOf(meta.difficulty) <= maxTierIdx
+  );
+  // Safety net: never return null just because every real question happens
+  // to sit above the current tier (e.g. a very small bank) — fall back to
+  // ranking the full bank rather than blocking practice entirely.
+  const entries = gated.length > 0 ? gated : allEntries;
 
   const lastRegister = mostRecentRegister(questionBank, context.reviewByQuestion);
 
