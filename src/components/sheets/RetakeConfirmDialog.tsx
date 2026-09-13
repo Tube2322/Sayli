@@ -21,11 +21,11 @@ export function RetakeConfirmDialog() {
       <div
         className="el-tap"
         onClick={closeRetakeConfirm}
-        style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 80 }}
+        style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 80 }}
       />
       <div
         style={{
-          position: "absolute", left: 20, right: 20, top: "50%", transform: "translateY(-50%)", zIndex: 90,
+          position: "fixed", left: 20, right: 20, top: "50%", transform: "translateY(-50%)", zIndex: 90,
           background: theme.surface, borderRadius: 22, padding: 22, boxShadow: "0 10px 40px rgba(0,0,0,0.25)", textAlign: "center",
         }}
       >

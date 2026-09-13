@@ -38,13 +38,18 @@ export function HintSheet() {
         <div
           className="el-tap"
           onClick={closeSheets}
-          style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 80 }}
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 80 }}
         />
       )}
       <div
         className="el-sheet"
         style={{
-          position: "absolute", left: 0, right: 0, bottom: 0, zIndex: 90,
+          // Fixed to the real viewport, not the app column's height:100vh box —
+          // sidesteps a position:absolute+vh containing-block bug (confirmed via
+          // devtools: a plain bottom:0 test div anchored ~310px short of the
+          // true bottom under certain devicePixelRatio conditions), which made
+          // "closed" sheets land inside the visible area instead of fully below it.
+          position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 90,
           background: theme.surface, borderRadius: "28px 28px 0 0",
           padding: "24px 22px calc(env(safe-area-inset-bottom,0px) + 24px)",
           boxShadow: "0 -10px 40px rgba(0,0,0,0.2)",

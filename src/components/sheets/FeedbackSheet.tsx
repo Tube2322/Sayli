@@ -71,7 +71,10 @@ export function FeedbackSheet() {
     <div
       className="el-sheet"
       style={{
-        position: "absolute", left: 0, right: 0, bottom: 0, zIndex: 90,
+        // Fixed to the real viewport — see HintSheet.tsx for why (a
+        // position:absolute+vh containing-block bug left "closed" sheets
+        // visible instead of fully off-screen).
+        position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 90,
         background: theme.surface, borderRadius: "28px 28px 0 0",
         padding: "24px 22px calc(env(safe-area-inset-bottom,0px) + 20px)",
         boxShadow: "0 -10px 40px rgba(0,0,0,0.2)",

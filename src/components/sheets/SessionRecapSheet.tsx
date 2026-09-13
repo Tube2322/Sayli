@@ -23,13 +23,16 @@ export function SessionRecapSheet() {
         <div
           className="el-tap"
           onClick={onDone}
-          style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 80 }}
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.4)", zIndex: 80 }}
         />
       )}
       <div
         className="el-sheet"
         style={{
-          position: "absolute", left: 0, right: 0, bottom: 0, zIndex: 90,
+          // Fixed to the real viewport — see HintSheet.tsx for why (a
+          // position:absolute+vh containing-block bug left "closed" sheets
+          // visible instead of fully off-screen).
+          position: "fixed", left: 0, right: 0, bottom: 0, zIndex: 90,
           background: theme.surface, borderRadius: "28px 28px 0 0",
           padding: "28px 22px calc(env(safe-area-inset-bottom,0px) + 24px)",
           boxShadow: "0 -10px 40px rgba(0,0,0,0.2)",
