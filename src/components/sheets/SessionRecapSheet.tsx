@@ -50,8 +50,8 @@ export function SessionRecapSheet() {
           <Stat theme={theme} value={recap.answered} label="ข้อที่ตอบ" />
           <Stat theme={theme} value={recap.correctCount} label="ตอบถูก" />
           <Stat theme={theme} value={`${recap.avgScore}%`} label="คะแนนเฉลี่ย" />
-          {recap.totalTimeMs && recap.totalTimeMs > 0 && (
-            <Stat theme={theme} value={`${Math.max(1, Math.round(recap.totalTimeMs / 60000))} นาที`} label="เวลาที่ใช้" />
+          {(recap.totalTimeMs ?? 0) > 0 && (
+            <Stat theme={theme} value={`${Math.max(1, Math.round((recap.totalTimeMs ?? 0) / 60000))} นาที`} label="เวลาที่ใช้" />
           )}
         </div>
 
