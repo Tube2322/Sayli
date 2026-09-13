@@ -42,6 +42,7 @@ export function SessionScreen() {
   const direction = question?.direction ?? "en-th";
   const writingMode = direction === "th-en";
   const listeningMode = question?.skill === "listening";
+  const readingMode = question?.skill === "reading";
 
   // Writing questions always use typed mode (typing English, not picking from
   // Thai options). All others alternate MC/typed by deterministic hash.
@@ -220,6 +221,13 @@ export function SessionScreen() {
             </button>
             <div style={{ fontSize: 13, color: theme.muted }}>แตะเพื่อฟังอีกครั้ง</div>
           </>
+        ) : readingMode ? (
+          // Passages run 2-3 sentences + an embedded question — a big
+          // display font (fine for one short sentence) becomes hard to
+          // read at that length, so this uses body-text sizing instead.
+          <div style={{ fontSize: 16, lineHeight: 1.6, textAlign: "left", background: theme.track, borderRadius: 16, padding: "16px 18px" }}>
+            {question?.en ?? ""}
+          </div>
         ) : (
           <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 28, lineHeight: 1.25 }}>
             {writingMode
@@ -229,6 +237,7 @@ export function SessionScreen() {
         )}
         <div style={{ fontSize: 14, color: theme.muted }}>
           {listeningMode ? (mcMode ? "ฟังแล้วเลือกคำแปลที่ถูกต้อง" : "ฟังแล้วแปลเป็นภาษาไทยดูสิ")
+            : readingMode ? (mcMode ? "อ่านแล้วเลือกคำตอบที่ถูกต้อง" : "อ่านแล้วตอบคำถามเป็นภาษาไทย")
             : writingMode ? "พิมพ์ประโยคนี้เป็นภาษาอังกฤษ"
             : mcMode ? "เลือกคำแปลที่ถูกต้อง" : "ลองแปลประโยคนี้เป็นภาษาไทยดูสิ"}
         </div>

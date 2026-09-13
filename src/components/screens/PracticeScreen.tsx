@@ -53,8 +53,10 @@ export function PracticeScreen() {
 
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".06em", color: theme.navy, textTransform: "uppercase" }}>ฝึกหลัก</div>
+        <PracticeRow theme={theme} onClick={goWithSkill("reading")} title="Read" desc="อ่านข้อความสั้นๆ แล้วตอบคำถาม" minutes="~4 นาที"
+          icon={<path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2Z" />} icon2={<path d="M7 8h2M7 11h2M15 8h2M15 11h2" />} />
         <PracticeRow theme={theme} onClick={goWithSkill("understanding")} title="Understand" desc="อ่าน คิด แล้วอธิบาย" minutes="~3 นาที"
-          icon={<path d="M12 6.5C10.5 5 8 4.5 4 4.5v14c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-14c-4 0-6.5.5-8 2Z" />} icon2={<path d="M12 6.5v14" />} />
+          icon={<path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.4.9 1 .9 1.7v.4h5.2v-.4c0-.7.3-1.3.9-1.7A6 6 0 0012 3z" />} icon2={<></>} />
         <PracticeRow theme={theme} onClick={goWithSkill("writing")} title="Write" desc="แปลความหมายไทย เขียนเป็นอังกฤษ" minutes="~4 นาที"
           icon={<path d="M12 20h9" />} icon2={<path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4Z" />} />
         <PracticeRow theme={theme} onClick={goWithSkill("listening")} title="Listen" desc="ฟัง แล้วทำความเข้าใจ" minutes="~3 นาที"
