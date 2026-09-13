@@ -7,7 +7,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase/client";
 import { signInWithGoogle, mapGoogleAuthError } from "@/lib/firebase/googleAuth";
 import { getOrCreateProfile } from "@/lib/profile/actions";
-import { useSystemTheme } from "@/lib/useSystemTheme";
+import { lightTheme as theme } from "@/lib/theme";
 import { AuthPageShell, AuthDivider, GoogleSignInButton } from "@/components/auth/AuthPageShell";
 
 function mapAuthError(code: string): string {
@@ -20,7 +20,6 @@ function mapAuthError(code: string): string {
 }
 
 export default function LoginPage() {
-  const { theme } = useSystemTheme();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

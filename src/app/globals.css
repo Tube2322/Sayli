@@ -30,4 +30,10 @@ body {
 
 .el-input {
   font-family: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.el-input:focus {
+  outline: none;
+  border-color: #7c5cfc !important;
+  box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.15);
 }

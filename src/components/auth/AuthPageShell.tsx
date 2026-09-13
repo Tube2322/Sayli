@@ -1,7 +1,11 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useSystemTheme } from "@/lib/useSystemTheme";
+import { lightTheme as theme } from "@/lib/theme";
+
+// Auth pages always render the white/minimal Gen-Z look regardless of the
+// visitor's OS dark-mode preference — a deliberate brand choice for the
+// first thing a new user sees, independent of the in-app dark theme.
 
 export function AuthPageShell({
   title,
@@ -14,7 +18,6 @@ export function AuthPageShell({
   children: ReactNode;
   footer: ReactNode;
 }) {
-  const { theme } = useSystemTheme();
 
   return (
     <div
@@ -31,34 +34,40 @@ export function AuthPageShell({
         overflow: "hidden",
       }}
     >
+      {/* Playful decorative blobs — Gen-Z accent pops, decorative only (not theme tokens) */}
       <div
         aria-hidden
         style={{
-          position: "absolute", top: "-12%", right: "-18%", width: 320, height: 320,
-          borderRadius: "50%", background: theme.accentSoft, filter: "blur(60px)", opacity: 0.9,
+          position: "absolute", top: "-14%", right: "-16%", width: 300, height: 300,
+          borderRadius: "42% 58% 63% 37% / 45% 41% 59% 55%",
+          background: "linear-gradient(135deg, #7C5CFC, #C7B8FF)",
+          filter: "blur(4px)", opacity: 0.35,
         }}
       />
       <div
         aria-hidden
         style={{
-          position: "absolute", bottom: "-16%", left: "-14%", width: 280, height: 280,
-          borderRadius: "50%", background: theme.track, filter: "blur(70px)", opacity: 0.8,
+          position: "absolute", bottom: "-18%", left: "-12%", width: 260, height: 260,
+          borderRadius: "58% 42% 37% 63% / 55% 45% 55% 45%",
+          background: "linear-gradient(135deg, #4ADE9A, #A78BFA)",
+          filter: "blur(6px)", opacity: 0.22,
         }}
       />
 
       <div
         style={{
           position: "relative", width: "100%", maxWidth: 380, background: theme.surface,
-          borderRadius: 28, boxShadow: theme.shadowCard, padding: "38px 30px 30px",
+          borderRadius: 32, boxShadow: theme.shadowCard, padding: "40px 28px 30px",
+          border: `1px solid ${theme.border}`,
         }}
       >
         <div
           style={{
-            width: 52, height: 52, borderRadius: 16, margin: "0 auto 18px",
-            background: `linear-gradient(135deg, ${theme.accent}, ${theme.accentDeep})`,
+            width: 56, height: 56, borderRadius: 20, margin: "0 auto 20px",
+            background: "linear-gradient(135deg, #7C5CFC, #A78BFA)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 20, color: "#fff",
-            boxShadow: theme.shadowSm,
+            fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 22, color: "#fff",
+            boxShadow: "0 8px 20px rgba(124,92,252,0.35)",
           }}
         >
           EL
@@ -66,19 +75,19 @@ export function AuthPageShell({
 
         <h1
           style={{
-            fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 26,
-            margin: "0 0 6px", textAlign: "center",
+            fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 28,
+            margin: "0 0 6px", textAlign: "center", letterSpacing: "-0.01em",
           }}
         >
           {title}
         </h1>
-        <div style={{ fontSize: 13.5, color: theme.muted, textAlign: "center", marginBottom: 26 }}>
+        <div style={{ fontSize: 13.5, color: theme.muted, textAlign: "center", marginBottom: 28 }}>
           {subtitle}
         </div>
 
         {children}
 
-        <div style={{ fontSize: 13, color: theme.muted, textAlign: "center", marginTop: 20 }}>
+        <div style={{ fontSize: 13, color: theme.muted, textAlign: "center", marginTop: 22 }}>
           {footer}
         </div>
       </div>
@@ -87,18 +96,16 @@ export function AuthPageShell({
 }
 
 export function AuthDivider() {
-  const { theme } = useSystemTheme();
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "18px 0" }}>
+    <div style={{ display: "flex", alignItems: "center", gap: 10, margin: "20px 0" }}>
       <div style={{ flex: 1, height: 1, background: theme.border }} />
-      <span style={{ fontSize: 12, color: theme.muted }}>หรือ</span>
+      <span style={{ fontSize: 11.5, fontWeight: 600, color: theme.mutedFaint, letterSpacing: ".04em" }}>หรือ</span>
       <div style={{ flex: 1, height: 1, background: theme.border }} />
     </div>
   );
 }
 
 export function GoogleSignInButton({ onClick, disabled, label }: { onClick: () => void; disabled?: boolean; label: string }) {
-  const { theme } = useSystemTheme();
   return (
     <button
       type="button"
@@ -106,7 +113,7 @@ export function GoogleSignInButton({ onClick, disabled, label }: { onClick: () =
       disabled={disabled}
       className="el-tap"
       style={{
-        width: "100%", height: 52, borderRadius: 16, border: `1.5px solid ${theme.border}`,
+        width: "100%", height: 54, borderRadius: 18, border: `1.5px solid ${theme.border}`,
         background: theme.surface, color: theme.text, fontSize: 15, fontWeight: 600,
         display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
         opacity: disabled ? 0.7 : 1,
