@@ -1,7 +1,7 @@
 import type { PracticeResult } from "@/lib/practice/types";
 import type { ReviewScheduleItem } from "@/lib/practice/reviewScheduleService";
 import type { PatternMastery } from "@/lib/pattern/types";
-import { SKILL_LEVELS, type Skill, type SkillProfile } from "@/lib/skill/types";
+import { SKILL_LEVELS, type DifficultyTier, type Skill, type SkillProfile } from "@/lib/skill/types";
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -144,4 +144,38 @@ export function computeMostImprovedSkill(results: PracticeResult[]): ImprovingSk
     }
   });
   return best;
+}
+
+/** Trailing run of consecutive correct answers within one practice session — real "combo" signal, not a fabricated counter. */
+export function computeSessionStreak(results: PracticeResult[], sessionId: string): number {
+  const inSession = results.filter((r) => r.sessionId === sessionId).sort((a, b) => a.createdAt - b.createdAt);
+  let streak = 0;
+  for (let i = inSession.length - 1; i >= 0; i--) {
+    if (!inSession[i].correct) break;
+    streak += 1;
+  }
+  return streak;
+}
+
+export type SessionRecap = {
+  answered: number;
+  correctCount: number;
+  avgScore: number;
+  tierCounts: Record<DifficultyTier, number>;
+};
+
+/** Summary of everything actually answered in one session — for the end-of-session recap card. */
+export function computeSessionRecap(results: PracticeResult[], sessionId: string): SessionRecap {
+  const inSession = results.filter((r) => r.sessionId === sessionId);
+  const tierCounts: Record<DifficultyTier, number> = { easy: 0, medium: 0, hard: 0 };
+  inSession.forEach((r) => {
+    tierCounts[r.difficulty] += 1;
+  });
+  const avgScore = inSession.length > 0 ? Math.round(inSession.reduce((s, r) => s + r.score, 0) / inSession.length) : 0;
+  return {
+    answered: inSession.length,
+    correctCount: inSession.filter((r) => r.correct).length,
+    avgScore,
+    tierCounts,
+  };
 }

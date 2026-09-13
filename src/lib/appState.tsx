@@ -25,7 +25,9 @@ import {
 export type ThemeMode = "light" | "dark" | "system";
 export type ChooseMode = "all" | "each";
 export type QuizPhase = "answering" | "feedback";
-export type SheetKind = "hint" | "feedback" | null;
+export type SheetKind = "hint" | "feedback" | "recap" | null;
+
+export type SessionRecapData = { answered: number; correctCount: number; avgScore: number; tierCounts: Record<"easy" | "medium" | "hard", number> };
 
 type SkillScoreEntry = { skill: string; correct: boolean; tier: "easy" | "medium" | "hard" };
 
@@ -53,6 +55,7 @@ type AppState = {
   lastPracticeCorrect: boolean | null;
   lastPracticeScore: number | null;
   activeQuestion: ActiveQuestion | null;
+  sessionRecap: SessionRecapData | null;
 };
 
 export type ActiveQuestion = { en: string; pattern: string; hintWord: string; hintMeaning: string };
@@ -66,6 +69,7 @@ type AppStateContextValue = AppState & {
   toggleSound: () => void;
   openHint: (question?: ActiveQuestion) => void;
   checkAnswer: (correct: boolean, score: number, question?: ActiveQuestion) => void;
+  openRecap: (data: SessionRecapData) => void;
   closeSheets: () => void;
   continueAfterFeedback: () => void;
   setHistoryFilter: (f: "7d" | "30d" | "all") => void;
@@ -111,6 +115,7 @@ const initialState: AppState = {
   lastPracticeCorrect: null,
   lastPracticeScore: null,
   activeQuestion: null,
+  sessionRecap: null,
 };
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
@@ -145,6 +150,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       openHint: (question) => patch({ sheet: "hint", activeQuestion: question ?? state.activeQuestion }),
       checkAnswer: (correct, score, question) =>
         patch({ sheet: "feedback", lastPracticeCorrect: correct, lastPracticeScore: score, activeQuestion: question ?? state.activeQuestion }),
+      openRecap: (data) => patch({ sheet: "recap", sessionRecap: data }),
       closeSheets: () => patch({ sheet: null }),
       continueAfterFeedback: () => patch({ sheet: null, answer: "" }),
       setHistoryFilter: (f) => patch({ historyFilter: f }),

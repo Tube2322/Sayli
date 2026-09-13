@@ -8,6 +8,7 @@ import { BottomNav } from "@/components/nav/BottomNav";
 import { HintSheet } from "@/components/sheets/HintSheet";
 import { FeedbackSheet } from "@/components/sheets/FeedbackSheet";
 import { RetakeConfirmDialog } from "@/components/sheets/RetakeConfirmDialog";
+import { SessionRecapSheet } from "@/components/sheets/SessionRecapSheet";
 
 export function AppShell({ children }: { children: ReactNode }) {
   const { theme } = useTheme();
@@ -48,6 +49,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <HintSheet />
       <FeedbackSheet />
       <RetakeConfirmDialog />
+      <SessionRecapSheet />
 
       {!hideNav && <BottomNav />}
     </div>
