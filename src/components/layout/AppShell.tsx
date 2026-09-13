@@ -20,7 +20,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div
       style={{
         position: "relative",
-        minHeight: "100vh",
+        height: "100vh",
         maxWidth: 430,
         margin: "0 auto",
         background: theme.bg,
