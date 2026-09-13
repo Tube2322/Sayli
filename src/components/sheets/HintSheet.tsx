@@ -2,6 +2,7 @@
 
 import { useAppState } from "@/lib/appState";
 import { useTheme } from "@/lib/useTheme";
+import { isUncommonWord } from "@/lib/content/difficultyClassifier";
 
 function HighlightedSentence({ sentence, word, theme }: { sentence: string; word: string; theme: ReturnType<typeof useTheme>["theme"] }) {
   if (!word || !sentence) return <span>{sentence}</span>;
@@ -26,6 +27,10 @@ export function HintSheet() {
   const open = sheet === "hint";
   const q = activeQuestion;
   const writingMode = q?.direction === "th-en";
+  // Only translate the keyword when it's genuinely new/hard (rare in the
+  // 10k-word frequency list) — a basic word like "here" or "happy" doesn't
+  // need its Thai meaning spelled out every time.
+  const showTranslation = q?.hintWord ? isUncommonWord(q.hintWord) : false;
 
   return (
     <>
@@ -72,7 +77,7 @@ export function HintSheet() {
           </div>
         </div>
 
-        {/* Key word */}
+        {/* Key word — Thai meaning only surfaces for genuinely new/hard words */}
         <div style={{ background: theme.accentSoft, borderRadius: 14, padding: "12px 16px", marginBottom: 12 }}>
           <div style={{ fontSize: 11, fontWeight: 600, color: theme.accentDeep, marginBottom: 4, letterSpacing: ".04em", textTransform: "uppercase" }}>
             คำสำคัญ
@@ -81,7 +86,11 @@ export function HintSheet() {
             <span style={{ fontSize: 18, fontWeight: 700, color: theme.accentDeep }}>
               &ldquo;{q?.hintWord ?? "-"}&rdquo;
             </span>
-            <span style={{ fontSize: 14, color: theme.text }}>{q?.hintMeaning ?? ""}</span>
+            {showTranslation && q?.hintMeaning ? (
+              <span style={{ fontSize: 14, color: theme.text }}>{q.hintMeaning}</span>
+            ) : (
+              <span style={{ fontSize: 12.5, color: theme.muted, fontStyle: "italic" }}>คำนี้พื้นฐานแล้ว ลองนึกความหมายเองดูก่อนนะ</span>
+            )}
           </div>
         </div>
 

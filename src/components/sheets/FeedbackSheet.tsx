@@ -2,6 +2,7 @@
 
 import { useAppState } from "@/lib/appState";
 import { useTheme } from "@/lib/useTheme";
+import { isUncommonWord } from "@/lib/content/difficultyClassifier";
 
 function HighlightedSentence({ sentence, word, theme }: { sentence: string; word: string; theme: ReturnType<typeof useTheme>["theme"] }) {
   if (!word || !sentence) return <span>{sentence}</span>;
@@ -128,7 +129,7 @@ export function FeedbackSheet() {
             : <HighlightedSentence sentence={contextSentence} word={q?.hintWord ?? ""} theme={theme} />
           }
         </div>
-        {q?.hintWord && !writingMode && (
+        {q?.hintWord && !writingMode && isUncommonWord(q.hintWord) && (
           <div style={{ marginTop: 6, fontSize: 12.5, color: theme.muted }}>
             <strong style={{ color: theme.accentDeep }}>{q.hintWord}</strong> = {q.hintMeaning}
           </div>

@@ -26,3 +26,12 @@ export function classifySentenceDifficulty(sentence: string): DifficultyTier {
   if (avgRank <= MEDIUM_MAX_AVG_RANK) return "medium";
   return "hard";
 }
+
+// Same rank scale as sentence classification above — a single word counts as
+// "new/hard" past the same threshold that marks a whole sentence as no
+// longer "easy". Used to decide whether a hint sheet's keyword is actually
+// worth translating, instead of glossing every word regardless of how basic
+// it already is.
+export function isUncommonWord(word: string): boolean {
+  return wordFrequencyRank(word) > EASY_MAX_AVG_RANK;
+}
