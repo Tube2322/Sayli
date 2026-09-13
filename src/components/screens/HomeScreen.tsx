@@ -6,6 +6,7 @@ import { useAppState } from "@/lib/appState";
 import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
 import { SKILL_LABELS } from "@/lib/sampleData";
+import { SkillIcon } from "@/components/ui/SkillIcon";
 import { QUESTION_BANK } from "@/lib/practice/questionBank";
 import { contextFromLearningState, selectNextQuestion } from "@/lib/practice/adaptiveEngine";
 import { computeStreakDays, computeTodayMinutes, computeTodayMissions, overallLevelNumber } from "@/lib/progress/progressService";
@@ -68,7 +69,8 @@ export function HomeScreen() {
         style={{ borderRadius: 26, padding: 20, background: theme.accentSoft, boxShadow: theme.shadowCard }}
       >
         <div style={{ fontSize: 12, letterSpacing: ".04em", color: theme.accentDeep, marginBottom: 6, fontWeight: 600 }}>กำลังเรียนต่อ</div>
-        <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 22, marginBottom: 4 }}>
+        <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 22, marginBottom: 4, display: "flex", alignItems: "center", gap: 8 }}>
+          {nextQuestion && <SkillIcon skill={nextQuestion.skill} size={19} color={theme.accentDeep} />}
           {nextQuestion ? SKILL_LABELS[nextQuestion.skill] : "ฝึกฝน"}
         </div>
         <div style={{ fontSize: 13, color: theme.muted, marginBottom: 16 }}>{nextQuestion?.pattern ?? "เริ่มฝึกข้อแรกของคุณ"}</div>
@@ -106,12 +108,12 @@ export function HomeScreen() {
       {latestMistake && (
         <div style={{ borderRadius: 24, padding: "16px 18px", background: theme.surface, boxShadow: theme.shadowCard, display: "flex", alignItems: "flex-start", gap: 12 }}>
           <div style={{ width: 34, height: 34, borderRadius: 12, background: theme.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={theme.accentDeep} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.6.4.9 1 .9 1.7v.4h5.2v-.4c0-.7.3-1.3.9-1.7A6 6 0 0012 3z" /></svg>
+            <SkillIcon skill={latestMistake.skill} size={16} color={theme.accentDeep} />
           </div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 11, fontWeight: 600, color: theme.accentDeep, marginBottom: 2 }}>น่าทบทวน</div>
             <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 2 }}>{latestMistakePattern ?? "-"}</div>
-            <div style={{ fontSize: 12.5, color: theme.muted }}>คุณพลาดจุดนี้เมื่อเร็ว ๆ นี้</div>
+            <div style={{ fontSize: 12.5, color: theme.muted }}>จุดนี้ยังไม่แม่น ลองทบทวนอีกครั้งนะ</div>
           </div>
           <button
             className="el-tap"
@@ -125,7 +127,9 @@ export function HomeScreen() {
 
       {weakSkill && (
         <div style={{ borderRadius: 24, padding: "16px 18px", background: theme.surface, boxShadow: theme.shadowCard, display: "flex", alignItems: "center", gap: 12 }}>
-          <div style={{ width: 34, height: 34, borderRadius: 12, background: `${theme.navy}22`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 16 }}>📖</div>
+          <div style={{ width: 34, height: 34, borderRadius: 12, background: `${theme.navy}22`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <SkillIcon skill={weakSkill} size={16} color={theme.navy} />
+          </div>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 11, fontWeight: 600, color: theme.navy, marginBottom: 2 }}>แนะนำสำหรับคุณ</div>
             <div style={{ fontSize: 14.5, fontWeight: 600 }}>{SKILL_LABELS[weakSkill]} — จากผลประเมิน</div>

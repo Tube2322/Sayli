@@ -14,6 +14,8 @@ import {
 import { db } from "@/lib/firebase/client";
 import type { DifficultyPreference } from "@/lib/profile/types";
 import type { Skill, SkillProfile } from "@/lib/skill/types";
+import { getSkillProfiles, updateSkillProfileFromScore } from "@/lib/skill/actions";
+import { calculateSkillLevel } from "@/lib/skill/levelService";
 import { computeLearningState } from "@/lib/practice/learningStateService";
 import type { LearningState, PracticeResult } from "@/lib/practice/types";
 import { getPatternMastery, recordPatternAttempt } from "@/lib/pattern/actions";
@@ -98,9 +100,33 @@ export async function getLearningState(uid: string): Promise<LearningState | nul
 }
 
 /**
- * Records one real practice attempt, then recomputes and stores Learning
- * State from the fresh result history — the only place either is written,
- * so Home/Review/Recommendation never diverge (spec §13-14, §28).
+ * Updates the practiced skill's profile from this one attempt's score, via
+ * the same EMA smoothing already used for reviewSchedule/patternMastery
+ * (prev*0.5 + new*0.5) — so Level/mastery% actually move with real ongoing
+ * practice instead of staying frozen at whatever assessment/self-select last
+ * set them to. Fetches the current profile fresh rather than trusting the
+ * caller's snapshot, since many attempts can land in one session.
+ */
+async function updateSkillProfileFromPractice(uid: string, skill: Skill, score: number): Promise<SkillProfile> {
+  const current = (await getSkillProfiles(uid))[skill];
+  const nextScore = Math.round((current?.score ?? score) * 0.5 + score * 0.5);
+  await updateSkillProfileFromScore(uid, skill, nextScore, current?.confidence ?? "low", "adaptive_update");
+  return {
+    skill,
+    level: calculateSkillLevel(nextScore),
+    score: nextScore,
+    confidence: current?.confidence ?? "low",
+    source: "adaptive_update",
+    startingDifficulty: current?.startingDifficulty ?? "easy",
+    updatedAt: Date.now(),
+  };
+}
+
+/**
+ * Records one real practice attempt, updates the practiced skill's profile,
+ * then recomputes and stores Learning State from the fresh result history —
+ * the only place either is written, so Home/Review/Recommendation never
+ * diverge (spec §13-14, §28).
  */
 export async function recordPracticeResult(
   uid: string,
@@ -111,9 +137,11 @@ export async function recordPracticeResult(
   await addDoc(practiceResultsCol(uid), { ...input, createdAt: serverTimestamp() });
   await recordPatternAttempt(uid, input.pattern, input.correct);
   await recordReviewScheduleAttempt(uid, input.questionId, input.skill, input.correct, input.score);
+  const updatedProfile = await updateSkillProfileFromPractice(uid, input.skill, input.score);
   const recentResults = await getRecentPracticeResults(uid, 20);
   const patternMastery = await getPatternMastery(uid);
   const reviewSchedule = await getReviewSchedule(uid);
-  const state = computeLearningState(skillProfiles, recentResults, difficultyPreference, patternMastery, reviewSchedule);
+  const nextSkillProfiles = { ...skillProfiles, [input.skill]: updatedProfile };
+  const state = computeLearningState(nextSkillProfiles, recentResults, difficultyPreference, patternMastery, reviewSchedule);
   await setDoc(learningStateRef(uid), { ...state, updatedAt: serverTimestamp() });
 }

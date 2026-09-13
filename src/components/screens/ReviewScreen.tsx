@@ -54,7 +54,7 @@ export function ReviewScreen() {
           {dueQuestionId && (
             <div style={{ borderRadius: 22, padding: 18, background: theme.surface, boxShadow: theme.shadowCard }}>
               <div style={{ fontSize: 12.5, fontWeight: 600, color: theme.accentDeep, marginBottom: 2 }}>ถึงเวลาทบทวน</div>
-              <div style={{ fontSize: 12, color: theme.muted, marginBottom: 12 }}>ไม่ได้เจอประโยคนี้มาสักพักแล้ว</div>
+              <div style={{ fontSize: 12, color: theme.muted, marginBottom: 12 }}>ไม่ได้เจอประโยคนี้พักนึงแล้ว ลองดูอีกครั้งนะ</div>
               <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 14 }}>{dueMeta?.en ?? dueQuestionId}</div>
               <button className="el-tap" onClick={go} style={{ width: "100%", height: 46, border: "none", borderRadius: 14, background: theme.btnSecondaryBg, color: theme.btnSecondaryText, fontSize: 14.5, fontWeight: 600 }}>ทบทวนตอนนี้</button>
             </div>
@@ -95,8 +95,8 @@ export function ReviewScreen() {
       ) : (
         <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 14, textAlign: "center", padding: "40px 10px" }}>
           <div style={{ fontSize: 40 }}>🎉</div>
-          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 20 }}>ทบทวนครบแล้ว!</div>
-          <div style={{ fontSize: 13.5, color: theme.muted }}>ตอนนี้ไม่มีอะไรที่ต้องรีบทบทวน</div>
+          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 20 }}>เยี่ยมมาก ทบทวนครบแล้ว!</div>
+          <div style={{ fontSize: 13.5, color: theme.muted }}>ตอนนี้ไม่มีอะไรต้องรีบทบทวนแล้ว ไปฝึกเนื้อหาใหม่กันต่อ</div>
           <button className="el-tap" onClick={() => router.push("/practice")} style={{ height: 48, padding: "0 22px", border: "none", borderRadius: 14, background: theme.btnBg, color: theme.btnText, fontSize: 14.5, fontWeight: 600 }}>ฝึกเนื้อหาใหม่</button>
         </div>
       )}

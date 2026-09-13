@@ -11,6 +11,10 @@ export function FeedbackSheet() {
   const score = lastPracticeScore ?? 0;
   const resultColor = correct ? theme.success : theme.error;
   const resultSoft = correct ? theme.successSoft : theme.errorSoft;
+  // Real score-aware framing — a near-miss (close bigram-similarity match)
+  // reads very differently to a learner than a fully wrong answer, so don't
+  // flatten both into the same discouraging line.
+  const resultMessage = correct ? "ถูกต้อง!" : score >= 40 ? "ใกล้เคียงแล้ว! ลองอีกนิดนะ" : "ยังไม่ตรงเป้า ลองใหม่อีกครั้ง";
 
   return (
     <div
@@ -27,7 +31,7 @@ export function FeedbackSheet() {
       <div style={{ width: 36, height: 4, borderRadius: 4, background: theme.track, margin: "0 auto 16px" }} />
       <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 30, color: resultColor }}>{score}%</div>
       <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 19, margin: "4px 0 14px" }}>
-        {correct ? "ถูกต้อง!" : "ยังไม่ตรงเป้า ลองใหม่ครั้งหน้า"}
+        {resultMessage}
       </div>
       <div style={{ textAlign: "left", background: resultSoft, borderRadius: 16, padding: "14px 16px", marginBottom: 20 }}>
         <div style={{ fontSize: 12, color: resultColor, marginBottom: 2 }}>คำสำคัญ</div>

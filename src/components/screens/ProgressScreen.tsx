@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useAppState } from "@/lib/appState";
 import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
@@ -13,6 +14,7 @@ import {
   masteryPctOverall,
   overallLevelNumber,
 } from "@/lib/progress/progressService";
+import { SkillIcon } from "@/components/ui/SkillIcon";
 
 export function ProgressScreen() {
   const { theme } = useTheme();
@@ -28,7 +30,11 @@ export function ProgressScreen() {
   const improvedSkill = computeMostImprovedSkill(recentPracticeResults);
 
   const skillRows = skillProfiles
-    ? Object.values(skillProfiles).map((p) => ({ name: SKILL_LABELS[p.skill], pct: p.score }))
+    ? Object.values(skillProfiles).map((p) => ({
+        name: SKILL_LABELS[p.skill],
+        pct: p.score,
+        icon: <SkillIcon skill={p.skill} size={14} color={theme.accentDeep} />,
+      }))
     : [];
   const patternRows = patternMastery.map((p) => ({ name: p.pattern, pct: p.masteryPct }));
 
@@ -155,7 +161,7 @@ export function ProgressScreen() {
   );
 }
 
-function ProgressCard({ theme, title, rows }: { theme: ReturnType<typeof useTheme>["theme"]; title: string; rows: { name: string; pct: number }[] }) {
+function ProgressCard({ theme, title, rows }: { theme: ReturnType<typeof useTheme>["theme"]; title: string; rows: { name: string; pct: number; icon?: ReactNode }[] }) {
   return (
     <div style={{ borderRadius: 22, padding: 18, background: theme.surface, boxShadow: theme.shadowCard }}>
       <div style={{ fontSize: 12.5, fontWeight: 600, marginBottom: 12 }}>{title}</div>
@@ -163,7 +169,10 @@ function ProgressCard({ theme, title, rows }: { theme: ReturnType<typeof useThem
         {rows.map((r) => (
           <div key={r.name}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
-              <span style={{ fontSize: 13.5, fontWeight: 500 }}>{r.name}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 500, display: "flex", alignItems: "center", gap: 7 }}>
+                {r.icon}
+                {r.name}
+              </span>
               <span style={{ fontSize: 12.5, color: theme.muted }}>{r.pct}%</span>
             </div>
             <div style={{ height: 6, background: theme.track, borderRadius: 999, overflow: "hidden" }}>

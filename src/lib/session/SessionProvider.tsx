@@ -198,12 +198,14 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       if (!user || !skillProfiles || !profile) return false;
       try {
         await recordPracticeResult(user.uid, input, skillProfiles, profile.difficultyPreference);
-        const [ls, pm, rs, recent] = await Promise.all([
+        const [sp, ls, pm, rs, recent] = await Promise.all([
+          getOrCreateSkillProfiles(user.uid),
           getLearningState(user.uid),
           getPatternMastery(user.uid),
           getReviewSchedule(user.uid),
           getRecentPracticeResults(user.uid, 200),
         ]);
+        setSkillProfiles(sp);
         setLearningState(ls);
         setPatternMastery(pm);
         setReviewSchedule(rs);

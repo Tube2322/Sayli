@@ -9,6 +9,7 @@ import { evaluateAnswer } from "@/lib/practice/evaluationService";
 import { QUESTION_BANK } from "@/lib/practice/questionBank";
 import { SKILL_LABELS } from "@/lib/sampleData";
 import { DIFFICULTY_META, REGISTER_META } from "@/lib/content/labels";
+import { SkillIcon } from "@/components/ui/SkillIcon";
 import { contextFromLearningState, selectNextQuestion } from "@/lib/practice/adaptiveEngine";
 import { buildMultipleChoiceOptions, isMultipleChoiceQuestion } from "@/lib/practice/multipleChoice";
 import { computeSessionRecap, computeSessionStreak } from "@/lib/progress/progressService";
@@ -116,7 +117,10 @@ export function SessionScreen() {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={theme.text} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
         </div>
         <div style={{ flex: 1, display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-          <span style={{ fontSize: 12, color: theme.muted }}>{question ? SKILL_LABELS[question.skill] : ""}</span>
+          <span style={{ fontSize: 12, color: theme.muted, display: "flex", alignItems: "center", gap: 5 }}>
+            {question && <SkillIcon skill={question.skill} size={13} color={theme.muted} />}
+            {question ? SKILL_LABELS[question.skill] : ""}
+          </span>
           {difficultyMeta && (
             <span style={{ fontSize: 11, fontWeight: 600, background: theme.track, borderRadius: 999, padding: "3px 8px" }}>
               {difficultyMeta.emoji} {difficultyMeta.label}
@@ -146,7 +150,7 @@ export function SessionScreen() {
         <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 28, lineHeight: 1.25 }}>
           &quot;{question?.en ?? ""}&quot;
         </div>
-        <div style={{ fontSize: 14, color: theme.muted }}>คุณจะแปลประโยคนี้เป็นภาษาไทยว่าอย่างไร?</div>
+        <div style={{ fontSize: 14, color: theme.muted }}>{mcMode ? "เลือกคำแปลที่ถูกต้อง" : "ลองแปลประโยคนี้เป็นภาษาไทยดูสิ"}</div>
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>

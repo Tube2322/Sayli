@@ -7,6 +7,7 @@ import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { ToggleSwitch } from "@/components/ui/ToggleSwitch";
+import { SkillIcon } from "@/components/ui/SkillIcon";
 import type { DifficultyPreference } from "@/lib/profile/types";
 
 const GOAL_OPTIONS = [5, 10, 15, 20];
@@ -150,7 +151,10 @@ export function SettingsScreen() {
         <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 14 }}>
           {skillRows.map((r) => (
             <div key={r.skill} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <span style={{ fontSize: 13.5, fontWeight: 500 }}>{r.name}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 500, display: "flex", alignItems: "center", gap: 8 }}>
+                <SkillIcon skill={r.skill} size={15} color={theme.accentDeep} />
+                {r.name}
+              </span>
               <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                 <span style={{ fontSize: 10, color: theme.muted }}>{r.confidence}</span>
                 <span style={{ fontSize: 12, fontWeight: 600, color: theme.accentDeep, background: theme.accentSoft, padding: "3px 9px", borderRadius: 999 }}>

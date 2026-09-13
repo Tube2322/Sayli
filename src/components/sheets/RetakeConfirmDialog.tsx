@@ -31,7 +31,7 @@ export function RetakeConfirmDialog() {
       >
         <div style={{ fontSize: 15, fontWeight: 600, marginBottom: 8 }}>ทำแบบประเมินใหม่?</div>
         <div style={{ fontSize: 13, color: theme.muted, lineHeight: 1.5, marginBottom: 18 }}>
-          การทำแบบประเมินใหม่อาจปรับแนวทางการเรียนที่แนะนำ ประวัติการเรียนของคุณจะไม่ถูกลบ
+          ผลประเมินใหม่จะช่วยปรับแนวทางการเรียนให้เหมาะกับคุณยิ่งขึ้น ส่วนประวัติการเรียนเดิมของคุณจะยังอยู่ครบ ไม่มีอะไรหายไป
         </div>
         <div style={{ display: "flex", gap: 10 }}>
           <button
