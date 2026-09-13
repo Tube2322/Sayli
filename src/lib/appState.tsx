@@ -28,7 +28,7 @@ export type ChooseMode = "all" | "each";
 export type QuizPhase = "answering" | "feedback";
 export type SheetKind = "hint" | "feedback" | "recap" | null;
 
-export type SessionRecapData = { answered: number; correctCount: number; avgScore: number; tierCounts: Record<"easy" | "medium" | "hard", number> };
+export type SessionRecapData = { answered: number; correctCount: number; avgScore: number; tierCounts: Record<"easy" | "medium" | "hard", number>; totalTimeMs?: number };
 
 type SkillScoreEntry = { skill: string; correct: boolean; tier: "easy" | "medium" | "hard" };
 
@@ -60,7 +60,17 @@ type AppState = {
   preferredSkill: Skill | null;
 };
 
-export type ActiveQuestion = { en: string; pattern: string; hintWord: string; hintMeaning: string };
+export type ActiveQuestion = {
+  en: string;
+  pattern: string;
+  hintWord: string;
+  hintMeaning: string;
+  referenceAnswer?: string;
+  userAnswer?: string;
+  direction?: "en-th" | "th-en";
+  grammarNote?: string;
+  usageContext?: string;
+};
 
 type AppStateContextValue = AppState & {
   toggleDark: () => void;

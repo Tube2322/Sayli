@@ -162,6 +162,7 @@ export type SessionRecap = {
   correctCount: number;
   avgScore: number;
   tierCounts: Record<DifficultyTier, number>;
+  totalTimeMs: number;
 };
 
 /** Summary of everything actually answered in one session — for the end-of-session recap card. */
@@ -172,10 +173,12 @@ export function computeSessionRecap(results: PracticeResult[], sessionId: string
     tierCounts[r.difficulty] += 1;
   });
   const avgScore = inSession.length > 0 ? Math.round(inSession.reduce((s, r) => s + r.score, 0) / inSession.length) : 0;
+  const totalTimeMs = inSession.reduce((sum, r) => sum + r.responseTimeMs, 0);
   return {
     answered: inSession.length,
     correctCount: inSession.filter((r) => r.correct).length,
     avgScore,
     tierCounts,
+    totalTimeMs,
   };
 }

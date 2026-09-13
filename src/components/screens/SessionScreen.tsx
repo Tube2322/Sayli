@@ -16,17 +16,20 @@ import { computeSessionRecap, computeSessionStreak } from "@/lib/progress/progre
 
 export function SessionScreen() {
   const { theme } = useTheme();
-  const { answer, setAnswer, openHint, checkAnswer, openRecap, consumePreferredSkill } = useAppState();
+  const { answer, setAnswer, openHint, checkAnswer, openRecap, preferredSkill, setPreferredSkill } = useAppState();
   const { submitPracticeResult, profileError, learningState, reviewSchedule, recentPracticeResults } = useSession();
   const router = useRouter();
   const [checking, setChecking] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const sessionIdRef = useRef<string>(crypto.randomUUID());
   const startedAtRef = useRef<number>(Date.now());
-  // Read once at mount: a skill chosen on the Practice hub (e.g. "Write")
-  // steers this whole session, but a fresh visit (Home's "ทำต่อ"/"ฝึกด่วน")
-  // has none set and falls back to plain adaptive selection.
-  const preferredSkillRef = useRef(consumePreferredSkill());
+  // Capture skill preference at mount time without calling setState during render.
+  // The effect below clears global state after mount so future sessions start fresh.
+  const preferredSkillRef = useRef(preferredSkill);
+  useEffect(() => {
+    if (preferredSkillRef.current) setPreferredSkill(null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Adaptive Engine picks the question once per session mount from the
   // learner's current Learning State (spec §Phase 7) — the same selection
@@ -36,10 +39,12 @@ export function SessionScreen() {
     [learningState, reviewSchedule]
   );
   const question = questionId ? QUESTION_BANK[questionId] : null;
+  const direction = question?.direction ?? "en-th";
+  const writingMode = direction === "th-en";
 
-  // Alternates typed/multiple-choice per question (deterministic, not random
-  // per render) — real distractors drawn from other real questions.
-  const mcMode = questionId ? isMultipleChoiceQuestion(questionId) : false;
+  // Writing questions always use typed mode (typing English, not picking from
+  // Thai options). All others alternate MC/typed by deterministic hash.
+  const mcMode = writingMode ? false : (questionId ? isMultipleChoiceQuestion(questionId) : false);
   const mcOptions = useMemo(
     () => (mcMode && question && questionId ? buildMultipleChoiceOptions(QUESTION_BANK, questionId, question) : []),
     [mcMode, question, questionId]
@@ -59,6 +64,12 @@ export function SessionScreen() {
     [recentPracticeResults]
   );
 
+  // How many questions answered so far in this session — shown as "ข้อที่ N"
+  const sessionAnswered = useMemo(
+    () => recentPracticeResults.filter((r) => r.sessionId === sessionIdRef.current).length,
+    [recentPracticeResults]
+  );
+
   const canCheck = mcMode ? !!selectedOption : !!answer.trim();
 
   const onCheckAnswer = async () => {
@@ -69,7 +80,12 @@ export function SessionScreen() {
       correct = selectedOption === question.referenceAnswer;
       score = correct ? 100 : 0;
     } else {
-      const evalResult = evaluateAnswer(answer, question.acceptableAnswers);
+      // Writing (th-en): evaluate user's English against question.en + acceptableAnswers.
+      // Standard (en-th): evaluate user's Thai against acceptableAnswers.
+      const targets = writingMode
+        ? [question.en, ...question.acceptableAnswers]
+        : question.acceptableAnswers;
+      const evalResult = evaluateAnswer(answer, targets);
       correct = evalResult.correct;
       score = evalResult.score;
     }
@@ -95,12 +111,17 @@ export function SessionScreen() {
       pattern: question.pattern,
       hintWord: question.hintWord,
       hintMeaning: question.hintMeaning,
+      referenceAnswer: question.referenceAnswer,
+      userAnswer: answerValue,
+      direction,
+      grammarNote: question.grammarNote,
+      usageContext: question.usageContext,
     });
   };
 
   const onOpenHint = () => {
     if (!question) return;
-    openHint({ en: question.en, pattern: question.pattern, hintWord: question.hintWord, hintMeaning: question.hintMeaning });
+    openHint({ en: question.en, pattern: question.pattern, hintWord: question.hintWord, hintMeaning: question.hintMeaning, referenceAnswer: question.referenceAnswer, direction, grammarNote: question.grammarNote, usageContext: question.usageContext });
   };
 
   const onEndSession = () => {
@@ -136,6 +157,9 @@ export function SessionScreen() {
             </span>
           )}
         </div>
+        <div style={{ fontSize: 12, fontWeight: 600, color: theme.mutedFaint, flexShrink: 0 }}>
+          ข้อที่ {sessionAnswered + 1}
+        </div>
         {sessionStreak >= 2 && (
           <div style={{ fontSize: 12.5, fontWeight: 700, color: theme.accentDeep, display: "flex", alignItems: "center", gap: 3, flexShrink: 0 }}>
             🔥 {sessionStreak}
@@ -151,10 +175,19 @@ export function SessionScreen() {
       </div>
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 22, textAlign: "center" }}>
+        {writingMode && (
+          <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".06em", color: theme.accentDeep, textTransform: "uppercase", opacity: 0.8 }}>
+            เขียนเป็นภาษาอังกฤษ
+          </div>
+        )}
         <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 28, lineHeight: 1.25 }}>
-          &quot;{question?.en ?? ""}&quot;
+          {writingMode
+            ? <span>&ldquo;{question?.referenceAnswer ?? ""}&rdquo;</span>
+            : <span>&ldquo;{question?.en ?? ""}&rdquo;</span>}
         </div>
-        <div style={{ fontSize: 14, color: theme.muted }}>{mcMode ? "เลือกคำแปลที่ถูกต้อง" : "ลองแปลประโยคนี้เป็นภาษาไทยดูสิ"}</div>
+        <div style={{ fontSize: 14, color: theme.muted }}>
+          {writingMode ? "พิมพ์ประโยคนี้เป็นภาษาอังกฤษ" : mcMode ? "เลือกคำแปลที่ถูกต้อง" : "ลองแปลประโยคนี้เป็นภาษาไทยดูสิ"}
+        </div>
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>

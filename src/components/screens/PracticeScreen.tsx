@@ -1,17 +1,20 @@
 "use client";
 
+import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/session/SessionProvider";
 import { useAppState } from "@/lib/appState";
 import { useTheme } from "@/lib/useTheme";
 import { SKILL_LABELS } from "@/lib/sampleData";
 import type { Skill } from "@/lib/skill/types";
+import { computeStreakDays } from "@/lib/progress/progressService";
 
 export function PracticeScreen() {
   const { theme } = useTheme();
   const router = useRouter();
-  const { learningState } = useSession();
+  const { learningState, recentPracticeResults } = useSession();
   const { setPreferredSkill } = useAppState();
+  const streakDays = useMemo(() => computeStreakDays(recentPracticeResults), [recentPracticeResults]);
   const go = () => router.push("/session");
   // Each labeled row steers the adaptive engine toward that real skill
   // (a genuine preference, not just a shared button to the same screen) —
@@ -26,9 +29,17 @@ export function PracticeScreen() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 18, flex: 1, paddingBottom: 100 }}>
-      <div>
-        <h1 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 26, margin: "0 0 4px" }}>ฝึกฝน</h1>
-        <div style={{ fontSize: 13.5, color: theme.muted }}>เลือกวิธีที่คุณอยากฝึก</div>
+      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+        <div>
+          <h1 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 26, margin: "0 0 4px" }}>ฝึกฝน</h1>
+          <div style={{ fontSize: 13.5, color: theme.muted }}>เลือกวิธีที่คุณอยากฝึก</div>
+        </div>
+        {streakDays >= 1 && (
+          <div style={{ display: "flex", alignItems: "center", gap: 4, background: streakDays >= 7 ? theme.warningSoft : theme.accentSoft, borderRadius: 999, padding: "6px 12px", flexShrink: 0 }}>
+            <span style={{ fontSize: 15 }}>🔥</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: streakDays >= 7 ? theme.warning : theme.accentDeep }}>{streakDays} วัน</span>
+          </div>
+        )}
       </div>
 
       {weakSkills.length > 0 && (
