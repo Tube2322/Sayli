@@ -61,20 +61,7 @@ export function AuthPageShell({
           border: `1px solid ${theme.border}`,
         }}
       >
-        <div
-          style={{
-            width: 56, height: 56, borderRadius: 20, margin: "0 auto 20px",
-            background: "linear-gradient(135deg, #7C5CFC, #A78BFA)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 8px 20px rgba(124,92,252,0.35)",
-          }}
-        >
-          {/* Two overlapping speech bubbles — conversation practice, the core of the app */}
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-            <path d="M9 3.5c-3.6 0-6.5 2.5-6.5 5.6 0 1.7.9 3.3 2.4 4.3l-.7 2.7 2.9-1.3c.6.15 1.2.23 1.9.23 3.6 0 6.5-2.5 6.5-5.6S12.6 3.5 9 3.5z" fill="#fff" opacity=".55" />
-            <path d="M15.2 8.3c3 .3 5.3 2.6 5.3 5.3 0 1.5-.7 2.8-1.9 3.8l.5 2.4-2.5-1.1c-.5.13-1 .2-1.6.2-3.2 0-5.8-2.2-5.9-5" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-          </svg>
-        </div>
+        <StudyingMascot />
 
         <h1
           style={{
@@ -125,6 +112,64 @@ export function GoogleSignInButton({ onClick, disabled, label }: { onClick: () =
       <GoogleGlyph />
       {label}
     </button>
+  );
+}
+
+// Cute chibi mascot sitting cross-legged, studying on a phone — replaces the
+// old text/icon logo mark. Gentle bob + glowing screen + floating sparkle,
+// all pure CSS keyframes scoped inside the SVG so no JS/animation library.
+function StudyingMascot() {
+  return (
+    <div
+      style={{
+        width: 96, height: 96, borderRadius: 28, margin: "0 auto 16px",
+        background: "linear-gradient(160deg, #F1EDFF, #E7E0FF)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        boxShadow: "0 8px 20px rgba(124,92,252,0.18)", overflow: "hidden",
+      }}
+    >
+      <svg width="76" height="76" viewBox="0 0 100 100">
+        <style>{`
+          .el-mascot-body { animation: elMascotBob 2.6s ease-in-out infinite; transform-origin: 50px 78px; }
+          .el-mascot-sparkle { animation: elMascotSparkle 1.8s ease-in-out infinite; transform-origin: 78px 26px; }
+          .el-mascot-screen { animation: elMascotGlow 2.2s ease-in-out infinite; }
+          @keyframes elMascotBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2.5px); } }
+          @keyframes elMascotSparkle { 0%,100% { opacity: .25; transform: scale(0.8) translateY(0); } 50% { opacity: 1; transform: scale(1.15) translateY(-3px); } }
+          @keyframes elMascotGlow { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+        `}</style>
+
+        <g className="el-mascot-body">
+          {/* seat shadow */}
+          <ellipse cx="50" cy="82" rx="22" ry="4.5" fill="#7C5CFC" opacity=".14" />
+          {/* crossed legs */}
+          <path d="M30 78c4-6 14-8 20-6" stroke="#5B3DF0" strokeWidth="7" strokeLinecap="round" fill="none" opacity=".9" />
+          <path d="M70 78c-4-6-14-8-20-6" stroke="#7C5CFC" strokeWidth="7" strokeLinecap="round" fill="none" opacity=".9" />
+          {/* torso */}
+          <rect x="34" y="46" width="32" height="30" rx="14" fill="#7C5CFC" />
+          {/* arms holding phone */}
+          <path d="M36 58c-4 3-6 8-5 12" stroke="#7C5CFC" strokeWidth="6" strokeLinecap="round" fill="none" />
+          <path d="M64 58c4 3 6 8 5 12" stroke="#7C5CFC" strokeWidth="6" strokeLinecap="round" fill="none" />
+          {/* phone */}
+          <rect x="39" y="55" width="22" height="30" rx="5" fill="#fff" stroke="#5B3DF0" strokeWidth="2" />
+          <rect className="el-mascot-screen" x="42" y="59" width="16" height="10" rx="2" fill="#A78BFA" />
+          <rect x="42" y="72" width="16" height="2.4" rx="1.2" fill="#ECEAF3" />
+          <rect x="42" y="77" width="10" height="2.4" rx="1.2" fill="#ECEAF3" />
+          {/* head */}
+          <circle cx="50" cy="34" r="16" fill="#FFDDBB" />
+          {/* hair */}
+          <path d="M34 32c-1-11 8-19 16-19s17 8 16 19c-3-3-6-5-9-5.5-1.5 2-4 3.5-7 3.5s-5.5-1.5-7-3.5c-3 .5-6 2.5-9 5.5z" fill="#3A2C22" />
+          {/* face */}
+          <circle cx="45" cy="35" r="1.6" fill="#3A2C22" />
+          <circle cx="55" cy="35" r="1.6" fill="#3A2C22" />
+          <path d="M46 40c1.5 1.6 6.5 1.6 8 0" stroke="#3A2C22" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+          <circle cx="41" cy="38" r="2.2" fill="#FF9EB0" opacity=".55" />
+          <circle cx="59" cy="38" r="2.2" fill="#FF9EB0" opacity=".55" />
+        </g>
+
+        {/* floating sparkle */}
+        <path className="el-mascot-sparkle" d="M78 20l1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6z" fill="#4ADE9A" />
+      </svg>
+    </div>
   );
 }
 
