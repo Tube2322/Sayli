@@ -61,7 +61,7 @@ export function AuthPageShell({
           border: `1px solid ${theme.border}`,
         }}
       >
-        <StudyingMascot />
+        <SleepingCatMascot />
 
         <h1
           style={{
@@ -116,10 +116,9 @@ export function GoogleSignInButton({ onClick, disabled, label }: { onClick: () =
 }
 
 // Bold-outline flat-illustration mascot (Icons8-sticker style, drawn as our
-// own art) sitting cross-legged, studying on a phone — replaces the old
-// text/icon logo mark. Gentle bob + glowing screen + floating sparkle, all
-// pure CSS keyframes scoped inside the SVG so no JS/animation library.
-function StudyingMascot() {
+// own art): a cat curled up asleep. Gentle breathing bob + floating "Zzz",
+// all pure CSS keyframes scoped inside the SVG so no JS/animation library.
+function SleepingCatMascot() {
   return (
     <div
       style={{
@@ -129,55 +128,50 @@ function StudyingMascot() {
         boxShadow: "0 8px 20px rgba(124,92,252,0.18)", overflow: "hidden",
       }}
     >
-      <svg width="76" height="76" viewBox="0 0 100 100">
+      <svg width="80" height="80" viewBox="0 0 100 100">
         <style>{`
-          .el-mascot-body { animation: elMascotBob 2.6s ease-in-out infinite; transform-origin: 50px 78px; }
-          .el-mascot-sparkle { animation: elMascotSparkle 1.8s ease-in-out infinite; transform-origin: 78px 26px; }
-          .el-mascot-screen { animation: elMascotGlow 2.2s ease-in-out infinite; }
-          @keyframes elMascotBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-2.5px); } }
-          @keyframes elMascotSparkle { 0%,100% { opacity: .25; transform: scale(0.8) translateY(0); } 50% { opacity: 1; transform: scale(1.15) translateY(-3px); } }
-          @keyframes elMascotGlow { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+          .el-mascot-body { animation: elMascotBreathe 3.2s ease-in-out infinite; transform-origin: 50px 64px; }
+          .el-mascot-zzz { animation: elMascotZzz 2.6s ease-in-out infinite; transform-origin: 74px 34px; }
+          @keyframes elMascotBreathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.035); } }
+          @keyframes elMascotZzz { 0%,20% { opacity: 0; transform: translateY(4px) scale(.8); } 50% { opacity: 1; transform: translateY(-3px) scale(1); } 100% { opacity: 0; transform: translateY(-12px) scale(1.05); } }
         `}</style>
 
         <g className="el-mascot-body" strokeLinejoin="round" strokeLinecap="round">
-          {/* seat shadow */}
-          <ellipse cx="50" cy="83" rx="23" ry="4.5" fill="#16151A" opacity=".12" />
+          {/* ground shadow */}
+          <ellipse cx="50" cy="76" rx="28" ry="5" fill="#16151A" opacity=".12" />
 
-          {/* crossed legs — outline pass then flat-color pass, Icons8-style bold outline */}
-          <path d="M30 78c4-6 14-8 20-6" stroke="#16151A" strokeWidth="10" fill="none" />
-          <path d="M70 78c-4-6-14-8-20-6" stroke="#16151A" strokeWidth="10" fill="none" />
-          <path d="M30 78c4-6 14-8 20-6" stroke="#5B3DF0" strokeWidth="6.5" fill="none" />
-          <path d="M70 78c-4-6-14-8-20-6" stroke="#7C5CFC" strokeWidth="6.5" fill="none" />
+          {/* tail curled around the body */}
+          <path d="M72 62c9-2 13-11 8-18-3-4-8-5-11-2" fill="none" stroke="#16151A" strokeWidth="9" />
+          <path d="M72 62c9-2 13-11 8-18-3-4-8-5-11-2" fill="none" stroke="#F5D9B8" strokeWidth="5.5" />
 
-          {/* arms — outline pass then flat-color pass */}
-          <path d="M36 58c-4 3-6 8-5 12" stroke="#16151A" strokeWidth="9" fill="none" />
-          <path d="M64 58c4 3 6 8 5 12" stroke="#16151A" strokeWidth="9" fill="none" />
-          <path d="M36 58c-4 3-6 8-5 12" stroke="#7C5CFC" strokeWidth="5.5" fill="none" />
-          <path d="M64 58c4 3 6 8 5 12" stroke="#7C5CFC" strokeWidth="5.5" fill="none" />
+          {/* body — curled loaf shape, lying down */}
+          <path
+            d="M20 66c-2-16 12-28 30-28s32 12 30 28c-1 6-8 10-30 10s-29-4-30-10z"
+            fill="#F5D9B8" stroke="#16151A" strokeWidth="3" paintOrder="stroke"
+          />
 
-          {/* torso */}
-          <rect x="34" y="46" width="32" height="30" rx="14" fill="#7C5CFC" stroke="#16151A" strokeWidth="3" paintOrder="stroke" />
+          {/* ears */}
+          <path d="M28 42l-3-11 10 6z" fill="#F5D9B8" stroke="#16151A" strokeWidth="3" paintOrder="stroke" />
+          <path d="M46 38l1-11 8 8z" fill="#F5D9B8" stroke="#16151A" strokeWidth="3" paintOrder="stroke" />
+          <path d="M28 40l-1.6-6 5.4 3.4z" fill="#FF9EB0" opacity=".7" />
+          <path d="M46.5 37l.6-6 4.6 4.6z" fill="#FF9EB0" opacity=".7" />
 
-          {/* phone */}
-          <rect x="39" y="55" width="22" height="30" rx="5" fill="#fff" stroke="#16151A" strokeWidth="3" paintOrder="stroke" />
-          <rect className="el-mascot-screen" x="42" y="59" width="16" height="10" rx="2" fill="#A78BFA" stroke="#16151A" strokeWidth="2" paintOrder="stroke" />
-          <rect x="42" y="72" width="16" height="2.6" rx="1.3" fill="#16151A" opacity=".7" />
-          <rect x="42" y="77" width="10" height="2.6" rx="1.3" fill="#16151A" opacity=".7" />
+          {/* closed sleepy eyes */}
+          <path d="M31 50c1.5 1.6 4 1.6 5.5 0" stroke="#16151A" strokeWidth="2" fill="none" />
+          <path d="M42 50c1.5 1.6 4 1.6 5.5 0" stroke="#16151A" strokeWidth="2" fill="none" />
+          {/* nose + mouth */}
+          <path d="M38 54l1.6 1.4 1.6-1.4z" fill="#FF9EB0" />
+          <path d="M39.6 55.4v1.6M39.6 57c-1.4 0-2.4.8-2.8 1.8M39.6 57c1.4 0 2.4.8 2.8 1.8" stroke="#16151A" strokeWidth="1.4" fill="none" />
+          {/* whiskers */}
+          <path d="M18 52h-8M18 56h-7.4M60 52h8M60 56h7.4" stroke="#16151A" strokeWidth="1.4" opacity=".55" />
 
-          {/* head */}
-          <circle cx="50" cy="34" r="16" fill="#FFDDBB" stroke="#16151A" strokeWidth="3" paintOrder="stroke" />
-          {/* hair */}
-          <path d="M34 32c-1-11 8-19 16-19s17 8 16 19c-3-3-6-5-9-5.5-1.5 2-4 3.5-7 3.5s-5.5-1.5-7-3.5c-3 .5-6 2.5-9 5.5z" fill="#3A2C22" stroke="#16151A" strokeWidth="2.4" paintOrder="stroke" />
-          {/* face */}
-          <circle cx="45" cy="35" r="1.8" fill="#16151A" />
-          <circle cx="55" cy="35" r="1.8" fill="#16151A" />
-          <path d="M46 40c1.5 1.6 6.5 1.6 8 0" stroke="#16151A" strokeWidth="2" fill="none" />
-          <circle cx="41" cy="38" r="2.2" fill="#FF9EB0" opacity=".6" />
-          <circle cx="59" cy="38" r="2.2" fill="#FF9EB0" opacity=".6" />
+          {/* front paw tucked in */}
+          <ellipse cx="30" cy="70" rx="7" ry="4.5" fill="#FFF0DC" stroke="#16151A" strokeWidth="2.4" paintOrder="stroke" />
         </g>
 
-        {/* floating sparkle */}
-        <path className="el-mascot-sparkle" d="M78 20l1.6 4.4 4.4 1.6-4.4 1.6-1.6 4.4-1.6-4.4-4.4-1.6 4.4-1.6z" fill="#4ADE9A" stroke="#16151A" strokeWidth="1.5" strokeLinejoin="round" paintOrder="stroke" />
+        {/* floating Zzz */}
+        <text className="el-mascot-zzz" x="72" y="30" fontFamily="'Barlow Condensed', sans-serif" fontWeight="700" fontSize="14" fill="#A78BFA" stroke="#16151A" strokeWidth="0.6">Z</text>
+        <text x="80" y="20" fontFamily="'Barlow Condensed', sans-serif" fontWeight="700" fontSize="9" fill="#A78BFA" opacity=".55">z</text>
       </svg>
     </div>
   );
