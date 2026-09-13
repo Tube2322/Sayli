@@ -66,11 +66,14 @@ export function AuthPageShell({
             width: 56, height: 56, borderRadius: 20, margin: "0 auto 20px",
             background: "linear-gradient(135deg, #7C5CFC, #A78BFA)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 700, fontSize: 22, color: "#fff",
             boxShadow: "0 8px 20px rgba(124,92,252,0.35)",
           }}
         >
-          EL
+          {/* Two overlapping speech bubbles — conversation practice, the core of the app */}
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+            <path d="M9 3.5c-3.6 0-6.5 2.5-6.5 5.6 0 1.7.9 3.3 2.4 4.3l-.7 2.7 2.9-1.3c.6.15 1.2.23 1.9.23 3.6 0 6.5-2.5 6.5-5.6S12.6 3.5 9 3.5z" fill="#fff" opacity=".55" />
+            <path d="M15.2 8.3c3 .3 5.3 2.6 5.3 5.3 0 1.5-.7 2.8-1.9 3.8l.5 2.4-2.5-1.1c-.5.13-1 .2-1.6.2-3.2 0-5.8-2.2-5.9-5" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          </svg>
         </div>
 
         <h1
