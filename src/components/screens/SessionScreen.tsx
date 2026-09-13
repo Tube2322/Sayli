@@ -1,47 +1,44 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAppState } from "@/lib/appState";
 import { useSession } from "@/lib/session/SessionProvider";
 import { useTheme } from "@/lib/useTheme";
 import { evaluateAnswer } from "@/lib/practice/evaluationService";
 import { QUESTION_BANK } from "@/lib/practice/questionBank";
-
-// This prototype still has exactly one practice exercise (no content bank
-// yet — see PracticeScreen). It's tagged honestly as an "understanding"
-// exercise (grasping the meaning of an English sentence) so real Practice
-// Results/Learning State have a real skill to attach to.
-const QUESTION_ID = "session-demo-didnt-mean-to-hurt-you";
-const REFERENCE_ANSWER = "ฉันไม่ได้ตั้งใจทำให้คุณเจ็บ";
-const PATTERN = QUESTION_BANK[QUESTION_ID].pattern;
-const ACCEPTABLE_ANSWERS = [
-  "ฉันไม่ได้ตั้งใจทำให้คุณเจ็บ",
-  "ฉันไม่ได้ตั้งใจจะทำร้ายคุณ",
-  "ฉันไม่ได้ตั้งใจทำร้ายคุณ",
-  "ฉันไม่ได้หมายความจะทำร้ายคุณ",
-];
+import { contextFromLearningState, selectNextQuestion } from "@/lib/practice/adaptiveEngine";
 
 export function SessionScreen() {
   const { theme } = useTheme();
   const { answer, setAnswer, openHint, checkAnswer } = useAppState();
-  const { submitPracticeResult, profileError } = useSession();
+  const { submitPracticeResult, profileError, learningState } = useSession();
   const router = useRouter();
   const [checking, setChecking] = useState(false);
   const sessionIdRef = useRef<string>(crypto.randomUUID());
   const startedAtRef = useRef<number>(Date.now());
 
+  // Adaptive Engine picks the question once per session mount from the
+  // learner's current Learning State (spec §Phase 7) — the same selection
+  // "ฝึกด่วน" (Quick Practice) relies on, since both just land here.
+  const questionId = useMemo(
+    () => selectNextQuestion(QUESTION_BANK, contextFromLearningState(learningState)),
+    [learningState]
+  );
+  const question = questionId ? QUESTION_BANK[questionId] : null;
+
   const onCheckAnswer = async () => {
-    const { correct, score } = evaluateAnswer(answer, ACCEPTABLE_ANSWERS);
+    if (!question || !questionId) return;
+    const { correct, score } = evaluateAnswer(answer, question.acceptableAnswers);
     setChecking(true);
     await submitPracticeResult({
       sessionId: sessionIdRef.current,
-      questionId: QUESTION_ID,
-      skill: "understanding",
-      difficulty: "medium",
+      questionId,
+      skill: question.skill,
+      difficulty: question.difficulty,
       answer,
-      referenceAnswer: REFERENCE_ANSWER,
-      pattern: PATTERN,
+      referenceAnswer: question.referenceAnswer,
+      pattern: question.pattern,
       evaluation: correct ? "correct" : "incorrect",
       score,
       correct,
@@ -72,7 +69,7 @@ export function SessionScreen() {
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 22, textAlign: "center" }}>
         <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 28, lineHeight: 1.25 }}>
-          &quot;I didn&apos;t mean<br />to hurt you.&quot;
+          &quot;{question?.en ?? ""}&quot;
         </div>
         <div style={{ fontSize: 14, color: theme.muted }}>คุณจะแปลประโยคนี้เป็นภาษาไทยว่าอย่างไร?</div>
       </div>
@@ -102,9 +99,9 @@ export function SessionScreen() {
           </button>
           <button
             className="el-tap"
-            disabled={checking || !answer.trim()}
+            disabled={checking || !answer.trim() || !question}
             onClick={onCheckAnswer}
-            style={{ flex: 1, height: 52, border: "none", borderRadius: 16, background: theme.btnBg, color: theme.btnText, fontSize: 16, fontWeight: 600, opacity: checking || !answer.trim() ? 0.6 : 1 }}
+            style={{ flex: 1, height: 52, border: "none", borderRadius: 16, background: theme.btnBg, color: theme.btnText, fontSize: 16, fontWeight: 600, opacity: checking || !answer.trim() || !question ? 0.6 : 1 }}
           >
             {checking ? "กำลังตรวจ..." : "ตรวจคำตอบ"}
           </button>
