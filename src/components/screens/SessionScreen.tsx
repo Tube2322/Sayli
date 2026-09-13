@@ -41,6 +41,7 @@ export function SessionScreen() {
   const question = questionId ? QUESTION_BANK[questionId] : null;
   const direction = question?.direction ?? "en-th";
   const writingMode = direction === "th-en";
+  const listeningMode = question?.skill === "listening";
 
   // Writing questions always use typed mode (typing English, not picking from
   // Thai options). All others alternate MC/typed by deterministic hash.
@@ -58,6 +59,26 @@ export function SessionScreen() {
     startedAtRef.current = Date.now();
     setSelectedOption(null);
   }, [questionId]);
+
+  // Listening skill: speak the EN sentence aloud via the browser's built-in
+  // Web Speech API — real synthesized audio, no audio files or server TTS
+  // needed. Auto-plays once per question; the replay button re-triggers it.
+  const speak = (text: string) => {
+    if (typeof window === "undefined" || !window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = "en-US";
+    utter.rate = 0.95;
+    window.speechSynthesis.speak(utter);
+  };
+
+  useEffect(() => {
+    if (listeningMode && question) speak(question.en);
+    return () => {
+      if (typeof window !== "undefined" && window.speechSynthesis) window.speechSynthesis.cancel();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionId, listeningMode]);
 
   const sessionStreak = useMemo(
     () => computeSessionStreak(recentPracticeResults, sessionIdRef.current),
@@ -180,13 +201,36 @@ export function SessionScreen() {
             เขียนเป็นภาษาอังกฤษ
           </div>
         )}
-        <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 28, lineHeight: 1.25 }}>
-          {writingMode
-            ? <span>&ldquo;{question?.referenceAnswer ?? ""}&rdquo;</span>
-            : <span>&ldquo;{question?.en ?? ""}&rdquo;</span>}
-        </div>
+        {listeningMode ? (
+          <>
+            <button
+              className="el-tap"
+              onClick={() => question && speak(question.en)}
+              style={{
+                width: 84, height: 84, borderRadius: "50%", border: "none",
+                background: theme.btnBg, color: theme.btnText, display: "flex",
+                alignItems: "center", justifyContent: "center", boxShadow: theme.shadowCard,
+              }}
+              aria-label="ฟังเสียงอีกครั้ง"
+            >
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M11 5L6 9H3v6h3l5 4V5z" />
+                <path d="M15.5 8.5a5 5 0 010 7M18.5 6a9 9 0 010 12" />
+              </svg>
+            </button>
+            <div style={{ fontSize: 13, color: theme.muted }}>แตะเพื่อฟังอีกครั้ง</div>
+          </>
+        ) : (
+          <div style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 28, lineHeight: 1.25 }}>
+            {writingMode
+              ? <span>&ldquo;{question?.referenceAnswer ?? ""}&rdquo;</span>
+              : <span>&ldquo;{question?.en ?? ""}&rdquo;</span>}
+          </div>
+        )}
         <div style={{ fontSize: 14, color: theme.muted }}>
-          {writingMode ? "พิมพ์ประโยคนี้เป็นภาษาอังกฤษ" : mcMode ? "เลือกคำแปลที่ถูกต้อง" : "ลองแปลประโยคนี้เป็นภาษาไทยดูสิ"}
+          {listeningMode ? (mcMode ? "ฟังแล้วเลือกคำแปลที่ถูกต้อง" : "ฟังแล้วแปลเป็นภาษาไทยดูสิ")
+            : writingMode ? "พิมพ์ประโยคนี้เป็นภาษาอังกฤษ"
+            : mcMode ? "เลือกคำแปลที่ถูกต้อง" : "ลองแปลประโยคนี้เป็นภาษาไทยดูสิ"}
         </div>
       </div>
 
