@@ -13,7 +13,7 @@ import { contextFromLearningState, selectNextQuestion } from "@/lib/practice/ada
 export function SessionScreen() {
   const { theme } = useTheme();
   const { answer, setAnswer, openHint, checkAnswer } = useAppState();
-  const { submitPracticeResult, profileError, learningState } = useSession();
+  const { submitPracticeResult, profileError, learningState, reviewSchedule } = useSession();
   const router = useRouter();
   const [checking, setChecking] = useState(false);
   const sessionIdRef = useRef<string>(crypto.randomUUID());
@@ -23,8 +23,8 @@ export function SessionScreen() {
   // learner's current Learning State (spec §Phase 7) — the same selection
   // "ฝึกด่วน" (Quick Practice) relies on, since both just land here.
   const questionId = useMemo(
-    () => selectNextQuestion(QUESTION_BANK, contextFromLearningState(learningState)),
-    [learningState]
+    () => selectNextQuestion(QUESTION_BANK, contextFromLearningState(learningState, reviewSchedule)),
+    [learningState, reviewSchedule]
   );
   const question = questionId ? QUESTION_BANK[questionId] : null;
 

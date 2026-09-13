@@ -32,8 +32,8 @@ export function HomeScreen() {
   const missionDone = missionItems.filter((m) => m.done).length;
 
   const nextQuestionId = useMemo(
-    () => selectNextQuestion(QUESTION_BANK, contextFromLearningState(learningState)),
-    [learningState]
+    () => selectNextQuestion(QUESTION_BANK, contextFromLearningState(learningState, reviewSchedule)),
+    [learningState, reviewSchedule]
   );
   const nextQuestion = nextQuestionId ? QUESTION_BANK[nextQuestionId] : null;
 

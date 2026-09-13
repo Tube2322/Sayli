@@ -1,0 +1,2404 @@
+[
+  {
+    "questionId": "tatoeba-13596839",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "He bought the flowers.",
+    "pattern": "flowers",
+    "referenceAnswer": "เขาซื้อดอกไม้แล้ว",
+    "acceptableAnswers": [
+      "เขาซื้อดอกไม้แล้ว"
+    ],
+    "hintWord": "flowers",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Babelball"
+  },
+  {
+    "questionId": "tatoeba-13572409",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Everyone, please stay still.",
+    "pattern": "everyone",
+    "referenceAnswer": "ทุกคนกรุณาอยู่นิ่ง",
+    "acceptableAnswers": [
+      "ทุกคนกรุณาอยู่นิ่ง"
+    ],
+    "hintWord": "everyone",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-12933887",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "The results are perfect.",
+    "pattern": "results",
+    "referenceAnswer": "ผลลัพธ์ที่สมบูรณ์แบบ",
+    "acceptableAnswers": [
+      "ผลลัพธ์ที่สมบูรณ์แบบ"
+    ],
+    "hintWord": "results",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "rul"
+  },
+  {
+    "questionId": "tatoeba-12896213",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Society will be doomed.",
+    "pattern": "society",
+    "referenceAnswer": "สังคมจะถึงคราวล่มจม",
+    "acceptableAnswers": [
+      "สังคมจะถึงคราวล่มจม"
+    ],
+    "hintWord": "society",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Josephlingo"
+  },
+  {
+    "questionId": "tatoeba-12896175",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Society will be ruined.",
+    "pattern": "society",
+    "referenceAnswer": "สังคมจะถึงคราวล่มจม",
+    "acceptableAnswers": [
+      "สังคมจะถึงคราวล่มจม"
+    ],
+    "hintWord": "society",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Josephlingo"
+  },
+  {
+    "questionId": "tatoeba-12794430",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Oh, I remember now.",
+    "pattern": "remember",
+    "referenceAnswer": "อ๋อ นึกออกแล้ว",
+    "acceptableAnswers": [
+      "อ๋อ นึกออกแล้ว"
+    ],
+    "hintWord": "remember",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-12546763",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Is there enough sauce?",
+    "pattern": "enough",
+    "referenceAnswer": "ซอสพอไหม",
+    "acceptableAnswers": [
+      "ซอสพอไหม"
+    ],
+    "hintWord": "enough",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-12507393",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "He translated a poem.",
+    "pattern": "translated",
+    "referenceAnswer": "เขาแปลบทกวี",
+    "acceptableAnswers": [
+      "เขาแปลบทกวี"
+    ],
+    "hintWord": "translated",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Pacific"
+  },
+  {
+    "questionId": "tatoeba-12487238",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "This is a sample.",
+    "pattern": "sample",
+    "referenceAnswer": "นี่เป็นตัวอย่างทดลอง",
+    "acceptableAnswers": [
+      "นี่เป็นตัวอย่างทดลอง"
+    ],
+    "hintWord": "sample",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "vxern"
+  },
+  {
+    "questionId": "tatoeba-12481087",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Further analysis is required.",
+    "pattern": "analysis",
+    "referenceAnswer": "จะต้องมีการวิเคราะห์มากกว่านี้",
+    "acceptableAnswers": [
+      "จะต้องมีการวิเคราะห์มากกว่านี้"
+    ],
+    "hintWord": "analysis",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Lumi"
+  },
+  {
+    "questionId": "tatoeba-12389003",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "That will not happen.",
+    "pattern": "happen",
+    "referenceAnswer": "มันจะไม่เกิดขึ้น",
+    "acceptableAnswers": [
+      "มันจะไม่เกิดขึ้น"
+    ],
+    "hintWord": "happen",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Adelpa"
+  },
+  {
+    "questionId": "tatoeba-12351053",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "I dissent from you.",
+    "pattern": "dissent",
+    "referenceAnswer": "ฉันไม่เห็นด้วยกับคุณ",
+    "acceptableAnswers": [
+      "ฉันไม่เห็นด้วยกับคุณ"
+    ],
+    "hintWord": "dissent",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "carlosalberto"
+  },
+  {
+    "questionId": "tatoeba-12267749",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Stop talking about Tom!",
+    "pattern": "talking",
+    "referenceAnswer": "เลิกพูดเรื่องทอมได้แล้ว",
+    "acceptableAnswers": [
+      "เลิกพูดเรื่องทอมได้แล้ว"
+    ],
+    "hintWord": "talking",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Miktsoanit"
+  },
+  {
+    "questionId": "tatoeba-12120557",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "You sound really happy.",
+    "pattern": "really",
+    "referenceAnswer": "ดูเธอมีความสุข",
+    "acceptableAnswers": [
+      "ดูเธอมีความสุข"
+    ],
+    "hintWord": "really",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-12090561",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "No one said that.",
+    "pattern": "said",
+    "referenceAnswer": "ไม่มีใครพูดสิ่งนั้น",
+    "acceptableAnswers": [
+      "ไม่มีใครพูดสิ่งนั้น"
+    ],
+    "hintWord": "said",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "shekitten"
+  },
+  {
+    "questionId": "tatoeba-12088235",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Is there anything cheaper?",
+    "pattern": "anything",
+    "referenceAnswer": "ที่ราคาถูกกว่านี้มีไหม",
+    "acceptableAnswers": [
+      "ที่ราคาถูกกว่านี้มีไหม"
+    ],
+    "hintWord": "anything",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "sundown"
+  },
+  {
+    "questionId": "tatoeba-12058734",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "I cannot find it.",
+    "pattern": "cannot",
+    "referenceAnswer": "ผมหาไม่เจอ",
+    "acceptableAnswers": [
+      "ผมหาไม่เจอ"
+    ],
+    "hintWord": "cannot",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Mediabat"
+  },
+  {
+    "questionId": "tatoeba-11857219",
+    "skill": "understanding",
+    "difficulty": "hard",
+    "register": "casual",
+    "en": "Do elephants climb trees?",
+    "pattern": "elephants",
+    "referenceAnswer": "ช้างเนี่ย ปีนต้นไหมใช่ไหม",
+    "acceptableAnswers": [
+      "ช้างเนี่ย ปีนต้นไหมใช่ไหม"
+    ],
+    "hintWord": "elephants",
+    "hintMeaning": "",
+    "sourceLicense": "CC0 1.0",
+    "sourceAttribution": "shekitten"
+  },
+  {
+    "questionId": "tatoeba-11827692",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "My father is coming.",
+    "pattern": "father",
+    "referenceAnswer": "พ่อกำลังมา",
+    "acceptableAnswers": [
+      "พ่อกำลังมา"
+    ],
+    "hintWord": "father",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "ddnktr"
+  },
+  {
+    "questionId": "tatoeba-11787903",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Are these your pencils?",
+    "pattern": "pencils",
+    "referenceAnswer": "นี่คือดินสอของคุณใช่ไหม",
+    "acceptableAnswers": [
+      "นี่คือดินสอของคุณใช่ไหม"
+    ],
+    "hintWord": "pencils",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CM"
+  },
+  {
+    "questionId": "tatoeba-11344714",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "I like old things.",
+    "pattern": "things",
+    "referenceAnswer": "ฉันชอบของเก่า",
+    "acceptableAnswers": [
+      "ฉันชอบของเก่า"
+    ],
+    "hintWord": "things",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-11218012",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "We have eight grandkids.",
+    "pattern": "grandkids",
+    "referenceAnswer": "มีหลานแปดคน",
+    "acceptableAnswers": [
+      "มีหลานแปดคน"
+    ],
+    "hintWord": "grandkids",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "ddnktr"
+  },
+  {
+    "questionId": "tatoeba-11201099",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Is it happening again?",
+    "pattern": "happening",
+    "referenceAnswer": "อีกแล้วหรือ",
+    "acceptableAnswers": [
+      "อีกแล้วหรือ"
+    ],
+    "hintWord": "happening",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "sundown"
+  },
+  {
+    "questionId": "tatoeba-11134562",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "What is the answer?",
+    "pattern": "answer",
+    "referenceAnswer": "คำตอบคืออะไร",
+    "acceptableAnswers": [
+      "คำตอบคืออะไร"
+    ],
+    "hintWord": "answer",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "carlosalberto"
+  },
+  {
+    "questionId": "tatoeba-11026197",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "This is too dangerous.",
+    "pattern": "dangerous",
+    "referenceAnswer": "นี่อันตรายเกินไป",
+    "acceptableAnswers": [
+      "นี่อันตรายเกินไป"
+    ],
+    "hintWord": "dangerous",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-11009261",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Get it out quickly!",
+    "pattern": "quickly",
+    "referenceAnswer": "ออกไปให้เร็ว",
+    "acceptableAnswers": [
+      "ออกไปให้เร็ว"
+    ],
+    "hintWord": "quickly",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "terrywallwork"
+  },
+  {
+    "questionId": "tatoeba-10899836",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "I took two pictures.",
+    "pattern": "pictures",
+    "referenceAnswer": "ฉันถ่ายรูปมาสองรูป",
+    "acceptableAnswers": [
+      "ฉันถ่ายรูปมาสองรูป"
+    ],
+    "hintWord": "pictures",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-10830180",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Check your spam folder.",
+    "pattern": "folder",
+    "referenceAnswer": "เช็คในสแปมเมลดูนะ",
+    "acceptableAnswers": [
+      "เช็คในสแปมเมลดูนะ"
+    ],
+    "hintWord": "folder",
+    "hintMeaning": "",
+    "sourceLicense": "CC0 1.0",
+    "sourceAttribution": "ddnktr"
+  },
+  {
+    "questionId": "tatoeba-10816693",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "The market is bustling.",
+    "pattern": "bustling",
+    "referenceAnswer": "ตลาดคึกคัก",
+    "acceptableAnswers": [
+      "ตลาดคึกคัก"
+    ],
+    "hintWord": "bustling",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "sundown"
+  },
+  {
+    "questionId": "tatoeba-10713670",
+    "skill": "understanding",
+    "difficulty": "hard",
+    "register": "casual",
+    "en": "Lilies are perennial plants.",
+    "pattern": "perennial",
+    "referenceAnswer": "ลิลลี่เป็นพืชยืนต้น",
+    "acceptableAnswers": [
+      "ลิลลี่เป็นพืชยืนต้น"
+    ],
+    "hintWord": "perennial",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "terrywallwork"
+  },
+  {
+    "questionId": "tatoeba-10683536",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "I can play football.",
+    "pattern": "football",
+    "referenceAnswer": "ผมเล่นฟุตบอลได้",
+    "acceptableAnswers": [
+      "ผมเล่นฟุตบอลได้"
+    ],
+    "hintWord": "football",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "sundown"
+  },
+  {
+    "questionId": "tatoeba-10635277",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Please stop bothering us.",
+    "pattern": "bothering",
+    "referenceAnswer": "กรุณาหยุดรบกวนเรา",
+    "acceptableAnswers": [
+      "กรุณาหยุดรบกวนเรา"
+    ],
+    "hintWord": "bothering",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-10553427",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Help me push it.",
+    "pattern": "help",
+    "referenceAnswer": "ช่วยฉันดันหน่อย",
+    "acceptableAnswers": [
+      "ช่วยฉันดันหน่อย"
+    ],
+    "hintWord": "help",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "AlanF_US"
+  },
+  {
+    "questionId": "tatoeba-10512913",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "I really love flowers.",
+    "pattern": "flowers",
+    "referenceAnswer": "ฉันชอบดอกไม้มาก ๆ เลย",
+    "acceptableAnswers": [
+      "ฉันชอบดอกไม้มาก ๆ เลย"
+    ],
+    "hintWord": "flowers",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-10475138",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Who benefits from it?",
+    "pattern": "benefits",
+    "referenceAnswer": "ใครได้ประโยชน์จากมัน",
+    "acceptableAnswers": [
+      "ใครได้ประโยชน์จากมัน"
+    ],
+    "hintWord": "benefits",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "sundown"
+  },
+  {
+    "questionId": "tatoeba-10303723",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "It cost three dollars.",
+    "pattern": "dollars",
+    "referenceAnswer": "ราคา 3 ดอลลาร์",
+    "acceptableAnswers": [
+      "ราคา 3 ดอลลาร์"
+    ],
+    "hintWord": "dollars",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-10193191",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Do your parents know?",
+    "pattern": "parents",
+    "referenceAnswer": "พ่อแม่รู้หรือปล่าว",
+    "acceptableAnswers": [
+      "พ่อแม่รู้หรือปล่าว"
+    ],
+    "hintWord": "parents",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Hybrid"
+  },
+  {
+    "questionId": "tatoeba-10151911",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Is that a whale?",
+    "pattern": "whale",
+    "referenceAnswer": "โน่นคือปลาวาฬเหรอ",
+    "acceptableAnswers": [
+      "โน่นคือปลาวาฬเหรอ"
+    ],
+    "hintWord": "whale",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "ddnktr"
+  },
+  {
+    "questionId": "tatoeba-10147238",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "My account was suspended.",
+    "pattern": "suspended",
+    "referenceAnswer": "บัญชีของผมถูกระงับ",
+    "acceptableAnswers": [
+      "บัญชีของผมถูกระงับ"
+    ],
+    "hintWord": "suspended",
+    "hintMeaning": "",
+    "sourceLicense": "CC0 1.0",
+    "sourceAttribution": "ddnktr"
+  },
+  {
+    "questionId": "tatoeba-10128271",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "I miss my father.",
+    "pattern": "father",
+    "referenceAnswer": "ฉันอยากเจอพ่อ",
+    "acceptableAnswers": [
+      "ฉันอยากเจอพ่อ"
+    ],
+    "hintWord": "father",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "ddnktr"
+  },
+  {
+    "questionId": "tatoeba-10098099",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "This car fits five.",
+    "pattern": "fits",
+    "referenceAnswer": "รถคันนี้นั่งได้ 5 คน",
+    "acceptableAnswers": [
+      "รถคันนี้นั่งได้ 5 คน"
+    ],
+    "hintWord": "fits",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "DJ_Saidez"
+  },
+  {
+    "questionId": "tatoeba-10054437",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Someone hacked my account.",
+    "pattern": "someone",
+    "referenceAnswer": "มีคนแฮคบัญชีของฉัน",
+    "acceptableAnswers": [
+      "มีคนแฮคบัญชีของฉัน"
+    ],
+    "hintWord": "someone",
+    "hintMeaning": "",
+    "sourceLicense": "CC0 1.0",
+    "sourceAttribution": "ddnktr"
+  },
+  {
+    "questionId": "tatoeba-9992616",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "It was our choice.",
+    "pattern": "choice",
+    "referenceAnswer": "มันคือทางเลือกของเรา",
+    "acceptableAnswers": [
+      "มันคือทางเลือกของเรา"
+    ],
+    "hintWord": "choice",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CM"
+  },
+  {
+    "questionId": "tatoeba-9960955",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Tom spoke very quickly.",
+    "pattern": "quickly",
+    "referenceAnswer": "ทอมพูดเร็วมาก",
+    "acceptableAnswers": [
+      "ทอมพูดเร็วมาก"
+    ],
+    "hintWord": "quickly",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-9949920",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Do you like curry?",
+    "pattern": "curry",
+    "referenceAnswer": "เธอชอบแกงกะหรี่ไหม",
+    "acceptableAnswers": [
+      "เธอชอบแกงกะหรี่ไหม"
+    ],
+    "hintWord": "curry",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-9882101",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "This will heal soon.",
+    "pattern": "heal",
+    "referenceAnswer": "อันนี้ แป๊บเดียวก็หาย",
+    "acceptableAnswers": [
+      "อันนี้ แป๊บเดียวก็หาย"
+    ],
+    "hintWord": "heal",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "DJ_Saidez"
+  },
+  {
+    "questionId": "tatoeba-9867717",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Our options are limited.",
+    "pattern": "options",
+    "referenceAnswer": "ทางเลือกของเรามีจำกัด",
+    "acceptableAnswers": [
+      "ทางเลือกของเรามีจำกัด"
+    ],
+    "hintWord": "options",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Ooneykcall"
+  },
+  {
+    "questionId": "tatoeba-9855645",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Electric cars are quiet.",
+    "pattern": "electric",
+    "referenceAnswer": "รถไฟฟ้าเสียงเงียบ",
+    "acceptableAnswers": [
+      "รถไฟฟ้าเสียงเงียบ"
+    ],
+    "hintWord": "electric",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "DJ_Saidez"
+  },
+  {
+    "questionId": "tatoeba-9812400",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Always brush your teeth.",
+    "pattern": "always",
+    "referenceAnswer": "ต้องแปรงฟันนะ",
+    "acceptableAnswers": [
+      "ต้องแปรงฟันนะ"
+    ],
+    "hintWord": "always",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Amastan"
+  },
+  {
+    "questionId": "tatoeba-9686269",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "They all ran away.",
+    "pattern": "away",
+    "referenceAnswer": "พวกเขาทั้งหมดวิ่งหนีไป",
+    "acceptableAnswers": [
+      "พวกเขาทั้งหมดวิ่งหนีไป"
+    ],
+    "hintWord": "away",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-9671906",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Ankara is in Turkey.",
+    "pattern": "ankara",
+    "referenceAnswer": "อังการาอยู่ในตุรกี",
+    "acceptableAnswers": [
+      "อังการาอยู่ในตุรกี"
+    ],
+    "hintWord": "ankara",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "TurkishReform"
+  },
+  {
+    "questionId": "tatoeba-9671888",
+    "skill": "understanding",
+    "difficulty": "hard",
+    "register": "casual",
+    "en": "Maisie lives in Manisa.",
+    "pattern": "maisie",
+    "referenceAnswer": "ไมซี่อาศัยอยู่ที่มานิซา",
+    "acceptableAnswers": [
+      "ไมซี่อาศัยอยู่ที่มานิซา"
+    ],
+    "hintWord": "maisie",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "shekitten"
+  },
+  {
+    "questionId": "tatoeba-9671140",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Is the book good?",
+    "pattern": "book",
+    "referenceAnswer": "หนังสือดีไหม",
+    "acceptableAnswers": [
+      "หนังสือดีไหม"
+    ],
+    "hintWord": "book",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "TurkishReform"
+  },
+  {
+    "questionId": "tatoeba-9671113",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Can you live abroad?",
+    "pattern": "abroad",
+    "referenceAnswer": "คุณอยู่ต่างประเทศได้ไหม",
+    "acceptableAnswers": [
+      "คุณอยู่ต่างประเทศได้ไหม"
+    ],
+    "hintWord": "abroad",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "TurkishReform"
+  },
+  {
+    "questionId": "tatoeba-9550208",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "I have many colleagues.",
+    "pattern": "colleagues",
+    "referenceAnswer": "ผมมีเพื่อนร่วมงานหลายคน",
+    "acceptableAnswers": [
+      "ผมมีเพื่อนร่วมงานหลายคน"
+    ],
+    "hintWord": "colleagues",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Dmitrij15"
+  },
+  {
+    "questionId": "tatoeba-9501177",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "The war has ended.",
+    "pattern": "ended",
+    "referenceAnswer": "สงครามจบแล้ว",
+    "acceptableAnswers": [
+      "สงครามจบแล้ว"
+    ],
+    "hintWord": "ended",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-9496075",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Does that happen often?",
+    "pattern": "happen",
+    "referenceAnswer": "มันเกิดขึ้นบ่อยไหม",
+    "acceptableAnswers": [
+      "มันเกิดขึ้นบ่อยไหม"
+    ],
+    "hintWord": "happen",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "DJ_Saidez"
+  },
+  {
+    "questionId": "tatoeba-9447994",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "I like eating apples.",
+    "pattern": "eating",
+    "referenceAnswer": "ผมชอบกินแอปเปิ้ล",
+    "acceptableAnswers": [
+      "ผมชอบกินแอปเปิ้ล"
+    ],
+    "hintWord": "eating",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Voider"
+  },
+  {
+    "questionId": "tatoeba-9387583",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Turn the radio on.",
+    "pattern": "radio",
+    "referenceAnswer": "เปิดวิทยุ",
+    "acceptableAnswers": [
+      "เปิดวิทยุ"
+    ],
+    "hintWord": "radio",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-9357797",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Is the machine running?",
+    "pattern": "machine",
+    "referenceAnswer": "ตอนนี้เครื่องยังทำงานอยู่ไหม",
+    "acceptableAnswers": [
+      "ตอนนี้เครื่องยังทำงานอยู่ไหม"
+    ],
+    "hintWord": "machine",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "sundown"
+  },
+  {
+    "questionId": "tatoeba-9301708",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "I love this shirt.",
+    "pattern": "shirt",
+    "referenceAnswer": "ฉันชอบเสื้อตัวนี้มาก",
+    "acceptableAnswers": [
+      "ฉันชอบเสื้อตัวนี้มาก"
+    ],
+    "hintWord": "shirt",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-9258033",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Is it just me?",
+    "pattern": "vocabulary",
+    "referenceAnswer": "ฉันคนเดียวเหรอ",
+    "acceptableAnswers": [
+      "ฉันคนเดียวเหรอ"
+    ],
+    "hintWord": "vocabulary",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-9203241",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Did you buy milk?",
+    "pattern": "milk",
+    "referenceAnswer": "ซื้อนมวัวแล้วใช่ไหม",
+    "acceptableAnswers": [
+      "ซื้อนมวัวแล้วใช่ไหม"
+    ],
+    "hintWord": "milk",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-9202105",
+    "skill": "understanding",
+    "difficulty": "hard",
+    "register": "casual",
+    "en": "I pretended to cry.",
+    "pattern": "pretended",
+    "referenceAnswer": "ฉันแกล้งร้องไห้",
+    "acceptableAnswers": [
+      "ฉันแกล้งร้องไห้"
+    ],
+    "hintWord": "pretended",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-9199261",
+    "skill": "understanding",
+    "difficulty": "hard",
+    "register": "casual",
+    "en": "I like boiled eggs.",
+    "pattern": "boiled",
+    "referenceAnswer": "ฉันชอบไข่ต้ม",
+    "acceptableAnswers": [
+      "ฉันชอบไข่ต้ม"
+    ],
+    "hintWord": "boiled",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-9192377",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "My phone is charging.",
+    "pattern": "charging",
+    "referenceAnswer": "โทรศัพท์ของฉันกำลังชาร์ตแบตอยู่",
+    "acceptableAnswers": [
+      "โทรศัพท์ของฉันกำลังชาร์ตแบตอยู่"
+    ],
+    "hintWord": "charging",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "DJ_Saidez"
+  },
+  {
+    "questionId": "tatoeba-9162326",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Tom said thank you.",
+    "pattern": "thank",
+    "referenceAnswer": "ทอมพูดว่าขอบคุณ",
+    "acceptableAnswers": [
+      "ทอมพูดว่าขอบคุณ"
+    ],
+    "hintWord": "thank",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8982777",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "The bus has arrived.",
+    "pattern": "arrived",
+    "referenceAnswer": "รถเมล์มาแล้ว",
+    "acceptableAnswers": [
+      "รถเมล์มาแล้ว"
+    ],
+    "hintWord": "arrived",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8978467",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Have you been vaccinated?",
+    "pattern": "vaccinated",
+    "referenceAnswer": "คุณฉีดวัคซีนหรือยัง",
+    "acceptableAnswers": [
+      "คุณฉีดวัคซีนหรือยัง"
+    ],
+    "hintWord": "vaccinated",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8977353",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Every child knows this.",
+    "pattern": "every",
+    "referenceAnswer": "เด็กทุกคนรู้เรื่องนี้",
+    "acceptableAnswers": [
+      "เด็กทุกคนรู้เรื่องนี้"
+    ],
+    "hintWord": "every",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8966279",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "What is Tom like?",
+    "pattern": "what",
+    "referenceAnswer": "ทอมเป็นคนอย่างไร?",
+    "acceptableAnswers": [
+      "ทอมเป็นคนอย่างไร?"
+    ],
+    "hintWord": "what",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Ergulis"
+  },
+  {
+    "questionId": "tatoeba-8928971",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "I like chubby women.",
+    "pattern": "chubby",
+    "referenceAnswer": "ฉันชอบผู้หญิงจั่มมั่ม",
+    "acceptableAnswers": [
+      "ฉันชอบผู้หญิงจั่มมั่ม"
+    ],
+    "hintWord": "chubby",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8829356",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Our team won yesterday.",
+    "pattern": "yesterday",
+    "referenceAnswer": "เมื่อวานทีมของพวกเราชนะ",
+    "acceptableAnswers": [
+      "เมื่อวานทีมของพวกเราชนะ"
+    ],
+    "hintWord": "yesterday",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "deniko"
+  },
+  {
+    "questionId": "tatoeba-8827009",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "I trust the police.",
+    "pattern": "police",
+    "referenceAnswer": "ผมเชื่อใจตำรวจ",
+    "acceptableAnswers": [
+      "ผมเชื่อใจตำรวจ"
+    ],
+    "hintWord": "police",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8825386",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "I like rainy days.",
+    "pattern": "rainy",
+    "referenceAnswer": "ผมชอบวันที่ฝนตก",
+    "acceptableAnswers": [
+      "ผมชอบวันที่ฝนตก"
+    ],
+    "hintWord": "rainy",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8821657",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "It is raining again.",
+    "pattern": "raining",
+    "referenceAnswer": "ฝนตกอีกแล้ว",
+    "acceptableAnswers": [
+      "ฝนตกอีกแล้ว"
+    ],
+    "hintWord": "raining",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Ergulis"
+  },
+  {
+    "questionId": "tatoeba-8802859",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Was that an earthquake?",
+    "pattern": "earthquake",
+    "referenceAnswer": "แผ่นดินไหวเหรอ",
+    "acceptableAnswers": [
+      "แผ่นดินไหวเหรอ"
+    ],
+    "hintWord": "earthquake",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CM"
+  },
+  {
+    "questionId": "tatoeba-8719514",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "How did you meet?",
+    "pattern": "meet",
+    "referenceAnswer": "รู้จักกันได้อย่างไรเหรอ",
+    "acceptableAnswers": [
+      "รู้จักกันได้อย่างไรเหรอ"
+    ],
+    "hintWord": "meet",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Hybrid"
+  },
+  {
+    "questionId": "tatoeba-8689172",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Tom took a nap.",
+    "pattern": "took",
+    "referenceAnswer": "ทอมนอนกลางวันแล้ว",
+    "acceptableAnswers": [
+      "ทอมนอนกลางวันแล้ว"
+    ],
+    "hintWord": "took",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Hybrid"
+  },
+  {
+    "questionId": "tatoeba-8669537",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "This book is good.",
+    "pattern": "book",
+    "referenceAnswer": "หนังสือเล่มนี้ดี",
+    "acceptableAnswers": [
+      "หนังสือเล่มนี้ดี"
+    ],
+    "hintWord": "book",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "ajje"
+  },
+  {
+    "questionId": "tatoeba-8663957",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Is your name Somchai?",
+    "pattern": "somchai",
+    "referenceAnswer": "คุณชื่อสมชายใช่มั้ย",
+    "acceptableAnswers": [
+      "คุณชื่อสมชายใช่มั้ย"
+    ],
+    "hintWord": "somchai",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Mediabat"
+  },
+  {
+    "questionId": "tatoeba-8663603",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "That was my rug!",
+    "pattern": "vocabulary",
+    "referenceAnswer": "อันนั้นพรมของเรา!",
+    "acceptableAnswers": [
+      "อันนั้นพรมของเรา!"
+    ],
+    "hintWord": "vocabulary",
+    "hintMeaning": "",
+    "sourceLicense": "CC0 1.0",
+    "sourceAttribution": "shekitten"
+  },
+  {
+    "questionId": "tatoeba-8647407",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "What are you boiling?",
+    "pattern": "boiling",
+    "referenceAnswer": "เธอกำลังต้มอะไรอยู่",
+    "acceptableAnswers": [
+      "เธอกำลังต้มอะไรอยู่"
+    ],
+    "hintWord": "boiling",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "AlanF_US"
+  },
+  {
+    "questionId": "tatoeba-8599862",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "I know Tom snores.",
+    "pattern": "snores",
+    "referenceAnswer": "ฉันรู้ว่าทอมกรน",
+    "acceptableAnswers": [
+      "ฉันรู้ว่าทอมกรน"
+    ],
+    "hintWord": "snores",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8599840",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Tom might know Mary.",
+    "pattern": "know",
+    "referenceAnswer": "ทอมอาจจะรู้จักแมรี่",
+    "acceptableAnswers": [
+      "ทอมอาจจะรู้จักแมรี่"
+    ],
+    "hintWord": "know",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8597085",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Relationships are very complicated.",
+    "pattern": "relationships",
+    "referenceAnswer": "ความสัมพันธ์ของมนุษย์เป็นเรื่องที่ซับซ้อนมาก",
+    "acceptableAnswers": [
+      "ความสัมพันธ์ของมนุษย์เป็นเรื่องที่ซับซ้อนมาก"
+    ],
+    "hintWord": "relationships",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8585431",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Everyone laughed at me.",
+    "pattern": "everyone",
+    "referenceAnswer": "ทุกคนหัวเราะเยาะฉัน",
+    "acceptableAnswers": [
+      "ทุกคนหัวเราะเยาะฉัน"
+    ],
+    "hintWord": "everyone",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8546354",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "The crow is black.",
+    "pattern": "black",
+    "referenceAnswer": "อีกามีสีดำ",
+    "acceptableAnswers": [
+      "อีกามีสีดำ"
+    ],
+    "hintWord": "black",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "shekitten"
+  },
+  {
+    "questionId": "tatoeba-8546348",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "The raven is black.",
+    "pattern": "raven",
+    "referenceAnswer": "อีกามีสีดำ",
+    "acceptableAnswers": [
+      "อีกามีสีดำ"
+    ],
+    "hintWord": "raven",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "shekitten"
+  },
+  {
+    "questionId": "tatoeba-8505879",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "His birthday was yesterday.",
+    "pattern": "yesterday",
+    "referenceAnswer": "วันเกิดของหมอนั่นคือเมื่อวาน",
+    "acceptableAnswers": [
+      "วันเกิดของหมอนั่นคือเมื่อวาน"
+    ],
+    "hintWord": "yesterday",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CH"
+  },
+  {
+    "questionId": "tatoeba-8466533",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "I have no alternatives.",
+    "pattern": "alternatives",
+    "referenceAnswer": "ผมไม่มีทางเลือกอื่น",
+    "acceptableAnswers": [
+      "ผมไม่มีทางเลือกอื่น"
+    ],
+    "hintWord": "alternatives",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8455501",
+    "skill": "understanding",
+    "difficulty": "hard",
+    "register": "casual",
+    "en": "Indonesia frequently experiences earthquakes.",
+    "pattern": "experiences",
+    "referenceAnswer": "อินโดนีเซียแผ่นดินไหวอยู่บ่อย ๆ",
+    "acceptableAnswers": [
+      "อินโดนีเซียแผ่นดินไหวอยู่บ่อย ๆ"
+    ],
+    "hintWord": "experiences",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "AlanF_US"
+  },
+  {
+    "questionId": "tatoeba-8410320",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Nobody speaks French here.",
+    "pattern": "nobody",
+    "referenceAnswer": "ที่นี่ไม่มีใครพูดภาษาฝรั่งเศส",
+    "acceptableAnswers": [
+      "ที่นี่ไม่มีใครพูดภาษาฝรั่งเศส"
+    ],
+    "hintWord": "nobody",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8389584",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "I am learning Thai.",
+    "pattern": "learning",
+    "referenceAnswer": "ฉันกำลังเรียนภาษาไทย",
+    "acceptableAnswers": [
+      "ฉันกำลังเรียนภาษาไทย"
+    ],
+    "hintWord": "learning",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Adelpa"
+  },
+  {
+    "questionId": "tatoeba-8382275",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Tom rejected our proposal.",
+    "pattern": "rejected",
+    "referenceAnswer": "ทอมปฏิเสธข้อเสนอของเรา",
+    "acceptableAnswers": [
+      "ทอมปฏิเสธข้อเสนอของเรา"
+    ],
+    "hintWord": "rejected",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8342283",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Is this a pencil?",
+    "pattern": "pencil",
+    "referenceAnswer": "อันนี้เป็นดินสอเหรอ",
+    "acceptableAnswers": [
+      "อันนี้เป็นดินสอเหรอ"
+    ],
+    "hintWord": "pencil",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "shekitten"
+  },
+  {
+    "questionId": "tatoeba-8288857",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "She waited for hours.",
+    "pattern": "waited",
+    "referenceAnswer": "หล่อนรอเป็นชั่วโมง",
+    "acceptableAnswers": [
+      "หล่อนรอเป็นชั่วโมง"
+    ],
+    "hintWord": "waited",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "sundown"
+  },
+  {
+    "questionId": "tatoeba-8174408",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Your seat is here.",
+    "pattern": "your",
+    "referenceAnswer": "ที่นั่งของคุณอยู่ที่นี่",
+    "acceptableAnswers": [
+      "ที่นั่งของคุณอยู่ที่นี่"
+    ],
+    "hintWord": "your",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "abburns"
+  },
+  {
+    "questionId": "tatoeba-8092954",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "I will begin anew.",
+    "pattern": "begin",
+    "referenceAnswer": "ฉันจะเริ่มใหม่",
+    "acceptableAnswers": [
+      "ฉันจะเริ่มใหม่"
+    ],
+    "hintWord": "begin",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "kedymera"
+  },
+  {
+    "questionId": "tatoeba-8092876",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Tom ordered orange juice.",
+    "pattern": "ordered",
+    "referenceAnswer": "ทอมสั่งน้ำส้มไป",
+    "acceptableAnswers": [
+      "ทอมสั่งน้ำส้มไป"
+    ],
+    "hintWord": "ordered",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "kedymera"
+  },
+  {
+    "questionId": "tatoeba-8091012",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "I love my family!",
+    "pattern": "family",
+    "referenceAnswer": "ฉันรักครอบครัวมาก",
+    "acceptableAnswers": [
+      "ฉันรักครอบครัวมาก"
+    ],
+    "hintWord": "family",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Ricardo14"
+  },
+  {
+    "questionId": "tatoeba-8037475",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Our TV is broken.",
+    "pattern": "broken",
+    "referenceAnswer": "ทีวีของเราเสีย",
+    "acceptableAnswers": [
+      "ทีวีของเราเสีย"
+    ],
+    "hintWord": "broken",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8037436",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "French is not hard.",
+    "pattern": "french",
+    "referenceAnswer": "ภาษาฝรั่งเศสไม่ยาก",
+    "acceptableAnswers": [
+      "ภาษาฝรั่งเศสไม่ยาก"
+    ],
+    "hintWord": "french",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-8008628",
+    "skill": "understanding",
+    "difficulty": "hard",
+    "register": "casual",
+    "en": "Mary ironed her pants.",
+    "pattern": "ironed",
+    "referenceAnswer": "แมรี่รีดกระโปรงแล้ว",
+    "acceptableAnswers": [
+      "แมรี่รีดกระโปรงแล้ว"
+    ],
+    "hintWord": "ironed",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "AlanF_US"
+  },
+  {
+    "questionId": "tatoeba-7923942",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "My whole body hurts.",
+    "pattern": "whole",
+    "referenceAnswer": "ฉันเจ็บไปทั้งตัวเลย",
+    "acceptableAnswers": [
+      "ฉันเจ็บไปทั้งตัวเลย"
+    ],
+    "hintWord": "whole",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "shekitten"
+  },
+  {
+    "questionId": "tatoeba-7888987",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "That works every time.",
+    "pattern": "works",
+    "referenceAnswer": "มันได้ผลทุกครั้ง",
+    "acceptableAnswers": [
+      "มันได้ผลทุกครั้ง"
+    ],
+    "hintWord": "works",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Matteusmauritz"
+  },
+  {
+    "questionId": "tatoeba-7845690",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "We want two taxis.",
+    "pattern": "taxis",
+    "referenceAnswer": "เราต้องการแท็กซี่สองคัน",
+    "acceptableAnswers": [
+      "เราต้องการแท็กซี่สองคัน"
+    ],
+    "hintWord": "taxis",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "sharris123"
+  },
+  {
+    "questionId": "tatoeba-7837711",
+    "skill": "understanding",
+    "difficulty": "hard",
+    "register": "casual",
+    "en": "Alessia cannot speak English.",
+    "pattern": "alessia",
+    "referenceAnswer": "คุณอาเลเซียพูดภาษาอังกฤษไม่ได้",
+    "acceptableAnswers": [
+      "คุณอาเลเซียพูดภาษาอังกฤษไม่ได้"
+    ],
+    "hintWord": "alessia",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "sharris123"
+  },
+  {
+    "questionId": "tatoeba-7787371",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Please make a contribution.",
+    "pattern": "contribution",
+    "referenceAnswer": "กรุณามีส่วนร่วม",
+    "acceptableAnswers": [
+      "กรุณามีส่วนร่วม"
+    ],
+    "hintWord": "contribution",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-7759878",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "I really like them.",
+    "pattern": "really",
+    "referenceAnswer": "ผมชอบพวกเขาจริงๆ",
+    "acceptableAnswers": [
+      "ผมชอบพวกเขาจริงๆ"
+    ],
+    "hintWord": "really",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "raggione"
+  },
+  {
+    "questionId": "tatoeba-7756008",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "I own two cars.",
+    "pattern": "cars",
+    "referenceAnswer": "ฉันมีรถสองคัน",
+    "acceptableAnswers": [
+      "ฉันมีรถสองคัน"
+    ],
+    "hintWord": "cars",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "robo731"
+  },
+  {
+    "questionId": "tatoeba-7734470",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Tom is the administrator.",
+    "pattern": "administrator",
+    "referenceAnswer": "ทอมเป็นผู้ดูแลระบบ",
+    "acceptableAnswers": [
+      "ทอมเป็นผู้ดูแลระบบ"
+    ],
+    "hintWord": "administrator",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-7733779",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "My arm still aches.",
+    "pattern": "still",
+    "referenceAnswer": "แขนผมยังปวด",
+    "acceptableAnswers": [
+      "แขนผมยังปวด"
+    ],
+    "hintWord": "still",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-7263860",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "What is her name?",
+    "pattern": "what",
+    "referenceAnswer": "หล่อนชื่ออะไรครับ",
+    "acceptableAnswers": [
+      "หล่อนชื่ออะไรครับ",
+      "เขาชื่ออะไร",
+      "เขาชื่ออะไรครับ"
+    ],
+    "hintWord": "what",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Thanuir"
+  },
+  {
+    "questionId": "tatoeba-7148574",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Our house is clean.",
+    "pattern": "house",
+    "referenceAnswer": "บ้านของฉันสะอาด",
+    "acceptableAnswers": [
+      "บ้านของฉันสะอาด"
+    ],
+    "hintWord": "house",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "samuraiseoul"
+  },
+  {
+    "questionId": "tatoeba-7129579",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Everyone must do this.",
+    "pattern": "everyone",
+    "referenceAnswer": "ทุกคนต้องทำอย่างนี้",
+    "acceptableAnswers": [
+      "ทุกคนต้องทำอย่างนี้"
+    ],
+    "hintWord": "everyone",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CM"
+  },
+  {
+    "questionId": "tatoeba-7060019",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Baby lions are cute.",
+    "pattern": "lions",
+    "referenceAnswer": "ลูกสิงโตน่ารักนะ",
+    "acceptableAnswers": [
+      "ลูกสิงโตน่ารักนะ"
+    ],
+    "hintWord": "lions",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Hybrid"
+  },
+  {
+    "questionId": "tatoeba-7001865",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "My sister is beautiful.",
+    "pattern": "beautiful",
+    "referenceAnswer": "พี่สาวของผมสวย",
+    "acceptableAnswers": [
+      "พี่สาวของผมสวย"
+    ],
+    "hintWord": "beautiful",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Darragh_jd"
+  },
+  {
+    "questionId": "tatoeba-6923977",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "That was ages ago.",
+    "pattern": "ages",
+    "referenceAnswer": "นั่นเมื่อนานมาแล้ว",
+    "acceptableAnswers": [
+      "นั่นเมื่อนานมาแล้ว"
+    ],
+    "hintWord": "ages",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Hybrid"
+  },
+  {
+    "questionId": "tatoeba-6907730",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Does Tom play golf?",
+    "pattern": "play",
+    "referenceAnswer": "ทอมเล่นกอล์ฟหรือปล่าว",
+    "acceptableAnswers": [
+      "ทอมเล่นกอล์ฟหรือปล่าว"
+    ],
+    "hintWord": "play",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6811436",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "We were happy then.",
+    "pattern": "happy",
+    "referenceAnswer": "ตอนนั้นเรามีความสุข",
+    "acceptableAnswers": [
+      "ตอนนั้นเรามีความสุข"
+    ],
+    "hintWord": "happy",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Hybrid"
+  },
+  {
+    "questionId": "tatoeba-6799154",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Somebody is watching us.",
+    "pattern": "somebody",
+    "referenceAnswer": "มีใครบางคนกำลังมองเรา",
+    "acceptableAnswers": [
+      "มีใครบางคนกำลังมองเรา"
+    ],
+    "hintWord": "somebody",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6738327",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Do you enjoy cooking?",
+    "pattern": "cooking",
+    "referenceAnswer": "คุณชอบการทำอาหารไหม",
+    "acceptableAnswers": [
+      "คุณชอบการทำอาหารไหม"
+    ],
+    "hintWord": "cooking",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6672382",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "The store is open.",
+    "pattern": "store",
+    "referenceAnswer": "ร้านกำลังเปิดอยู่",
+    "acceptableAnswers": [
+      "ร้านกำลังเปิดอยู่"
+    ],
+    "hintWord": "store",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "moskytoo"
+  },
+  {
+    "questionId": "tatoeba-6662342",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Tom is buying bread.",
+    "pattern": "buying",
+    "referenceAnswer": "ทอมซื้อขนมปังอยู่",
+    "acceptableAnswers": [
+      "ทอมซื้อขนมปังอยู่"
+    ],
+    "hintWord": "buying",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6622811",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "My sister likes painting.",
+    "pattern": "painting",
+    "referenceAnswer": "น้องสาวผมชอบวาดรูป",
+    "acceptableAnswers": [
+      "น้องสาวผมชอบวาดรูป"
+    ],
+    "hintWord": "painting",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CarpeLanam"
+  },
+  {
+    "questionId": "tatoeba-6567340",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "She likes this game.",
+    "pattern": "likes",
+    "referenceAnswer": "เธอชอบเกมนี้",
+    "acceptableAnswers": [
+      "เธอชอบเกมนี้"
+    ],
+    "hintWord": "likes",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "rchase"
+  },
+  {
+    "questionId": "tatoeba-6563784",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "social",
+    "en": "I wanna say something.",
+    "pattern": "something",
+    "referenceAnswer": "ฉันอยากจะพูดอะไรบางอย่าง",
+    "acceptableAnswers": [
+      "ฉันอยากจะพูดอะไรบางอย่าง"
+    ],
+    "hintWord": "something",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "OsoHombre"
+  },
+  {
+    "questionId": "tatoeba-6559107",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "I will not die.",
+    "pattern": "vocabulary",
+    "referenceAnswer": "ฉันจะไม่ตาย",
+    "acceptableAnswers": [
+      "ฉันจะไม่ตาย"
+    ],
+    "hintWord": "vocabulary",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "ren"
+  },
+  {
+    "questionId": "tatoeba-6383822",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Are you working tonight?",
+    "pattern": "working",
+    "referenceAnswer": "คืนนี้คุณทำงานไหม",
+    "acceptableAnswers": [
+      "คืนนี้คุณทำงานไหม"
+    ],
+    "hintWord": "working",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Hybrid"
+  },
+  {
+    "questionId": "tatoeba-6357905",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Are you still home?",
+    "pattern": "still",
+    "referenceAnswer": "ยังอยู่ที่บ้านอยู่เหรอ",
+    "acceptableAnswers": [
+      "ยังอยู่ที่บ้านอยู่เหรอ"
+    ],
+    "hintWord": "still",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6357893",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Can you come early?",
+    "pattern": "early",
+    "referenceAnswer": "คุณมาเร็วหน่อยได้ไหม",
+    "acceptableAnswers": [
+      "คุณมาเร็วหน่อยได้ไหม"
+    ],
+    "hintWord": "early",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6351817",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "Is that boy Tom?",
+    "pattern": "vocabulary",
+    "referenceAnswer": "ทอมคือผู้ชายคนนั้นเหรอ?",
+    "acceptableAnswers": [
+      "ทอมคือผู้ชายคนนั้นเหรอ?"
+    ],
+    "hintWord": "vocabulary",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6335595",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Take your coat off.",
+    "pattern": "take",
+    "referenceAnswer": "ถอดเสื้อของคุณ",
+    "acceptableAnswers": [
+      "ถอดเสื้อของคุณ"
+    ],
+    "hintWord": "take",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6272510",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Tom will be cooperative.",
+    "pattern": "cooperative",
+    "referenceAnswer": "ทอมจะให้ความร่วมมือ",
+    "acceptableAnswers": [
+      "ทอมจะให้ความร่วมมือ"
+    ],
+    "hintWord": "cooperative",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6271781",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Tom will definitely come.",
+    "pattern": "definitely",
+    "referenceAnswer": "ทอมจะมาแน่นอน",
+    "acceptableAnswers": [
+      "ทอมจะมาแน่นอน"
+    ],
+    "hintWord": "definitely",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6268790",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Was it snowing yesterday?",
+    "pattern": "yesterday",
+    "referenceAnswer": "เมื่อวานหิมะตกไหม",
+    "acceptableAnswers": [
+      "เมื่อวานหิมะตกไหม"
+    ],
+    "hintWord": "yesterday",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6195258",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "It does not matter.",
+    "pattern": "matter",
+    "referenceAnswer": "ไม่เป็นไร",
+    "acceptableAnswers": [
+      "ไม่เป็นไร"
+    ],
+    "hintWord": "matter",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "rayshih715"
+  },
+  {
+    "questionId": "tatoeba-6146182",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Why are you apologizing?",
+    "pattern": "apologizing",
+    "referenceAnswer": "คุณจะขอโทษทำไม?",
+    "acceptableAnswers": [
+      "คุณจะขอโทษทำไม?"
+    ],
+    "hintWord": "apologizing",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6092599",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "The girl was kidnapped.",
+    "pattern": "kidnapped",
+    "referenceAnswer": "เด็กผู้หญิงถูกลักพาตัวไป",
+    "acceptableAnswers": [
+      "เด็กผู้หญิงถูกลักพาตัวไป"
+    ],
+    "hintWord": "kidnapped",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "mailohilohi"
+  },
+  {
+    "questionId": "tatoeba-6088851",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "The taxi is here.",
+    "pattern": "taxi",
+    "referenceAnswer": "แท็กซี่มาแล้ว",
+    "acceptableAnswers": [
+      "แท็กซี่มาแล้ว"
+    ],
+    "hintWord": "taxi",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "mailohilohi"
+  },
+  {
+    "questionId": "tatoeba-6088850",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "The cab is here.",
+    "pattern": "here",
+    "referenceAnswer": "แท็กซี่มาแล้ว",
+    "acceptableAnswers": [
+      "แท็กซี่มาแล้ว"
+    ],
+    "hintWord": "here",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "mailohilohi"
+  },
+  {
+    "questionId": "tatoeba-6088849",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "The bus is here.",
+    "pattern": "here",
+    "referenceAnswer": "รถเมล์มาแล้ว",
+    "acceptableAnswers": [
+      "รถเมล์มาแล้ว"
+    ],
+    "hintWord": "here",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "mailohilohi"
+  },
+  {
+    "questionId": "tatoeba-6079124",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Do you like gardening?",
+    "pattern": "gardening",
+    "referenceAnswer": "คุณชอบทำสวนไหม",
+    "acceptableAnswers": [
+      "คุณชอบทำสวนไหม"
+    ],
+    "hintWord": "gardening",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6066948",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Everybody must do this.",
+    "pattern": "everybody",
+    "referenceAnswer": "ทุกคนต้องทำอย่างนี้",
+    "acceptableAnswers": [
+      "ทุกคนต้องทำอย่างนี้"
+    ],
+    "hintWord": "everybody",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "CK"
+  },
+  {
+    "questionId": "tatoeba-6058286",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Everybody forgot my birthday.",
+    "pattern": "everybody",
+    "referenceAnswer": "ทุกคนลืมวันเกิดผม",
+    "acceptableAnswers": [
+      "ทุกคนลืมวันเกิดผม"
+    ],
+    "hintWord": "everybody",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "mailohilohi"
+  },
+  {
+    "questionId": "tatoeba-6058284",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "Everyone forgot my birthday.",
+    "pattern": "everyone",
+    "referenceAnswer": "ทุกคนลืมวันเกิดผม",
+    "acceptableAnswers": [
+      "ทุกคนลืมวันเกิดผม"
+    ],
+    "hintWord": "everyone",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "mailohilohi"
+  },
+  {
+    "questionId": "tatoeba-6054174",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "He is my dad.",
+    "pattern": "vocabulary",
+    "referenceAnswer": "เขาคือพ่อของฉัน",
+    "acceptableAnswers": [
+      "เขาคือพ่อของฉัน"
+    ],
+    "hintWord": "vocabulary",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "Sethlang"
+  },
+  {
+    "questionId": "tatoeba-6028414",
+    "skill": "understanding",
+    "difficulty": "easy",
+    "register": "casual",
+    "en": "I also believe that.",
+    "pattern": "believe",
+    "referenceAnswer": "ฉันก็คิดอย่างนั้น",
+    "acceptableAnswers": [
+      "ฉันก็คิดอย่างนั้น"
+    ],
+    "hintWord": "believe",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "zumley"
+  },
+  {
+    "questionId": "tatoeba-6020560",
+    "skill": "understanding",
+    "difficulty": "medium",
+    "register": "casual",
+    "en": "He is very intelligent.",
+    "pattern": "intelligent",
+    "referenceAnswer": "เธอฉลาดมาก",
+    "acceptableAnswers": [
+      "เธอฉลาดมาก"
+    ],
+    "hintWord": "intelligent",
+    "hintMeaning": "",
+    "sourceLicense": "CC BY 2.0 FR",
+    "sourceAttribution": "mailohilohi"
+  }
+]
