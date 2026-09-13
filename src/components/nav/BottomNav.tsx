@@ -54,7 +54,12 @@ export function BottomNav() {
   return (
     <div
       style={{
-        position: "absolute",
+        // Fixed to the real viewport, not the app column's height:100vh box —
+        // position:absolute + bottom:0 anchored short of the true bottom on
+        // real phones with certain device pixel ratios, making this bar
+        // render off-screen entirely (confirmed live: icons missing on an
+        // Android phone). Same root cause and fix as the bottom sheets.
+        position: "fixed",
         left: 0,
         right: 0,
         bottom: 0,
