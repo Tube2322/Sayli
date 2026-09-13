@@ -36,6 +36,9 @@ export function AssessmentResultsScreen() {
       <div style={{ textAlign: "center", padding: "10px 0" }}>
         <div style={{ fontSize: 34 }}>🎉</div>
         <h1 style={{ fontFamily: "'Barlow Condensed', sans-serif", fontWeight: 600, fontSize: 21, margin: "6px 0 0" }}>โปรไฟล์ภาษาอังกฤษของคุณพร้อมแล้ว</h1>
+        <div style={{ fontSize: 12.5, color: theme.muted, marginTop: 6, maxWidth: 280, marginInline: "auto", lineHeight: 1.5 }}>
+          นี่คือระดับเริ่มต้นโดยประมาณจากแบบประเมินสั้น ๆ — ระบบจะปรับให้แม่นยำขึ้นเรื่อย ๆ ตามการฝึกจริงของคุณ
+        </div>
       </div>
       <div style={{ borderRadius: 22, padding: 18, background: theme.surface, boxShadow: theme.shadowCard, display: "flex", flexDirection: "column", gap: 12 }}>
         {skillRows.map((r) => (

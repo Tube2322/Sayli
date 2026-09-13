@@ -89,16 +89,25 @@ export function AssessmentQuizScreen() {
             {orderPicked.join(" ")}
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-            {(q.words ?? []).map((w, idx) => (
-              <div
-                key={w + idx}
-                className="el-tap"
-                onClick={() => toggleOrderWord(w)}
-                style={{ padding: "9px 14px", borderRadius: 10, border: `1.3px solid ${theme.accent}`, background: theme.accentSoft, color: theme.accentDeep, fontSize: 14, fontWeight: 600 }}
-              >
-                {w}
-              </div>
-            ))}
+            {(q.words ?? []).map((w, idx) => {
+              const used = orderPicked.includes(w);
+              return (
+                <div
+                  key={w + idx}
+                  className="el-tap"
+                  onClick={() => toggleOrderWord(w)}
+                  style={{
+                    padding: "9px 14px", borderRadius: 10, fontSize: 14, fontWeight: 600,
+                    border: `1.3px solid ${used ? theme.border : theme.accent}`,
+                    background: used ? "transparent" : theme.accentSoft,
+                    color: used ? theme.mutedFaint : theme.accentDeep,
+                    opacity: used ? 0.5 : 1,
+                  }}
+                >
+                  {w}
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

@@ -10,11 +10,16 @@ export type AdaptiveContext = {
   forgottenItems: string[]; // questionIds due for spaced review
   recommendedDifficulty: DifficultyTier;
   reviewByQuestion: Record<string, ReviewScheduleItem>;
+  // Set when the learner explicitly picked a skill row on the Practice hub
+  // (e.g. "Write") — an explicit choice should win over passive signals, so
+  // its bonus outranks even spaced-review priority.
+  preferredSkill?: Skill | null;
 };
 
 export function contextFromLearningState(
   learningState: LearningState | null,
-  reviewSchedule: ReviewScheduleItem[] = []
+  reviewSchedule: ReviewScheduleItem[] = [],
+  preferredSkill: Skill | null = null
 ): AdaptiveContext {
   return {
     reviewPriority: learningState?.reviewPriority ?? [],
@@ -22,6 +27,7 @@ export function contextFromLearningState(
     forgottenItems: learningState?.forgottenItems ?? [],
     recommendedDifficulty: learningState?.recommendedDifficulty ?? "medium",
     reviewByQuestion: Object.fromEntries(reviewSchedule.map((r) => [r.questionId, r])),
+    preferredSkill,
   };
 }
 
@@ -100,6 +106,7 @@ export function selectNextQuestion(
   let best: { questionId: string; score: number } | null = null;
   for (const [questionId, meta] of entries) {
     let score = 0;
+    if (context.preferredSkill && meta.skill === context.preferredSkill) score += 150;
     if (context.forgottenItems.includes(questionId)) score += 100;
     if (context.reviewPriority.includes(meta.skill)) score += 50;
     if (meta.difficulty === context.recommendedDifficulty) score += 20;

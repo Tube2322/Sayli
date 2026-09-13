@@ -21,6 +21,7 @@ import {
   SKILL_ORDER,
   normalizeText,
 } from "@/lib/sampleData";
+import type { Skill } from "@/lib/skill/types";
 
 export type ThemeMode = "light" | "dark" | "system";
 export type ChooseMode = "all" | "each";
@@ -56,6 +57,7 @@ type AppState = {
   lastPracticeScore: number | null;
   activeQuestion: ActiveQuestion | null;
   sessionRecap: SessionRecapData | null;
+  preferredSkill: Skill | null;
 };
 
 export type ActiveQuestion = { en: string; pattern: string; hintWord: string; hintMeaning: string };
@@ -70,6 +72,8 @@ type AppStateContextValue = AppState & {
   openHint: (question?: ActiveQuestion) => void;
   checkAnswer: (correct: boolean, score: number, question?: ActiveQuestion) => void;
   openRecap: (data: SessionRecapData) => void;
+  setPreferredSkill: (skill: Skill | null) => void;
+  consumePreferredSkill: () => Skill | null;
   closeSheets: () => void;
   continueAfterFeedback: () => void;
   setHistoryFilter: (f: "7d" | "30d" | "all") => void;
@@ -116,6 +120,7 @@ const initialState: AppState = {
   lastPracticeScore: null,
   activeQuestion: null,
   sessionRecap: null,
+  preferredSkill: null,
 };
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
@@ -151,6 +156,15 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       checkAnswer: (correct, score, question) =>
         patch({ sheet: "feedback", lastPracticeCorrect: correct, lastPracticeScore: score, activeQuestion: question ?? state.activeQuestion }),
       openRecap: (data) => patch({ sheet: "recap", sessionRecap: data }),
+      setPreferredSkill: (skill) => patch({ preferredSkill: skill }),
+      // One-shot read: a skill preference set by tapping a Practice hub row
+      // should steer only the very next question, not linger and bias every
+      // future session (including "ฝึกด่วน" quick practice).
+      consumePreferredSkill: () => {
+        const skill = state.preferredSkill;
+        if (skill) patch({ preferredSkill: null });
+        return skill;
+      },
       closeSheets: () => patch({ sheet: null }),
       continueAfterFeedback: () => patch({ sheet: null, answer: "" }),
       setHistoryFilter: (f) => patch({ historyFilter: f }),

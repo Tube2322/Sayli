@@ -45,7 +45,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
   {
     skill: "listening",
     type: "blank",
-    note: "🔊 ต้นแบบนี้ยังไม่มีระบบเสียง — อ่านประโยคแทนการฟัง",
+    note: "🔊 ยังไม่รองรับเสียงในตอนนี้ — อ่านประโยคแทนไปก่อนนะ",
     prompt: 'I\'m ____ call you later. (เติมคำที่ได้ยินบ่อยในภาษาพูด แปลว่า "going to")',
     accept: ["gonna"],
   },
@@ -65,7 +65,7 @@ export const ASSESSMENT_QUESTIONS: AssessmentQuestion[] = [
   {
     skill: "speaking",
     type: "situation",
-    note: "🎤 ต้นแบบนี้ยังไม่รองรับไมโครโฟน — พิมพ์คำตอบแทนการพูด",
+    note: "🎤 ยังไม่รองรับไมโครโฟนในตอนนี้ — พิมพ์คำตอบแทนไปก่อนนะ",
     prompt: "คุณอยู่ในร้านอาหาร พนักงานเสิร์ฟอาหารผิดโต๊ะ คุณจะพูดว่าอะไร?",
     accept: ["this is not what i ordered", "wrong order", "excuse me this is", "i think there is a mistake"],
   },

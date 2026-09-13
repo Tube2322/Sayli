@@ -16,19 +16,23 @@ import { computeSessionRecap, computeSessionStreak } from "@/lib/progress/progre
 
 export function SessionScreen() {
   const { theme } = useTheme();
-  const { answer, setAnswer, openHint, checkAnswer, openRecap } = useAppState();
+  const { answer, setAnswer, openHint, checkAnswer, openRecap, consumePreferredSkill } = useAppState();
   const { submitPracticeResult, profileError, learningState, reviewSchedule, recentPracticeResults } = useSession();
   const router = useRouter();
   const [checking, setChecking] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const sessionIdRef = useRef<string>(crypto.randomUUID());
   const startedAtRef = useRef<number>(Date.now());
+  // Read once at mount: a skill chosen on the Practice hub (e.g. "Write")
+  // steers this whole session, but a fresh visit (Home's "ทำต่อ"/"ฝึกด่วน")
+  // has none set and falls back to plain adaptive selection.
+  const preferredSkillRef = useRef(consumePreferredSkill());
 
   // Adaptive Engine picks the question once per session mount from the
   // learner's current Learning State (spec §Phase 7) — the same selection
   // "ฝึกด่วน" (Quick Practice) relies on, since both just land here.
   const questionId = useMemo(
-    () => selectNextQuestion(QUESTION_BANK, contextFromLearningState(learningState, reviewSchedule)),
+    () => selectNextQuestion(QUESTION_BANK, contextFromLearningState(learningState, reviewSchedule, preferredSkillRef.current)),
     [learningState, reviewSchedule]
   );
   const question = questionId ? QUESTION_BANK[questionId] : null;
